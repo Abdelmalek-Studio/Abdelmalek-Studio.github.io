@@ -161,3 +161,28 @@ section.sec + section.sec{margin-top:34px}
 
 /* أزرار الكارت (قلب / مشاركة / إبلاغ) على شاشات اللمس: نفس الشكل، بس منطقة الضغط أكبر (~42px) عشان الضغط الغلط يقل */
 @media(pointer:coarse){.favbtn::after,.sharebtn::after,.reportbtn::after{content:"";position:absolute;inset:-3px}}
+
+/* ---------- أداء التمرير + ترتيب الموبايل (آخر ملف تحميل، فبيغلب اللي قبله) ----------
+   السبب الحقيقي لتقل التمرير على الموبايل: كل كارت فيه 3 أزرار دايرية بـ backdrop-filter (blur) = حوالي 440 طبقة blur
+   بتتحسب في كل فريم أثناء التمرير. الشكل ثابت تقريبًا من غير blur لأن خلفية الزرار شبه معتمة أصلًا. */
+.favbtn,.sharebtn,.reportbtn,.pcopy{-webkit-backdrop-filter:none;backdrop-filter:none;background-color:rgba(var(--bg-rgb),.9)}
+.play{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(12,12,16,.72)}
+
+@media(max-width:560px){
+  /* هيدر وشريط التابات اللاصقين: خلفية معتمة بدل blur بيتعاد حسابه مع كل حركة تمرير */
+  header.top{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(var(--bg-rgb),.96)}
+  .cgroup{-webkit-backdrop-filter:none;backdrop-filter:none}
+  .controls .filters,.filters{-webkit-backdrop-filter:none;backdrop-filter:none}
+  /* الهيرو: حلقة الصورة ثابتة (بدل ما تتحسب كل فريم) + توهّج من غير blur تقيل */
+  .avatar-ring{animation:none}
+  .who::before{filter:none}
+  /* ظهور الكروت: أخف وأسرع، من غير تكبير/تصغير وبدون تأخير متدرّج */
+  .reveal{transform:translateY(10px);transition:opacity .35s ease,transform .35s ease,border-color .2s,background .2s}
+  /* الاسم في الهيدر بيتقطع («A…») والاسم ظاهر في الهيرو تحته: بنسيب اللوجو بس ونخلّي الاسم لقارئات الشاشة */
+  #brandName{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  /* بانر القسم: رسمة الغلاف كانت بتتداخل مع النص، فبتبقى خلفية خافتة والنص فوقها واضح */
+  .sec-cover{opacity:.3}
+  /* زر الإبلاغ كان واخد سطر لوحده تحت الكارت: بنحطه جنب القلب والمشاركة فالكارت يقصر */
+  .reportbtn{top:10px;bottom:auto;inset-inline-end:94px}
+  .cwrap:has(.reportbtn) .card{padding-bottom:16px}
+}
