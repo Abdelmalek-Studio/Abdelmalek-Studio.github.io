@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>لوحة تحكم | Abdelmalek Studio</title>
+<link rel="stylesheet" href="css/admin.css">
+<script src="../site/data/data.js"></script>
+</head>
+<body>
+<header><div class="wrap hb">
+  <h1>لوحة تحكم الموقع</h1>
+  <label class="btn" style="margin:0">فتح data.js<input id="file" type="file" accept=".js,.json,text/javascript,application/json" hidden></label>
+  <button id="backup" title="تنزيل نسخة احتياطية JSON من البيانات الحالية">نسخة احتياطية</button>
+  <label class="btn" style="margin:0" title="استرجاع نسخة احتياطية (هيطلب تأكيد قبل الاستبدال)">استرجاع نسخة<input id="restore" type="file" accept=".json,.js,application/json" hidden></label>
+  <button id="reset" title="يرجّع البيانات الحالية في site/data/data.js">رجوع للأصل</button>
+</div></header>
+
+<main class="wrap">
+  <div class="note"><b>إزاي أستخدمها؟</b> عدّل أو زوّد اللي تحبه، وبعدين دوس <b>تنزيل data.js</b> تحت، وحط الملف مكان <code>site/data/data.js</code>، وبعدها ارفع التعديل على GitHub. قبل أي تعديل كبير دوس <b>نسخة احتياطية</b>. لو عايز تكمّل على نسخة قديمة استخدم <b>فتح data.js</b> أو <b>استرجاع نسخة</b> (بيسألك قبل ما يستبدل أي حاجة).
+  لوحة الإدارة <b>تفضل على جهازك بس</b> ومبتتنشرش مع الموقع.</div>
+  <div class="errbox" id="errbox" role="alert" hidden></div>
+  <div class="errbox info" id="diffbox" role="region" aria-label="معاينة التغييرات" hidden></div>
+
+  <h2>الملف الشخصي</h2>
+  <div class="panel" id="profile"></div>
+
+  <h2>آخر الإضافات والتحديثات</h2>
+  <div class="panel"><div id="updates"></div><button id="addUpd" class="mini" style="margin-top:10px">+ تحديث جديد</button></div>
+
+  <h2>الأقسام والمحتوى <span class="totals" id="totals"></span></h2>
+  <div class="toolbar">
+    <input id="asearch" type="search" placeholder="ابحث في كل العناصر (الاسم، الوصف، اللينك، الكلمات المفتاحية)..." aria-label="بحث داخل لوحة الإدارة" autocomplete="off">
+    <span class="hint" id="asearchinfo" aria-live="polite"></span>
+    <button id="dupcheck" type="button" title="يفحص الروابط المكررة والعناصر المتشابهة">فحص التكرارات</button>
+  </div>
+  <div class="errbox warn" id="dupbox" role="status" hidden></div>
+  <div id="sections"></div>
+  <datalist id="catlist"></datalist>
+  <button id="addSec" class="pri">+ قسم جديد</button>
+</main>
+
+<div class="sticky-save"><div class="wrap">
+  <span id="status">جاهز</span>
+  <button id="preview" type="button" title="يوريك الفرق بين اللي اتحمّل واللي عدّلته قبل ما تنزّل">معاينة التغييرات</button>
+  <button id="download" class="pri">تنزيل data.js</button>
+</div></div>
+
+<script src="js/utils.js"></script>
+<script src="js/validate.js"></script>
+<script src="js/render.js"></script>
+<script src="js/events.js"></script>
+<script src="js/io.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

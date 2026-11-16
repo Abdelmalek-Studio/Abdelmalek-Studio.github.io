@@ -1,0 +1,163 @@
+/* ==========================================================================
+   Studio look (مرحلة التصميم) — طبقة فوق base/layout/components/motion.
+   تصميم فقط: مفيش حاجة هنا بتغيّر البيانات أو الوظائف. لو حبيت ترجع الشكل القديم شيل سطر studio.css من index.html.
+   1) عرض الصفحة على الشاشة كلها  2) خلفية بتوهّج ألوان الهوية بتتغير مع القسم
+   3) لون مميّز لكل قسم (--h = درجة اللون، بتتحدد من app.js)  4) الأقسام سايدبار ثابت على الديسكتوب
+   ========================================================================== */
+
+/* --h بتتحرك بنعومة لما القسم يتغير (لو المتصفح بيدعم @property) */
+@property --h{syntax:"<number>";inherits:true;initial-value:40}
+:root{--h:40;--pad:clamp(16px,2.6vw,52px);--bar:74px}
+
+/* ---------- 1) العرض ---------- */
+.wrap{max-width:2400px;padding-inline:var(--pad)}
+.bar{padding-block:12px}
+.search{max-width:min(520px,38vw)}
+.grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,250px),1fr))}
+
+/* ---------- 2) الخلفية: ألوان الهوية منتشرة جوّه الخلفية (زي البورتفوليو) ---------- */
+body{background-image:none}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(0,0,0,.78) 0,rgba(0,0,0,.3) 14%,transparent 30%,transparent 70%,rgba(0,0,0,.3) 86%,rgba(0,0,0,.78) 100%),
+    radial-gradient(90vw 95vh at 50% -12%,hsl(var(--h) 95% 50%/.92),hsl(var(--h) 92% 42%/.45) 42%,hsl(var(--h) 90% 36%/.12) 66%,transparent 80%),
+    radial-gradient(55vw 50vh at 50% 108%,hsl(var(--h) 88% 42%/.28),transparent 72%),
+    radial-gradient(36vw 40vh at 100% 55%,color-mix(in srgb,var(--accent2) 22%,transparent),transparent 72%),
+    linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.34))}
+/* الشادو في الاتجاهات: تعتيم على الجنبين والأطراف، وتوهّج لون الهوية في النص فوق (زي أدوات Image to Prompts) */
+:root[data-theme="light"] body::before{opacity:.5}
+header.top{background:rgba(var(--bg-rgb),.62);backdrop-filter:blur(18px) saturate(1.3)}
+
+/* ---------- 3) ألوان الأقسام ---------- */
+/* شريط القسم الكبير */
+.sec-head,section.sec:nth-child(even) .sec-head{border-color:hsl(var(--h) 75% 58%/.38);
+  background:
+    radial-gradient(560px 250px at 10% 0%,hsl(var(--h) 96% 56%/.34),transparent),
+    radial-gradient(460px 260px at 96% 100%,hsl(calc(var(--h) + 34) 96% 58%/.24),transparent),
+    linear-gradient(135deg,hsl(var(--h) 38% 15%),var(--card) 78%)}
+.sec-mark{color:hsl(var(--h) 95% 62%);opacity:.12}
+section.sec h2 i:not(.img){background:linear-gradient(135deg,hsl(var(--h,40) 95% 60%),hsl(calc(var(--h,40) + 28) 96% 57%));color:#16110a;box-shadow:0 10px 26px -10px hsl(var(--h) 95% 55%/.8)}
+section.sec h2 i.img{border-color:hsl(var(--h) 85% 60%/.55)}
+section.sec + section.sec::before{background:linear-gradient(90deg,transparent,var(--line) 14%,hsl(var(--h) 90% 60%/.9) 50%,var(--line) 86%,transparent)}
+/* الكروت */
+.cwrap>.card{border-top-color:hsl(var(--h,40) 80% 60%/.45)}
+.cwrap>.card:hover,.cwrap>.card:focus-visible{border-color:hsl(var(--h,40) 88% 62%/.7);box-shadow:0 20px 44px -24px hsl(var(--h,40) 92% 55%/.65)}
+.cwrap.flash>.card{border-color:hsl(var(--h,40) 92% 62%)}
+/* الفلاتر */
+.filters .fchip.on{background:hsl(var(--h) 95% 58%/.2);border-color:hsl(var(--h) 90% 62%/.85);color:var(--text)}
+:root[data-theme="light"] .filters .fchip.on{background:hsl(var(--h) 90% 50%/.16)}
+
+/* ---------- الهيرو: أكبر وأوضح، وفيه توهّج ورا الصورة ---------- */
+.hero{padding:clamp(28px,4.5vw,64px) 0 clamp(20px,3vw,40px);gap:clamp(24px,4vw,72px);align-items:center;flex-wrap:wrap}
+.hero h1{font-size:clamp(38px,5.6vw,104px)}
+.hero p.tag{font-size:clamp(17px,1.6vw,26px)}
+.hero p.about{font-size:clamp(15px,1.15vw,19px);max-width:720px}
+.avatar{width:clamp(150px,17vw,300px);height:clamp(150px,17vw,300px);border-radius:clamp(34px,4vw,60px);font-size:clamp(54px,6vw,100px)}
+.avatar-ring{border-radius:clamp(38px,4.3vw,64px)}
+.who{position:relative}
+.who::before{content:"";position:absolute;inset:-34%;z-index:-1;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--accent2) 46%,transparent),color-mix(in srgb,var(--accent) 14%,transparent) 55%,transparent 72%);filter:blur(18px)}
+.controls .filters,.filters{backdrop-filter:blur(10px)}
+
+@media(prefers-reduced-motion:reduce){body::before{transition:none}}
+
+/* رسمة غلاف القسم (SVG بألوان الهوية): بنلفّ درجتها (hue-rotate) على لون القسم، ونكبّر البانر على الشاشات العريضة عشان الرسمة متتقصّش */
+.sec-cover{filter:hue-rotate(calc((var(--h,40) - 40) * 1deg)) saturate(1.08)}
+
+/* ---------- 4) شريط التنقل العلوي الرئيسي ----------
+   تحت الهيدر وروابط السوشيال (الهيرو) مباشرة. كبير وبريميوم: خلفية داكنة، نص أبيض، كل قسم بأيقونته وعدد عناصره،
+   والقسم النشط بتعبئة كاملة بتدرّج الهوية (برتقالي مايل للأحمر). على الديسكتوب كل الأقسام ظاهرة (بتنزل في صفّين لو مش واسعة)
+   من غير تمرير مخفي، وبيلزق تحت الهيدر؛ وأول ما الصفحة تنزل بيصغّر شوية (.compact) عشان ياخد مساحة أقل. الضغط على قسم مبيحرّكش الصفحة. */
+.cgroup{position:sticky;top:var(--hdr,64px);z-index:40;display:block;margin:0 calc(var(--pad) * -1) 26px;padding:16px var(--pad);
+  background:linear-gradient(180deg,rgba(30,21,15,.97),rgba(14,11,9,.98));
+  border-block:1px solid rgba(255,255,255,.1);box-shadow:0 22px 40px -22px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.05);backdrop-filter:blur(16px);transition:padding .2s}
+.cgroup::before{content:"";position:absolute;inset-inline:0;top:0;height:2px;background:linear-gradient(90deg,transparent,#E8561A 25%,#C0301F 60%,transparent);opacity:.9}
+.clabel{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}   /* للـ screen readers بس */
+nav.tabs{display:flex;flex-wrap:wrap;gap:9px;padding:2px}
+nav.tabs .chip{--ic:none;position:relative;display:inline-flex;align-items:center;flex:1 1 auto;white-space:nowrap;gap:9px;min-height:54px;padding:0 12px 0 10px;border-radius:15px;
+  font-size:16.5px;font-weight:800;line-height:1;color:#fff;background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.13);
+  transition:background .2s,border-color .2s,transform .15s,box-shadow .2s}
+/* أيقونة القسم (إيموجي/رمز من البيانات أو صورة) في دايرة */
+nav.tabs .chip::before{content:attr(data-i);flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:10px;font-size:17px;font-weight:800;color:#FFB070;
+  background:rgba(245,130,32,.14) var(--ic) no-repeat center/62%;border:1px solid rgba(245,130,32,.25)}
+nav.tabs .chip[style*="--ic"]::before{content:""}
+/* عدد عناصر القسم */
+nav.tabs .chip::after{content:attr(data-n);margin-inline-start:auto;min-width:26px;padding:4px 8px;border-radius:99px;text-align:center;font-size:13px;font-weight:800;color:rgba(255,255,255,.82);background:rgba(255,255,255,.1)}
+nav.tabs .chip:not([data-n])::after{display:none}
+nav.tabs .chip:not(.on):hover{background:linear-gradient(180deg,rgba(255,255,255,.15),rgba(255,255,255,.07));border-color:rgba(245,130,32,.55);transform:translateY(-2px)}
+nav.tabs .chip.on{background:linear-gradient(135deg,#E8561A,#C0301F);border-color:rgba(255,200,160,.5);color:#fff;box-shadow:0 14px 30px -12px #E8412C,inset 0 1px 0 rgba(255,255,255,.3)}
+nav.tabs .chip.on::before{color:#fff;background-color:rgba(255,255,255,.22);border-color:rgba(255,255,255,.3)}
+nav.tabs .chip.on::after{background:rgba(0,0,0,.26);color:#fff}
+nav.tabs .chip:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(245,130,32,.7)}
+/* «الكل» (الرئيسية): أيقونة بيت */
+nav.tabs .chip[data-id="all"]::before{content:"";background:rgba(245,130,32,.14) no-repeat center/58% url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFB070' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 11l9-8 9 8'/%3E%3Cpath d='M5 10v10h5v-6h4v6h5V10'/%3E%3C/svg%3E")}
+nav.tabs .chip[data-id="all"].on::before{background-color:rgba(255,255,255,.22);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 11l9-8 9 8'/%3E%3Cpath d='M5 10v10h5v-6h4v6h5V10'/%3E%3C/svg%3E")}
+/* بعد النزول: أصغر شوية (لسه واضح) */
+.cgroup.compact{padding-block:9px}
+.cgroup.compact nav.tabs{gap:7px}
+.cgroup.compact .chip{min-height:42px;font-size:16px;gap:9px;padding:0 14px 0 10px;border-radius:14px}
+.cgroup.compact .chip::before{width:26px;height:26px;border-radius:9px;font-size:15px}
+.cgroup.compact .chip::after{padding:3px 7px;font-size:12px}
+/* الفلاتر (مؤقتًا زي ما هي — بتتغيّر في المرحلة التانية) */
+.controls[hidden]{display:none}
+.controls{display:block;margin:0 0 20px;padding:0;border:0;background:none}
+.controls .filters{margin:0;padding:14px 18px;border:1px solid var(--line);border-radius:22px;background:color-mix(in srgb,var(--card) 78%,transparent);flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:12px}
+section.sec{scroll-margin-top:calc(var(--hdr,64px) + 150px)}
+body.fav-mode .cgroup{display:none}
+@media(max-width:700px){
+  /* موبايل: مش لازق (يوفّر مساحة)، صف واحد بيتسحب أفقيًا، وبيبان إن فيه أكتر (الشيب اللي بعده نص ظاهر) */
+  .cgroup{position:static;margin-bottom:18px;padding:12px var(--pad)}
+  nav.tabs{display:grid;grid-template-rows:repeat(2,auto);grid-auto-flow:column;grid-auto-columns:max-content;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none;gap:10px}
+  nav.tabs::-webkit-scrollbar{display:none}
+  nav.tabs .chip{min-height:52px;font-size:16px;padding:0 12px 0 10px;gap:8px;flex:none;scroll-snap-align:start}
+  section.sec{scroll-margin-top:calc(var(--hdr,64px) + 12px)}
+}
+
+/* تلميح السحب الأفقي للشريط (موبايل بس): سهم + تدرّج على الطرف اللي فيه أقسام زيادة — فوق الشريط من غير ما يغيّر ارتفاعه */
+.tabs-arrow{display:none}
+@media(max-width:700px){
+  .tabs-wrap{position:relative}
+  .tabs-arrow:not([hidden]){display:flex;position:absolute;top:0;bottom:0;width:44px;align-items:center;border:0;padding:0;cursor:pointer;color:#FFB070;font:inherit;font-size:30px;font-weight:800;line-height:1;z-index:2}
+  .tabs-arrow span{direction:ltr;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:rgba(14,11,9,.88);border:1px solid rgba(245,130,32,.5);box-shadow:0 4px 12px rgba(0,0,0,.55);padding-bottom:3px}
+  .tabs-next{left:0;justify-content:flex-start;padding-inline-start:6px;background:linear-gradient(90deg,rgba(18,13,10,.96) 30%,transparent)}
+  .tabs-prev{right:0;justify-content:flex-end;padding-inline-end:6px;background:linear-gradient(270deg,rgba(18,13,10,.96) 30%,transparent)}
+  .tabs-arrow:focus-visible{outline:none}.tabs-arrow:focus-visible span{box-shadow:0 0 0 3px rgba(245,130,32,.7)}
+  .tabs-next span{animation:tabsNudge 1.6s ease-in-out 3}
+}
+@keyframes tabsNudge{0%,100%{transform:translateX(0)}50%{transform:translateX(-5px)}}
+@media(prefers-reduced-motion:reduce){.tabs-next span{animation:none}}
+
+/* ---------- الفلاتر الخاصة بالقسم ---------- */
+.controls .filters .fnote{flex-basis:100%;font-size:12.5px;color:var(--muted);margin-top:2px}
+.controls .filters .fchip{min-height:42px}
+.controls .filters .fchip b{opacity:.85}
+.controls .filters .fgroup{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.controls .filters .fchip.clearall{align-self:flex-start}
+
+/* ---------- الاسم العربي تحت الصورة: بعرض الصورة بالظبط + علامة التوثيق ---------- */
+.who{--av:clamp(150px,17vw,300px);width:var(--av)}
+.owner{width:100%;justify-content:center;gap:.32em;font-size:calc(var(--av) * .104);font-weight:800;line-height:1.15;white-space:nowrap;letter-spacing:0}
+.owner .verified{width:1.15em;height:1.15em}
+.controls .filters .fchip b{margin-inline-start:8px;font-weight:800}
+
+/* ---------- بانر القسم (.sec-head): الخط واللون هنا؛ المقاسات (الارتفاع/الحشو/الغلاف/التدرج) في layout.css فقط ----------
+   الارتفاع ~92px ديسكتوب / ~76px موبايل، ومرن: لو العنوان أو الوصف احتاجوا سطر زيادة بيكبر ومفيش نص بيتقص. */
+section.sec h2{font-size:clamp(22px,2.1vw,30px);line-height:1.2;gap:11px}
+section.sec h2 i:not(.img){width:40px;height:40px;border-radius:12px;font-size:19px}
+section.sec h2 i.img{min-width:40px;height:40px;padding:0 9px}
+section.sec h2 i.img img{height:18px}
+.sec-text p{margin-top:4px;font-size:14px;line-height:1.55;max-width:min(640px,100%);color:var(--muted)}
+.sec-head.has-cover .sec-text p{color:#dcdce6}
+section.sec + section.sec{margin-top:34px}
+@media(max-width:560px){
+  section.sec h2{font-size:21px;gap:9px}
+  section.sec h2 i:not(.img){width:34px;height:34px;border-radius:10px;font-size:16px}
+  section.sec h2 i.img{min-width:34px;height:34px;padding:0 8px}
+  .sec-text p{font-size:12.5px;margin-top:3px;max-width:none}
+}
+
+/* الصفحة لازم تكون طويلة كفاية عشان الشريط يوصل لفوق حتى مع قسم قصير (3 كروت مثلًا) */
+#content{min-height:calc(100vh - 260px)}
+
+/* أزرار الكارت (قلب / مشاركة / إبلاغ) على شاشات اللمس: نفس الشكل، بس منطقة الضغط أكبر (~42px) عشان الضغط الغلط يقل */
+@media(pointer:coarse){.favbtn::after,.sharebtn::after,.reportbtn::after{content:"";position:absolute;inset:-3px}}

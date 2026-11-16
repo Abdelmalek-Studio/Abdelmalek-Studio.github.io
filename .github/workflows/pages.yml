@@ -1,0 +1,64 @@
+# نشر الموقع على GitHub Pages — مربوط بنجاح الاختبارات:
+#   job «test» (فحص + كل الاختبارات على الموقع وعلى نسخة dist) ← لو فشل، job «deploy» مبيشتغلش أصلًا (needs: test) ومفيش نشر.
+# الـ artifact المنشور = مجلد dist/ المبني بـ tools/build.js (نسخة من site/ + ملفات SEO). مجلد admin/ مش جواه أبدًا (البناء بيفشل لو لقى أي ملف admin).
+# المستودع المستهدف: Abdelmalek-Studio.github.io ← الموقع على https://abdelmalek-studio.github.io/ (الـ build بياخد اسم المستودع من github.repository).
+name: Test and deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies (exact versions from package-lock.json)
+        run: npm ci --no-audit --no-fund
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+      - name: Syntax check
+        run: node tools/check-syntax.js
+      # كل الاختبارات: القديمة (e2e + features) + الجديدة + إعادة التشغيل على dist/ — أي فشل بيوقف الـ workflow
+      - name: Run all tests
+        run: npm test
+        env:
+          CI: "true"
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # بناء نسخة النشر وفحصها: مفيش admin ولا ملفات ناقصة ولا مسارات مطلقة (مبتتعملش commit)
+      - name: Build dist/
+        run: node tools/build.js --github "${{ github.repository }}"
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4

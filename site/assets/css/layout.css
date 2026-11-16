@@ -1,0 +1,103 @@
+/* هيكل الصفحة: الهيدر، البروفايل، التابات، الأقسام، الفوتر، الموبايل */
+header.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);background:rgba(var(--bg-rgb),.78);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:14px;padding:12px 18px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;white-space:nowrap;direction:ltr;min-width:0}
+.brand span{overflow:hidden;text-overflow:ellipsis}
+.logo{height:30px;display:flex;align-items:center;flex:none}
+.logo img{height:100%;width:auto;display:block}
+.logo.letter{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));justify-content:center;color:var(--ink)}
+.search{margin-inline-start:auto;flex:1;max-width:320px}
+.search input{width:100%;background:var(--card);border:1px solid var(--line);color:var(--text);padding:9px 14px;border-radius:12px;font:inherit;font-size:14px;outline:none}
+.search input:focus{border-color:var(--accent)}
+.hero{padding:54px 0 34px;display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap}
+.avatar{width:140px;height:140px;border-radius:34px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:54px;font-weight:800;overflow:hidden;flex:none;box-shadow:0 24px 60px -24px var(--accent2)}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.avatar img.mark{object-fit:contain;padding:20px}
+.hero h1{font-size:clamp(34px,6vw,60px);font-weight:800;line-height:1;margin-top:-.06em;direction:ltr;text-align:right;letter-spacing:-.01em}
+.hero h1 .grad{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.who{display:flex;flex-direction:column;align-items:center;gap:12px;flex:none}
+.owner{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--text)}
+.verified{width:19px;height:19px;flex:none;filter:drop-shadow(0 2px 6px rgba(29,155,240,.45))}
+.intro{flex:1;min-width:260px}
+.hero p.tag{color:var(--text);font-weight:600;margin:14px 0 6px}
+.hero p.about{color:var(--muted);max-width:620px}
+.socials{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.socials a{padding:7px 16px;border:1px solid var(--line);border-radius:999px;font-size:14px;transition:.2s}
+.socials a:hover{border-color:var(--accent);color:var(--accent-ink)}
+.socials a.ico{width:44px;height:44px;padding:0;display:grid;place-items:center;border-radius:50%;background:var(--card)}
+.socials a.ico svg{width:20px;height:20px;fill:currentColor;stroke:none}
+.socials a.ico:hover{transform:translateY(-2px)}
+/* لون كل منصة الحقيقي عند المرور */
+.socials a.ico-youtube:hover{color:#ff0033;border-color:#ff0033}.socials a.ico-instagram:hover{color:#e4405f;border-color:#e4405f}
+.socials a.ico-facebook:hover{color:#1877f2;border-color:#1877f2}.socials a.ico-linkedin:hover{color:#0a66c2;border-color:#0a66c2}
+.socials a.ico-tiktok:hover{color:#25f4ee;border-color:#25f4ee}.socials a.ico-whatsapp:hover{color:#25d366;border-color:#25d366}
+.socials a.ico-telegram:hover{color:#26a5e4;border-color:#26a5e4}.socials a.ico-behance:hover{color:#1769ff;border-color:#1769ff}.socials a.ico-pinterest:hover{color:#e60023;border-color:#e60023}
+nav.tabs{display:flex;flex-wrap:wrap;gap:8px;flex:1;min-width:0}
+.chip{flex:none;padding:7px 17px;min-height:38px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer;font:inherit;font-size:14px;font-weight:600;transition:.2s}
+.chip:hover{color:var(--text)}
+.chip.on{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;color:var(--ink)}
+section.sec{margin:0;padding:44px 0 8px;position:relative;scroll-margin-top:calc(var(--hdr,56px) + 64px)}
+section.sec:first-child{padding-top:12px}
+/* فاصل بين كل قسم والتاني */
+section.sec + section.sec::before{content:"";position:absolute;top:0;inset-inline:0;height:1px;background:linear-gradient(90deg,transparent,var(--line) 18%,var(--accent) 50%,var(--line) 82%,transparent);opacity:.75}
+/* عنوان القسم: بانر مع مكان لصورة غلاف اختيارية */
+/* مقاسات بانر القسم (.sec-head): المصدر الوحيد هنا — الديسكتوب ثم الموبايل (≤560px). متتكررش في ملف تاني. */
+.sec-head{--sh-min:92px;--sh-pad:14px 26px;--sh-gap:14px;--sh-mb:16px;--sh-rad:20px;--sh-mark:72px;position:relative;overflow:hidden;display:flex;align-items:center;gap:var(--sh-gap);min-height:var(--sh-min);padding:var(--sh-pad);margin-bottom:var(--sh-mb);border-radius:var(--sh-rad);border:1px solid var(--line);
+  --text:#f2f2f6;--muted:#9a9aab;--card:#16161d;--line:#2a2a37;--accent-ink:var(--accent);color:var(--text);
+  background:radial-gradient(520px 220px at 12% 0%,color-mix(in srgb,var(--accent2) 26%,transparent),transparent),linear-gradient(135deg,color-mix(in srgb,var(--accent) 12%,var(--card)),var(--card) 70%)}
+section.sec:nth-child(even) .sec-head{background:radial-gradient(520px 220px at 88% 100%,color-mix(in srgb,var(--accent) 22%,transparent),transparent),linear-gradient(225deg,color-mix(in srgb,var(--accent2) 12%,var(--card)),var(--card) 70%)}
+.sec-head::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,rgba(255,255,255,.03) 0 2px,transparent 2px 14px);pointer-events:none}
+/* رسمة الغلاف بتتصغّر كلها على ارتفاع البانر بنسبتها الأصلية (1600×360) على الشمال، وطرفها بيدوب في الخلفية — مفيش قص ولا تشويه */
+.sec-cover{position:absolute;inset:0 auto 0 0;width:auto;height:100%;max-width:100%;object-fit:contain;object-position:left center;transform-origin:left center;-webkit-mask-image:linear-gradient(90deg,#000 72%,transparent);mask-image:linear-gradient(90deg,#000 72%,transparent)}
+.sec-head.has-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(270deg,rgba(12,12,16,.95) 0%,rgba(12,12,16,.88) 40%,rgba(12,12,16,.45) 62%,rgba(12,12,16,.05) 82%)}
+.sec-head.has-cover::before{display:none}
+.sec-mark{position:absolute;inset-inline-end:auto;inset-inline-start:22px;top:50%;transform:translateY(-50%);font-size:var(--sh-mark);line-height:1;font-style:normal;color:var(--accent);opacity:.09;pointer-events:none;font-weight:800}
+.sec-head.has-cover .sec-mark{display:none}
+.sec-text{position:relative;z-index:1;flex:1;min-width:0}
+section.sec h2{font-size:clamp(26px,4.4vw,38px);font-weight:800;line-height:1.25;display:flex;align-items:center;gap:12px}
+section.sec h2 i.img{width:auto;min-width:46px;padding:0 11px;background:#101016;border:1px solid color-mix(in srgb,var(--accent) 45%,#2a2a37)}
+section.sec h2 i.img img{height:20px;width:auto;display:block}
+section.sec h2 i{font-style:normal;flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:14px;font-size:22px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--ink)}
+.sec-text p{color:var(--muted);margin-top:8px;font-size:15px;max-width:420px}
+.sec-head.has-cover .sec-text p{color:#e6e6ee}
+.sec-head.has-cover .sec-text{text-shadow:0 1px 10px rgba(0,0,0,.65)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+footer{border-top:1px solid var(--line);color:var(--muted);text-align:center;padding:26px 0;font-size:13px;margin-top:30px}
+@media(max-width:560px){.brand{flex:1 1 0;justify-content:flex-end}section.sec{scroll-margin-top:calc(var(--hdr,106px) + 64px)}.sec-head{--sh-min:76px;--sh-pad:11px 14px;--sh-gap:8px;--sh-mb:12px;--sh-rad:16px;--sh-mark:56px;flex-wrap:wrap}section.sec h2 i{width:38px;height:38px;font-size:18px}.bar{flex-wrap:wrap;gap:8px}.search{max-width:none;flex-basis:100%;order:3;margin-inline-start:0}.avatar{width:104px;height:104px;border-radius:26px}.avatar img.mark{padding:14px}}
+
+@media(max-width:400px){.brand{font-size:15px;gap:8px}.bar{gap:8px}}
+
+.visitors{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:5px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:13px}
+.visitors b{color:var(--accent);font-weight:800}
+.visitors[hidden]{display:none}
+
+.contact{margin-bottom:22px}
+.contact:empty{display:none}
+.contact-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:min(100%,380px);margin:0 auto;padding:16px 24px;border-radius:18px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--ink);font-size:20px;font-weight:800;box-shadow:0 10px 30px -10px color-mix(in srgb,var(--accent2) 70%,transparent);transition:.2s}
+.contact-btn svg{width:26px;height:26px;fill:currentColor;stroke:none}
+.contact-btn:hover{transform:translateY(-3px);box-shadow:0 14px 34px -10px color-mix(in srgb,var(--accent2) 85%,transparent)}
+@media(max-width:480px){.socials{display:grid;grid-template-columns:repeat(4,44px);gap:10px;justify-content:start}}
+/* موبايل: الرسمة بتبقى خلفية هادية والنص فوقها واضح */
+@media(max-width:560px){.sec-head.has-cover::after{background:linear-gradient(270deg,rgba(12,12,16,.94) 0%,rgba(12,12,16,.82) 45%,rgba(12,12,16,.35) 100%)}}
+
+/* ---- شريط التحكم: الأقسام + الفلاتر في كارت واحد منظّم ---- */
+.controls{margin:0 0 26px;padding:18px 20px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(180deg,color-mix(in srgb,var(--accent) 5%,var(--card)),var(--card));display:flex;flex-direction:column;gap:16px}
+.cgroup{display:flex;align-items:flex-start;gap:14px}
+.clabel{flex:none;min-width:58px;padding-top:9px;font-size:12px;font-weight:800;color:var(--muted);letter-spacing:.02em}
+.controls .filters{margin:0;padding-top:16px;border-top:1px solid var(--line);flex-direction:row;flex-wrap:wrap;gap:12px 36px}
+.controls .fgroup{gap:8px}
+.controls .flabel{min-width:0;margin-inline-end:2px;padding:0;font-size:12px;font-weight:800}
+.controls .fchip{min-height:34px;padding:5px 14px;font-size:13px}
+.controls .chip{font-size:13.5px}
+@media(max-width:560px){
+  .controls{padding:12px 12px 14px;gap:12px;border-radius:18px}
+  .cgroup{flex-direction:column;gap:6px}.clabel{padding-top:0}
+  /* موبايل: التابات سطر واحد بيتحرك بالصباع، مع تلاشي على الأطراف عشان واضح إنه فيه كمان */
+  nav.tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;width:100%;padding:2px 2px 4px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 18px,#000 calc(100% - 18px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 18px,#000 calc(100% - 18px),transparent 100%);scroll-snap-type:x proximity}
+  nav.tabs::-webkit-scrollbar{display:none}
+  nav.tabs .chip{scroll-snap-align:center}
+  .controls .filters{gap:10px;padding-top:12px}
+  .controls .fgroup{width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.controls .fgroup::-webkit-scrollbar{display:none}
+  .controls .flabel{flex:none}
+}
+.chip,.fchip{white-space:nowrap}

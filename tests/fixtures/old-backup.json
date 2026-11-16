@@ -1,0 +1,1355 @@
+{
+  "format": "abdelmalek-studio-backup",
+  "version": 1,
+  "exportedAt": "2026-11-07T18:34:31.058Z",
+  "site": {
+    "name": "عبد المالك استوديو",
+    "nameEn": "Abdelmalek Studio",
+    "owner": "محمود عبد المالك",
+    "verified": true,
+    "tagline": "جرافيك ديزاينر • أدوات وأفكار و Prompts بشاركها معاكم",
+    "about": "أنا محمود عبد المالك، جرافيك ديزاينر. جمعت هنا كل الأدوات والمواقع والـ Prompts والأفكار اللي بستخدمها في شغلي عشان توفروا وقتكم.",
+    "photo": "assets/img/photo.webp",
+    "logo": "assets/img/logo.svg",
+    "accent": "#FDC713",
+    "accent2": "#F58220",
+    "socials": [
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/@abdelmalek.studio"
+      },
+      {
+        "label": "Instagram",
+        "url": "https://www.instagram.com/abdelmalek.studio/"
+      },
+      {
+        "label": "TikTok",
+        "url": "https://www.tiktok.com/@abdelmalek.studio"
+      },
+      {
+        "label": "Facebook",
+        "url": "https://www.facebook.com/abdelmalek.studio/"
+      },
+      {
+        "label": "Behance",
+        "url": "https://www.behance.net/mahmooud_3li"
+      },
+      {
+        "label": "Pinterest",
+        "url": "https://www.pinterest.com/abdelmalekstudio/"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/abdelmalekstudio/"
+      },
+      {
+        "label": "Telegram",
+        "url": "https://t.me/abdelmalek_studio"
+      },
+      {
+        "label": "WhatsApp",
+        "url": "https://wa.me/201095851278"
+      }
+    ]
+  },
+  "sections": [
+    {
+      "id": "work",
+      "title": "شغلي",
+      "icon": "assets/img/logo.svg",
+      "desc": "شوف شغلي بالتفصيل على Behance، وتابع أحدث أعمالي على السوشيال.",
+      "cover": "assets/img/sections/work.svg",
+      "items": [
+        {
+          "id": "itm-c30ef1cd",
+          "type": "link",
+          "title": "Behance: البورتفوليو الكامل",
+          "desc": "كل مشاريعي بالتفصيل: هويات بصرية وتصميمات سوشيال وإعلانات.",
+          "url": "https://www.behance.net/mahmooud_3li",
+          "tag": "أعمال"
+        },
+        {
+          "id": "itm-5656322b",
+          "type": "link",
+          "title": "Facebook",
+          "desc": "تابع شغلي الجديد أول بأول على صفحتي.",
+          "url": "https://www.facebook.com/abdelmalek.studio/",
+          "tag": "سوشيال"
+        },
+        {
+          "id": "itm-61fcdbd3",
+          "type": "link",
+          "title": "Pinterest",
+          "desc": "لوحات إلهام ومراجع بجمعها لمشاريعي.",
+          "url": "https://www.pinterest.com/abdelmalekstudio/",
+          "tag": "سوشيال"
+        },
+        {
+          "id": "itm-7d3aedf3",
+          "type": "link",
+          "title": "Instagram",
+          "desc": "أحدث تصميماتي وأفكاري على إنستجرام.",
+          "url": "https://www.instagram.com/abdelmalek.studio/",
+          "tag": "سوشيال"
+        }
+      ]
+    },
+    {
+      "id": "video",
+      "title": "فيديوهات تعليمية",
+      "icon": "▶",
+      "desc": "شروحات على قناتي — اضغط على الفيديو لمشاهدته.",
+      "cover": "assets/img/sections/video.svg",
+      "items": [
+        {
+          "id": "itm-bce4e3d0",
+          "type": "video",
+          "title": "فيديو من القناة",
+          "desc": "",
+          "url": "https://youtu.be/n6pG39wZpOw",
+          "tag": "يوتيوب",
+          "autoTitle": true
+        },
+        {
+          "id": "itm-6f8b8899",
+          "type": "video",
+          "title": "فيديو من القناة",
+          "desc": "",
+          "url": "https://youtu.be/kMJlBDzpzxc",
+          "tag": "يوتيوب",
+          "autoTitle": true
+        },
+        {
+          "id": "itm-0f9159e4",
+          "type": "video",
+          "title": "فيديو من القناة",
+          "desc": "",
+          "url": "https://youtu.be/Wumkmr7vGno",
+          "tag": "يوتيوب",
+          "autoTitle": true
+        }
+      ]
+    },
+    {
+      "id": "daily",
+      "title": "أدواتي اليومية",
+      "icon": "★",
+      "desc": "المواقع اللي بفتحها كل يوم تقريبًا في شغلي — الأساسيات اللي مبستغناش عنها.",
+      "cover": "assets/img/sections/daily.svg",
+      "items": [
+        {
+          "id": "itm-de02fdaf",
+          "type": "link",
+          "title": "ChatGPT",
+          "desc": "مساعدي في الأفكار والكتابة والبرومبتات وتلخيص أي حاجة، وبولّد بيه صور كمان.",
+          "url": "https://chatgpt.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-60e89868",
+          "type": "link",
+          "title": "Claude",
+          "desc": "للكتابة الطويلة وتحليل الملفات والشغل المركّز، وبيفهم العربي كويس.",
+          "url": "https://claude.ai/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-8a10db76",
+          "type": "link",
+          "title": "Google Gemini",
+          "desc": "مساعد جوجل: بحث وتحليل وتوليد وتعديل صور (Nano Banana) في نفس المحادثة.",
+          "url": "https://gemini.google.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-a6c35d72",
+          "type": "link",
+          "title": "Google Flow",
+          "desc": "استوديو جوجل لتوليد الفيديو والصور بالذكاء الاصطناعي (Veo). فيه رصيد يومي مجاني محدود، والباقات بتزوّد الرصيد.",
+          "url": "https://labs.google/flow/about",
+          "tag": "مجاني محدود"
+        }
+      ]
+    },
+    {
+      "id": "ai-both",
+      "title": "AI صور وفيديو",
+      "icon": "✨",
+      "desc": "أدوات بتولّد الصور والفيديو من مكان واحد.",
+      "cover": "assets/img/sections/ai-both.svg",
+      "items": [
+        {
+          "id": "itm-de9b5ce3",
+          "type": "link",
+          "title": "Magnific",
+          "desc": "(كان اسمه Freepik AI) توليد صور وفيديو وأقوى رفع دقة وتحسين صور. بيدي رصيد يومي مجاني محدود، والباقات المدفوعة للشغل الكتير.",
+          "url": "https://magnific.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-d7423ccf",
+          "type": "link",
+          "title": "Krea",
+          "desc": "توليد صور وفيديو ورفع جودة، وتوليد لحظي وأنت بترسم. فيه رصيد يومي مجاني من غير كارت.",
+          "url": "https://www.krea.ai/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-ab2b048e",
+          "type": "link",
+          "title": "Leonardo AI",
+          "desc": "صور وتحريك صور لفيديو، وتحكم كويس في الستايل. بيدي توكنز يومية مجانية.",
+          "url": "https://leonardo.ai/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-83232601",
+          "type": "link",
+          "title": "Dreamina (CapCut)",
+          "desc": "من بايت دانس: صور وفيديو (موديلات Seedance) برصيد يومي مجاني، ومتكامل مع CapCut.",
+          "url": "https://dreamina.capcut.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-526ea8c2",
+          "type": "link",
+          "title": "Adobe Firefly",
+          "desc": "صور وفيديو وتعبئة توليدية، ومتصمم للاستخدام التجاري. فيه كريدت شهري مجاني محدود والباقي باشتراك.",
+          "url": "https://firefly.adobe.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-fa5d85a8",
+          "type": "link",
+          "title": "Higgsfield",
+          "desc": "منصة بتجمع أحدث موديلات الصور والفيديو في مكان واحد، وقوية في حركات الكاميرا. فيه تجربة مجانية بسيطة، والاستخدام الحقيقي باشتراك.",
+          "url": "https://higgsfield.ai/",
+          "tag": "مدفوع"
+        },
+        {
+          "id": "itm-11929d0e",
+          "type": "link",
+          "title": "Weavy (Figma Weave)",
+          "desc": "كانفاس بالعُقد (Nodes) بتربط موديلات الصور والفيديو وأدوات التعديل في مكان واحد، وتبني بيه Workflow تعيد استخدامه. فيه رصيد شهري مجاني.",
+          "url": "https://app.weavy.ai/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-5bc0cce3",
+          "type": "link",
+          "title": "Nordy",
+          "desc": "بتشغّل ComfyUI على السحابة من أي جهاز من غير كارت شاشة ولا تنصيب، وفيه تطبيقات جاهزة (EasyApps) لتوليد الصور والفيديو والصوت. مجاني مع خيارات مدفوعة بالرصيد.",
+          "url": "https://nordy.ai/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-0e5292cc",
+          "type": "link",
+          "title": "Pippit (CapCut)",
+          "desc": "من فريق CapCut: بيحوّل لينك منتج أو نص لفيديو وصور إعلانية، مع أفاتار ومحرر فيديو. مناسب لإعلانات السوشيال والمتاجر.",
+          "url": "https://www.pippit.ai/home",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-084c046f",
+          "type": "link",
+          "title": "RoboNeo",
+          "desc": "وكيل ذكاء اصطناعي من Meitu: بتوصفله اللي عايزه بالكلام، وفريق الوكلاء بينفّذ تصميم وتعديل صور وفيديو. التطبيق مجاني وفيه اشتراكات وكريدت.",
+          "url": "https://www.roboneo.com/home",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-ebec5113",
+          "type": "link",
+          "title": "Atlas Cloud",
+          "desc": "منصة API بتجمع أكتر من 300 موديل (نصوص وصور وفيديو) بمفتاح واحد وحساب واحد، والدفع حسب الاستخدام. للمطوّرين ومن بيبني أدوات.",
+          "url": "https://www.atlascloud.ai/ar",
+          "tag": "مدفوع"
+        }
+      ]
+    },
+    {
+      "id": "ai-images",
+      "title": "AI صور",
+      "icon": "🎨",
+      "desc": "أقوى أدوات توليد وتحسين الصور بالذكاء الاصطناعي، المجاني منها والمدفوع.",
+      "cover": "assets/img/sections/ai-images.svg",
+      "items": [
+        {
+          "id": "itm-f54c605b",
+          "type": "link",
+          "title": "Microsoft Designer",
+          "desc": "توليد صور وتصميمات ببساطة بحساب مايكروسوفت المجاني. الترخيص للاستخدام الشخصي.",
+          "url": "https://designer.microsoft.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-ece820e1",
+          "type": "link",
+          "title": "Hugging Face Spaces",
+          "desc": "تجارب موديلات مفتوحة المصدر مجانًا من المتصفح. الجودة والسرعة بتتفاوت ومحتاج صبر في الزحمة.",
+          "url": "https://huggingface.co/spaces",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-43e4037d",
+          "type": "link",
+          "title": "Upscayl",
+          "desc": "برنامج مفتوح المصدر على جهازك لرفع دقة الصور، من غير حدود ولا اشتراك.",
+          "url": "https://upscayl.org/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-ed231d7e",
+          "type": "link",
+          "title": "Ideogram",
+          "desc": "الأفضل في كتابة النصوص والتايبوجرافي جوه الصورة، ومناسب للبوسترات واللوجو. فيه رصيد مجاني، والصور بتبقى عامة في المجاني.",
+          "url": "https://ideogram.ai/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-9d0bb329",
+          "type": "link",
+          "title": "Google Gemini",
+          "desc": "توليد وتعديل صور بالمحادثة (Nano Banana). مجاني بحدود استخدام يومية.",
+          "url": "https://gemini.google.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-5d74b33a",
+          "type": "link",
+          "title": "ChatGPT",
+          "desc": "توليد وتعديل صور بالمحادثة، وبيفهم الوصف الطويل كويس. المجاني له حد يومي.",
+          "url": "https://chatgpt.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-45e7d7a6",
+          "type": "link",
+          "title": "Recraft",
+          "desc": "مناسب للمصممين: بيطلّع فيكتور SVG وأيقونات وستايلات تصميم نظيفة. فيه رصيد مجاني.",
+          "url": "https://www.recraft.ai/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-65fbe92e",
+          "type": "link",
+          "title": "Canva Magic Media",
+          "desc": "توليد صور جوه كانفا مباشرة وتكملها في تصميمك. الحدود المجانية قليلة.",
+          "url": "https://www.canva.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-0c261e0a",
+          "type": "link",
+          "title": "Magic Hour",
+          "desc": "صور يومية مجانية من غير حساب. الاستخدام التجاري محتاج باقة مدفوعة.",
+          "url": "https://magichour.ai/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-fd545576",
+          "type": "link",
+          "title": "Midjourney",
+          "desc": "من أقوى الموديلات في الجمالية والستايل الفني. اشتراك فقط ومفيش نسخة مجانية.",
+          "url": "https://www.midjourney.com/",
+          "tag": "مدفوع"
+        },
+        {
+          "id": "itm-b0f55d75",
+          "type": "link",
+          "title": "FLUX (Black Forest Labs)",
+          "desc": "موديلات FLUX، وبعضها مفتوح المصدر وتقدر تشغله على جهازك، ومتاح بالدفع حسب الاستخدام.",
+          "url": "https://bfl.ai/",
+          "tag": "مدفوع"
+        },
+        {
+          "id": "itm-3fc3dccd",
+          "type": "link",
+          "title": "Topaz Labs",
+          "desc": "أدوات احترافية لرفع جودة الصور والفيديو وتقليل الضوضاء.",
+          "url": "https://www.topazlabs.com/",
+          "tag": "مدفوع"
+        }
+      ]
+    },
+    {
+      "id": "ai-video",
+      "title": "AI فيديو",
+      "icon": "🎬",
+      "desc": "حوّل فكرتك أو صورتك لفيديو بأدوات الذكاء الاصطناعي.",
+      "cover": "assets/img/sections/ai-video.svg",
+      "items": [
+        {
+          "id": "itm-e4d69d3c",
+          "type": "link",
+          "title": "Kling AI",
+          "desc": "من أقوى مولدات الفيديو في الحركة والواقعية. المجاني بعلامة مائية وبجودة أقل، والباقات من حوالي 10 دولار.",
+          "url": "https://klingai.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-ae42c13a",
+          "type": "link",
+          "title": "Luma Dream Machine",
+          "desc": "فيديو سينمائي من نص أو صورة. المجاني محدود وبعلامة مائية.",
+          "url": "https://lumalabs.ai/dream-machine",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-68d00b01",
+          "type": "link",
+          "title": "Hailuo AI (MiniMax)",
+          "desc": "حركة سلسة وتحريك صور كويس. المجاني بعلامة مائية وبعدد لقطات قليل.",
+          "url": "https://hailuoai.video/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-29a36bd1",
+          "type": "link",
+          "title": "PixVerse",
+          "desc": "رصيد يومي مجاني، وقوالب وتأثيرات جاهزة لفيديوهات السوشيال.",
+          "url": "https://pixverse.ai/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-58449b1b",
+          "type": "link",
+          "title": "Runway",
+          "desc": "أداة احترافية لتوليد الفيديو وتعديله. بيدي رصيد تجريبي مرة واحدة بس وبعدها باشتراك.",
+          "url": "https://runwayml.com/",
+          "tag": "مدفوع"
+        },
+        {
+          "id": "itm-0705e421",
+          "type": "link",
+          "title": "Pika",
+          "desc": "تأثيرات إبداعية وتحريك صور، بالكريدت أو بالاشتراك.",
+          "url": "https://pika.art/",
+          "tag": "مدفوع"
+        },
+        {
+          "id": "itm-f4861978",
+          "type": "link",
+          "title": "Pollo AI",
+          "desc": "مولّد فيديو بيجمع موديلات كتير (Kling وRunway وHailuo وغيرهم) في مكان واحد، مع قوالب وتأثيرات جاهزة. المجاني برصيد قليل وبعلامة مائية.",
+          "url": "https://pollo.ai/home",
+          "tag": "مجاني محدود"
+        }
+      ]
+    },
+    {
+      "id": "prompts",
+      "title": "Prompts",
+      "icon": "✦",
+      "desc": "Prompts جاهزة بتفتحها وتنسخها بضغطة واحدة وتجرّبها على أدوات الذكاء الاصطناعي.",
+      "cover": "assets/img/sections/prompts.svg",
+      "items": [
+        {
+          "id": "itm-a7ccdbbd",
+          "type": "prompt",
+          "title": "تبديل الشخص واللبس (3 مراجع)",
+          "tag": "صور",
+          "desc": "بتدي 3 صور: الأولى للشخص، التانية للبس، التالتة للوضعية والكادر. بيطلع نفس الصورة الأخيرة بالشخص واللبس الجداد على خلفية استوديو أبيض.",
+          "text": "{\n  \"PROJECT\": {\n    \"type\": \"Ultra Premium Multi-Reference Composite\",\n    \"quality\": \"8K Ultra Photorealistic\",\n    \"style\": \"Commercial Studio Photography\",\n    \"mode\": \"Absolute Reference Match\"\n  },\n\n  \"REFERENCE_ORDER\": {\n    \"Reference_1\": {\n      \"purpose\": \"Subject Appearance\",\n      \"description\": \"The only reference for the person's appearance.\",\n      \"use\": [\n        \"Face\",\n        \"Hair\",\n        \"Skin tone\",\n        \"Body shape\",\n        \"Natural facial characteristics\"\n      ]\n    },\n\n    \"Reference_2\": {\n      \"purpose\": \"Outfit\",\n      \"description\": \"The only reference for clothing and wearable accessories.\",\n      \"use\": [\n        \"Clothing\",\n        \"Shoes\",\n        \"Wearable accessories\",\n        \"Logos\",\n        \"Patterns\",\n        \"Materials\",\n        \"Colors\",\n        \"Textures\"\n      ]\n    },\n\n    \"Reference_3\": {\n      \"purpose\": \"MASTER BLUEPRINT\",\n      \"description\": \"The master reference for the entire scene except the person's appearance and clothing.\",\n      \"use\": [\n        \"Body pose\",\n        \"Action\",\n        \"Hand position\",\n        \"Finger position\",\n        \"Head direction\",\n        \"Eye direction\",\n        \"Body orientation\",\n        \"Weight distribution\",\n        \"Camera angle\",\n        \"Camera height\",\n        \"Camera distance\",\n        \"Perspective\",\n        \"Lens look\",\n        \"Composition\",\n        \"Framing\",\n        \"Crop\",\n        \"Object positions\",\n        \"Object interaction\",\n        \"Subject placement\"\n      ]\n    }\n  },\n\n  \"IDENTITY_LOCK\": {\n    \"enabled\": true,\n    \"rules\": [\n      \"Keep the subject visually consistent with Reference 1.\",\n      \"Maintain natural facial features.\",\n      \"Maintain hairstyle.\",\n      \"Maintain skin tone.\",\n      \"Maintain body proportions naturally.\",\n      \"Do not stylize the face.\",\n      \"Do not beautify the subject.\",\n      \"Do not change facial proportions.\"\n    ]\n  },\n\n  \"OUTFIT_LOCK\": {\n    \"enabled\": true,\n    \"rules\": [\n      \"Use the outfit from Reference 2 exactly.\",\n      \"Maintain logos.\",\n      \"Maintain colors.\",\n      \"Maintain stitching.\",\n      \"Maintain folds.\",\n      \"Maintain textures.\",\n      \"Maintain materials.\",\n      \"Maintain all wearable accessories.\"\n    ]\n  },\n\n  \"MASTER_BLUEPRINT_LOCK\": {\n    \"enabled\": true,\n    \"priority\": \"ABSOLUTE\",\n    \"rules\": [\n      \"Reference 3 controls the entire image.\",\n      \"Copy the blueprint exactly.\",\n      \"Do not reinterpret anything.\",\n      \"Do not optimize anything.\",\n      \"Do not improve anything.\",\n      \"Do not modify composition.\",\n      \"Only replace the person and the outfit.\"\n    ]\n  },\n\n  \"POSE_LOCK\": {\n    \"enabled\": true,\n    \"rules\": [\n      \"Copy the exact body pose.\",\n      \"Copy every joint rotation.\",\n      \"Copy shoulder angles.\",\n      \"Copy elbow angles.\",\n      \"Copy wrist angles.\",\n      \"Copy hip rotation.\",\n      \"Copy knee angles.\",\n      \"Copy ankle angles.\",\n      \"Copy spine angle.\",\n      \"Copy neck angle.\",\n      \"Copy head tilt.\",\n      \"Copy eye direction.\",\n      \"Copy hand pose.\",\n      \"Copy finger positions.\",\n      \"Copy body balance.\",\n      \"Copy weight distribution.\"\n    ]\n  },\n\n  \"ACTION_LOCK\": {\n    \"enabled\": true,\n    \"rules\": [\n      \"Perform exactly the same action shown in the blueprint.\",\n      \"Keep identical interaction with every object.\",\n      \"Do not reinterpret the action.\",\n      \"Do not simplify movement.\"\n    ]\n  },\n\n  \"OBJECT_LOCK\": {\n    \"enabled\": true,\n    \"rules\": [\n      \"Every object shown in the blueprint must remain.\",\n      \"Keep identical object position.\",\n      \"Keep identical object orientation.\",\n      \"Keep identical object size.\",\n      \"Keep identical interaction.\",\n      \"Never replace objects.\",\n      \"Never remove objects.\",\n      \"Never invent objects.\"\n    ]\n  },\n\n  \"CAMERA_LOCK\": {\n    \"enabled\": true,\n    \"rules\": [\n      \"Copy the exact camera angle.\",\n      \"Copy the exact perspective.\",\n      \"Copy the exact framing.\",\n      \"Copy the exact crop.\",\n      \"Copy the exact composition.\",\n      \"Copy the exact camera distance.\",\n      \"Copy the exact camera height.\",\n      \"Copy the exact focal length appearance.\",\n      \"Keep the subject in exactly the same position inside the frame.\"\n    ]\n  },\n\n  \"BACKGROUND\": {\n    \"environment\": \"Professional White Infinity Studio\",\n    \"rules\": [\n      \"Replace the blueprint background with a pure seamless white infinity studio.\",\n      \"Do not copy the blueprint background.\",\n      \"Keep the exact camera angle.\",\n      \"Keep the exact framing.\",\n      \"Keep the exact perspective.\",\n      \"Keep the exact crop.\",\n      \"Keep the exact subject placement.\",\n      \"Keep the exact scale.\",\n      \"Keep the exact composition.\",\n      \"Use soft professional studio lighting.\",\n      \"Create a clean commercial studio look.\"\n    ]\n  },\n\n  \"QUALITY\": {\n    \"rules\": [\n      \"Ultra photorealistic\",\n      \"Commercial photography\",\n      \"8K\",\n      \"Professional DSLR realism\",\n      \"Natural skin\",\n      \"Natural lighting\",\n      \"Highly detailed fabrics\",\n      \"Clean white studio\"\n    ]\n  },\n\n  \"NEGATIVE_PROMPT\": [\n    \"wrong pose\",\n    \"wrong action\",\n    \"wrong perspective\",\n    \"wrong framing\",\n    \"wrong crop\",\n    \"wrong camera angle\",\n    \"wrong object position\",\n    \"missing object\",\n    \"extra object\",\n    \"creative interpretation\",\n    \"pose correction\",\n    \"background copied from blueprint\",\n    \"cartoon\",\n    \"anime\",\n    \"cgi\",\n    \"illustration\",\n    \"plastic skin\",\n    \"low quality\",\n    \"blurry\",\n    \"bad anatomy\",\n    \"extra fingers\"\n  ],\n\n  \"FINAL_INSTRUCTION\": \"Reference Image 1 defines only the subject's appearance. Reference Image 2 defines only the outfit. Reference Image 3 is the MASTER BLUEPRINT for the entire scene. Recreate the blueprint with absolute precision by preserving the exact body pose, action, hand positions, finger positions, body orientation, head direction, eye direction, camera angle, camera height, camera distance, perspective, framing, crop, composition, subject placement, object placement, object interaction, and overall scene layout. Replace ONLY the subject's appearance using Reference Image 1 and the outfit using Reference Image 2. Replace the original background with a pure seamless white infinity studio background while preserving every other aspect of the blueprint exactly. The final image should look like the same photograph recreated with the new subject and outfit, maintaining maximum realism and without any creative interpretation or unnecessary modifications.\"\n}"
+        },
+        {
+          "id": "itm-7a05562a",
+          "type": "prompt",
+          "title": "تايبوجرافي عربي مخصص",
+          "tag": "تايبوجرافي",
+          "desc": "بيحوّل أي كلمة عربي للترتيب حروف مخصص ومدوّر وسميك، أبيض على خلفية سودا. غيّر الكلمة جوه arabic_text.",
+          "text": "{\n  \"arabic_text\": \"صيف\",\n\n  \"core_instruction\": \"Create a professional custom Arabic lettering composition using the exact Arabic text provided in 'arabic_text'. Treat the entire text as one unified piece of custom lettering, carefully constructed like a professional graphic designer manually created it in Adobe Illustrator.\",\n\n  \"typography_style\": {\n    \"style\": \"bold rounded custom Arabic lettering\",\n    \"visual_character\": \"smooth, playful, modern, handcrafted and highly polished\",\n    \"letterforms\": {\n      \"stroke\": \"bold and smooth\",\n      \"curves\": \"soft, flowing and naturally exaggerated\",\n      \"terminals\": \"rounded and clean\",\n      \"connections\": \"fluid and harmonious\",\n      \"weight\": \"consistent and visually balanced\",\n      \"shape\": \"compact, organic and carefully constructed\"\n    },\n    \"priority\": \"The beauty of the Arabic letterforms and the overall composition is more important than decorative elements.\"\n  },\n\n  \"composition\": {\n    \"adaptive\": true,\n    \"instruction\": \"Automatically build the best composition according to the number of words and the natural shapes of the Arabic letters.\",\n    \n    \"one_word\": \"Create a strong standalone typographic mark with a compact and balanced silhouette.\",\n\n    \"two_words\": \"Arrange the two words in the most visually harmonious relationship, preferably close together or stacked when appropriate. Optically center and balance both words so they feel intentionally designed as one piece.\",\n\n    \"three_words\": \"Arrange the three words into a compact unified composition, preferably stacked when this creates the strongest silhouette. Carefully balance their widths, spacing and alignment so the three words feel like one typographic artwork.\",\n\n    \"multiple_words\": \"Automatically determine the most aesthetically pleasing arrangement based on the actual text. Prioritize unity, balance and silhouette over rigid layout rules.\",\n\n    \"word_relationship\": [\n      \"Keep the visual importance of all words harmonious.\",\n      \"Do not create an artificial large-word/small-word hierarchy.\",\n      \"Do not make one word dramatically larger than the others unless absolutely necessary for composition.\",\n      \"Adjust word widths, spacing and positioning optically rather than mechanically.\",\n      \"Make neighboring words visually lock together when possible.\",\n      \"Use subtle overlaps or close spacing only when they improve the overall composition.\",\n      \"Treat the entire phrase as one custom lettering shape.\"\n    ]\n  },\n\n  \"custom_lettering\": {\n    \"instruction\": \"Redesign and refine the letterforms as necessary to create a cohesive custom lettering piece while preserving correct Arabic structure and readability.\",\n    \"design_principles\": [\n      \"optical balance\",\n      \"consistent stroke rhythm\",\n      \"harmonious curves\",\n      \"balanced negative space\",\n      \"controlled proportions\",\n      \"clean intersections\",\n      \"smooth transitions\",\n      \"strong overall silhouette\",\n      \"professional graphic design precision\"\n    ],\n    \"goal\": \"Make the result look manually constructed and refined by an experienced Arabic lettering designer, not generated from a conventional font.\"\n  },\n\n  \"decorative_accents\": {\n    \"amount\": \"minimal\",\n    \"instruction\": \"Use only a few subtle hand-drawn accents when they naturally improve the composition.\",\n    \"preferred_elements\": [\n      \"one or two elegant curved strokes\",\n      \"small flowing swashes\",\n      \"subtle short accent lines\",\n      \"minimal organic marks\"\n    ],\n    \"placement\": \"Only place accents where there is natural negative space or where they visually complete the lettering.\",\n    \"rule\": \"Decorative elements must remain secondary to the typography and must never make the artwork feel busy or ornamental.\"\n  },\n\n  \"visual_finish\": {\n    \"look\": \"premium custom Arabic lettering\",\n    \"feel\": \"clean, confident, modern and artistic\",\n    \"edges\": \"very smooth and precise\",\n    \"silhouette\": \"compact and visually strong\",\n    \"spacing\": \"optically corrected\",\n    \"overall_quality\": \"professional vector-style graphic design\"\n  },\n\n  \"presentation\": {\n    \"background\": \"pure black\",\n    \"typography\": \"pure white\",\n    \"contrast\": \"high\",\n    \"composition\": \"centered\",\n    \"background_clean\": true,\n    \"no_mockup\": true,\n    \"no_environment\": true,\n    \"no_objects\": true,\n    \"no_extra_text\": true,\n    \"no_logo\": true\n  },\n\n  \"negative_constraints\": [\n    \"generic Arabic font\",\n    \"ordinary typography\",\n    \"random decorative elements\",\n    \"excessive flourishes\",\n    \"busy ornamentation\",\n    \"large artificial hierarchy between words\",\n    \"one word dramatically larger than another\",\n    \"random word placement\",\n    \"uneven spacing\",\n    \"weak composition\",\n    \"mechanical alignment\",\n    \"broken Arabic letters\",\n    \"incorrect Arabic connections\",\n    \"distorted Arabic structure\",\n    \"unreadable text\",\n    \"overcomplicated design\"\n  ],\n\n  \"final_goal\": \"Create a highly polished custom Arabic typography composition that looks intentionally designed by a professional graphic designer in Illustrator. The exact Arabic text must remain readable and authentic, while the letterforms, curves, proportions, spacing and word relationships are carefully customized to create one beautiful unified typographic shape. Keep decorative accents minimal and secondary. Prioritize exceptional composition, smooth curves, balanced proportions, optical alignment and a strong professional silhouette.\"\n}"
+        },
+        {
+          "id": "itm-bc1c0e76",
+          "type": "prompt",
+          "title": "رفع جودة الصورة للطباعة",
+          "tag": "تحسين",
+          "desc": "بيحسّن دقة الصورة ويقلل البكسلة والضوضاء ويجهّزها للطباعة من غير ما يغيّر في محتواها أو ألوانها.",
+          "text": "Act as a professional image restoration, resolution enhancement, and print-preparation specialist. Your task is to improve the technical quality of the provided image for high-quality professional printing while preserving the original image as faithfully as possible.\nPRIMARY OBJECTIVE\nEnhance the existing image itself. Do not recreate, redesign, reinterpret, or generate a new version of the image. The original uploaded image is the absolute source of truth and must remain visually consistent with the input.\nImprove resolution, pixelation, clarity, detail rendering, tonal quality, and image cleanliness only where technically necessary and supported by the original image.\n1. ANALYZE BEFORE EDITING\nCarefully inspect the actual image before applying any enhancement. Identify its image type, resolution limitations, compression artifacts, visible pixelation, blur, noise, existing detail quality, color characteristics, and tonal balance.\nAdapt the enhancement process to the specific image. Do not apply a universal visual preset or assume that every image requires sharpening, denoising, contrast enhancement, or color correction.\nOnly correct defects that are genuinely visible. Preserve characteristics that are already correct.\n2. RESOLUTION ENHANCEMENT AND UPSCALING\nIncrease the image resolution using high-quality, detail-preserving upscaling appropriate for professional print production.\nReduce visible pixelation, blockiness, compression artifacts, and jagged edges where possible.\nImprove the smoothness and definition of existing edges without changing their original shapes.\nRecover and clarify genuine details that are faintly present in the source.\nPreserve fine textures, subtle transitions, delicate patterns, and small visual elements.\nMaintain natural detail density without inventing fine details that cannot be supported by the original image.\nAvoid artificial textures, fabricated patterns, repeated details, distorted edges, and AI-generated micro-details.\nDo not mistake sharpening artifacts, noise, or compression patterns for real image details.\nUpscaling must improve the usability and apparent quality of the original image, not change its visual content.\n3. ABSOLUTE CONTENT AND DETAIL PRESERVATION\nPreserve all existing visual information, including:\nSubject identity, facial features, facial proportions, expressions, gaze, skin texture, hair, and anatomy.\nObject shapes, product designs, packaging, labels, logos, symbols, printed text, and fine design elements.\nClothing, accessories, materials, surface textures, and small distinctive features.\nBackground elements, foreground objects, and all visible environmental details.\nOriginal composition, framing, perspective, camera angle, proportions, object placement, and spatial relationships.\nOriginal colors, gradients, lighting characteristics, shadows, highlights, and tonal relationships.\nDo not add, remove, replace, reposition, reshape, or redesign any object or feature.\nDo not generate missing content to make the image appear more detailed. If information has been lost through severe pixelation or low resolution, preserve the most faithful interpretation possible without introducing unsupported visual information.\nFor images containing text, logos, product packaging, or intricate graphics, prioritize exact content preservation over aggressive detail reconstruction.\n4. NATURAL SHARPNESS AND DETAIL CLARITY\nAchieve clean, natural, well-defined details without excessive sharpening.\nUse controlled, selective sharpening only when needed.\nPreserve smooth gradients, natural edges, fine textures, and subtle details.\nAvoid halos, bright outlines, dark outlines, ringing, oversharpening, and exaggerated edge contrast.\nDo not make skin, fabric, food, natural materials, or product surfaces look rough, crunchy, plastic, waxy, or artificially textured.\nDo not exaggerate pores, grain, fibers, reflections, or surface imperfections.\nAvoid excessive clarity, local contrast, and high-frequency detail enhancement.\nKeep the result visually smooth where the original image is smooth and detailed where genuine details exist.\nThe final image should look clean, refined, naturally sharp, and professionally produced, never aggressively processed.\n5. EXPOSURE, COLOR, AND TONAL FIDELITY\nPreserve the original image's color identity and tonal character.\nDo not unnecessarily darken, brighten, desaturate, oversaturate, or recolor the image.\nPreserve natural skin tones, product colors, brand colors, neutral whites, and subtle color variations.\nMaintain the original balance between shadows, midtones, and highlights.\nAvoid crushed shadows, clipped highlights, excessive contrast, artificial HDR, and dramatic cinematic grading.\nDo not introduce color casts, artificial warmth, excessive coolness, or unnatural vibrance.\nCorrect exposure or color problems only when an actual technical defect is evident.\nImproved clarity must not come at the expense of the original colors, brightness, or visual balance.\n6. NO GENERATIVE ALTERATIONS\nThis is a faithful restoration and enhancement task, NOT an image-generation task.\nStrictly prohibit:\nRecreating the image from scratch.\nChanging facial identity, anatomy, expressions, or object geometry.\nInventing details, textures, patterns, reflections, or surface features.\nReplacing backgrounds or altering any existing element.\nAdding stylistic effects, artistic interpretations, cinematic lighting, or aesthetic filters.\nApplying beauty retouching, skin smoothing, artificial texture enhancement, or unnecessary cleanup.\nModifying text, logos, typography, packaging, or graphic design elements.\nCropping, rotating, reframing, changing aspect ratio, or altering the original composition.\nUse conservative, content-preserving enhancement. When a correction risks changing the original content, prioritize fidelity over aggressive enhancement.\n7. PROFESSIONAL PRINT PREPARATION\nPrepare the enhanced image for high-quality print use.\nProduce the highest practical output resolution supported by the enhancement process.\nPreserve the original aspect ratio and complete image boundaries.\nMaintain clean edges, consistent detail quality, natural gradients, and smooth tonal transitions.\nAvoid visible upscaling artifacts, excessive noise reduction, banding, ringing, and compression damage.\nPreserve fine details that may be important when the image is reproduced at a larger physical size.\nAvoid introducing artifacts that become more noticeable when printed.\nDo not add artificial grain, texture, or sharpening to simulate print quality.\nIf output dimensions can be specified, target a resolution appropriate for the intended print size, commonly 300 PPI at final physical dimensions for high-quality photographic printing when practical.\nDo not claim that a specific effective print resolution has been achieved unless the output pixel dimensions and intended print size support that claim. Do not change the image's colors for a different printing profile unless explicitly requested.\n8. FINAL QUALITY CONTROL\nBefore finalizing, compare the enhanced image against the original and verify that:\nThe image content and all identifiable details remain faithful to the source.\nNo objects, facial features, text, logos, patterns, or design elements have changed.\nPixelation and compression artifacts have been reduced wherever possible.\nDetail clarity has improved without excessive sharpening or artificial textures.\nColors, brightness, contrast, shadows, and highlights remain natural and consistent with the original.\nNo unwanted darkening, oversmoothing, halos, distortion, or generative artifacts have been introduced.\nThe output is suitable for the intended print size to the extent supported by the available source resolution and enhancement.\nIf any enhancement introduces unwanted changes, reduce its strength and favor the most faithful result.\nFINAL INSTRUCTION\nReturn the enhanced version of the original image, preserving its existing content, design, identity, and composition as faithfully as possible while maximizing genuine image quality and practical print readiness.\nPriority order:\nPreserve the original content and details.\nImprove resolution and reduce pixelation.\nImprove natural clarity and detail definition.\nPreserve original colors and tonal balance.\nOptimize the technical quality for printing.\nNever sacrifice source fidelity for artificial sharpness, invented details, or a visually impressive but altered result."
+        },
+        {
+          "id": "itm-3f8246cd",
+          "type": "prompt",
+          "title": "كركتر شيت",
+          "tag": "شخصيات",
+          "desc": "شيت من 4 لقطات لنفس الشخص (أمامي، جانبي، 3/4، جسم كامل) بتطابق عالي للملامح. اكتب وصف الجسم واللبس مكان الأقواس [ ].",
+          "text": "{\n  \"PROJECT\": {\n    \"type\": \"Ultra Realistic Photographic Character Reference Sheet\",\n    \"purpose\": \"Identity-Preserved Multi-Angle Character Sheet\",\n    \"style\": \"Professional Studio Photography\",\n    \"quality\": \"Ultra High Resolution, 8K, Photorealistic\"\n  },\n  \"SUBJECT\": {\n    \"source\": \"Use the person from the provided reference image(s)\",\n    \"identity_lock\": true,\n    \"identity_preservation_priority\": \"Maximum\",\n    \"reference_strength\": \"Very High\",\n    \"same_person_in_all_panels\": true,\n    \"consistency_requirements\": {\n      \"facial_structure\": \"identical\",\n      \"face_shape\": \"identical\",\n      \"skin_tone\": \"identical\",\n      \"skin_texture\": \"identical\",\n      \"eye_color\": \"identical\",\n      \"eye_shape\": \"identical\",\n      \"eyebrow_shape\": \"identical\",\n      \"hair_color\": \"identical\",\n      \"hairstyle\": \"identical\",\n      \"hairline\": \"identical\",\n      \"nose_shape\": \"identical\",\n      \"lip_shape\": \"identical\",\n      \"ear_shape\": \"identical\",\n      \"body_proportions\": \"identical\",\n      \"height\": \"identical\",\n      \"weight_distribution\": \"identical\",\n      \"age\": \"identical\",\n      \"ethnicity\": \"identical\",\n      \"neutral_expression\": \"identical\",\n      \"identity_consistency\": \"absolute\"\n    }\n  },\n  \"BODY_TYPE\": {\n    \"description\": \"[DESCRIBE THE BODY TYPE]\",\n    \"examples\": [\n      \"Slim athletic body with a narrow waist and long legs\",\n      \"Curvy hourglass figure with full hips and bust\",\n      \"Petite slim figure with delicate proportions\",\n      \"Tall fashion-model proportions with elongated limbs\",\n      \"Soft natural body with medium curves\"\n    ]\n  },\n  \"GRID_LAYOUT\": {\n    \"format\": \"2x2\",\n    \"panels\": {\n      \"top_left\": {\n        \"view\": \"Front Portrait\",\n        \"camera_angle\": \"Straight-on\",\n        \"expression\": \"Neutral\",\n        \"framing\": \"Centered\"\n      },\n      \"top_right\": {\n        \"view\": \"Exact Side Profile\",\n        \"rotation\": \"90 Degrees\",\n        \"expression\": \"Neutral\",\n        \"framing\": \"Centered\"\n      },\n      \"bottom_left\": {\n        \"view\": \"Three-Quarter Portrait\",\n        \"body_rotation\": \"Slightly Turned\",\n        \"expression\": \"Neutral\",\n        \"framing\": \"Centered\"\n      },\n      \"bottom_right\": {\n        \"view\": \"Full Body\",\n        \"pose\": \"Standing Naturally\",\n        \"posture\": \"Relaxed\",\n        \"framing\": \"Head to Toe\"\n      }\n    },\n    \"presentation\": {\n      \"symmetrical_layout\": true,\n      \"equal_spacing\": true,\n      \"clearly_separated_panels\": true,\n      \"consistent_scale_between_panels\": true\n    }\n  },\n  \"APPEARANCE\": {\n    \"skin\": \"Realistic skin texture with natural pores and subtle imperfections\",\n    \"facial_anatomy\": \"Natural human anatomy\",\n    \"eyes\": \"Highly detailed realistic eyes\",\n    \"hair\": \"Highly detailed individual hair strands\",\n    \"photography_style\": \"Professional studio photography realism\",\n    \"detail_level\": \"Extremely high\"\n  },\n  \"OUTFIT\": {\n    \"description\": \"[DESCRIBE THE CLOTHING OR USE A REFERENCE IMAGE]\",\n    \"examples\": [\n      \"Fitted white sleeveless top with white leggings\",\n      \"Black sports bra with fitted shorts\",\n      \"Neutral minimalist studio outfit\",\n      \"Oversized hoodie with shorts\",\n      \"Monochrome fashion styling\"\n    ]\n  },\n  \"STYLING\": {\n    \"studio_styling\": \"Minimal\",\n    \"presentation\": \"Clean and professional\",\n    \"body_language\": \"Neutral\",\n    \"fashion_pose\": \"None\",\n    \"body_proportions\": \"Natural\"\n  },\n  \"BACKGROUND\": {\n    \"type\": \"Seamless Studio Backdrop\",\n    \"color\": [\n      \"Pure White\",\n      \"Light Gray\"\n    ],\n    \"props\": false,\n    \"environmental_elements\": false\n  },\n  \"LIGHTING\": {\n    \"setup\": \"Soft, even studio lighting\",\n    \"shadows\": \"Natural and realistic\",\n    \"contrast\": \"Low\",\n    \"cinematic_lighting\": false,\n    \"color_casts\": false,\n    \"exposure\": \"Balanced\",\n    \"white_balance\": \"Neutral daylight\"\n  },\n  \"CAMERA\": {\n    \"lens_equivalent\": \"50mm-85mm portrait lens\",\n    \"perspective\": \"Natural human perspective\",\n    \"distortion\": \"None\",\n    \"sharpness\": \"High\",\n    \"focus\": \"Crisp focus on face and body\",\n    \"depth_of_field\": \"Moderate\"\n  },\n  \"COMPOSITION\": {\n    \"type\": \"Professional Character Reference Sheet\",\n    \"centered_framing\": true,\n    \"consistent_camera_distance\": true,\n    \"uniform_scale\": true,\n    \"balanced_spacing\": true\n  },\n  \"RESTRICTIONS\": [\n    \"No text\",\n    \"No captions\",\n    \"No titles\",\n    \"No logos\",\n    \"No watermarks\",\n    \"No cartoon style\",\n    \"No anime style\",\n    \"No CGI appearance\",\n    \"No doll-like rendering\",\n    \"No fantasy styling\",\n    \"No exaggerated anatomy\",\n    \"No facial modifications\",\n    \"No age changes\",\n    \"No body shape changes\",\n    \"No hairstyle changes\",\n    \"No extra accessories\",\n    \"No beauty filters\",\n    \"No makeup changes\",\n    \"No identity drift\",\n    \"No asymmetrical facial alterations\",\n    \"No inconsistent proportions\"\n  ],\n  \"MASTER_INSTRUCTION\": \"Generate a highly realistic photographic character reference sheet using the provided reference image(s). The person appearing in all four panels must be the exact same individual with absolute identity preservation and zero variation in facial features, body proportions, age, ethnicity, hairstyle, or overall appearance.\"\n}"
+        },
+        {
+          "id": "itm-7afb3a7d",
+          "type": "prompt",
+          "title": "صورة إعلانية احترافية لأي منتج",
+          "tag": "منتجات",
+          "desc": "ترفع صورة المنتج وبيحطه في مشهد إعلاني واقعي مناسب لنوعه (أكل، مشروب، تجميل، إلكترونيات…) مع الحفاظ على شكل العبوة والنص العربي والإنجليزي واللوجو 100%. وكل مرة بيطلع لك فكرة إعلان مختلفة.",
+          "text": "{\n  \"prompt\": \"Create a premium commercial advertising photograph using the provided reference product image. The product in the reference image MUST remain 100% identical to the original with absolute identity preservation. Do not redesign, modify, simplify, recreate, or reinterpret the product in any way. Preserve the exact packaging shape, dimensions, proportions, colors, materials, texture, cap, label, logo placement, typography, Arabic and English text, branding, icons, graphics, reflections, printing quality, and every visible design detail exactly as they appear in the reference image. The Arabic text must remain perfectly readable and unchanged. Do not invent missing details or replace any branding elements.\\n\\nAnalyze what the product is and automatically create a realistic environment that naturally represents its intended use, purpose, industry, or lifestyle. If it is a food product, place it in an appetizing food scene. If it is a beverage, create a refreshing serving scene. If it is a cleaning product, create a clean modern environment where it is naturally being used. If it is a cosmetic product, create an elegant beauty scene. If it is an automotive product, create a suitable automotive environment. If it is an electronic device, create a premium technology setup. If it is an industrial product, create a realistic industrial context. If it is any other product category, intelligently generate the most suitable professional advertising scene without requiring additional instructions.\\n\\nThe scene should look like a high-end international commercial campaign. The product should be the hero of the composition. Build a believable story around the product using realistic props, authentic surroundings, natural interactions, cinematic composition, premium styling, tasteful color harmony, realistic lighting, accurate materials, and subtle depth of field.\\n\\nWhen appropriate, include realistic human interaction with the product, ensuring hands, poses, and usage are natural and believable, while keeping the product fully visible and unobstructed.\\n\\nEvery generation should produce a fresh, creative, and different advertising concept while remaining relevant to the product category. Vary the composition, camera angle, background, props, lighting, styling, environment, mood, framing, and storytelling each time. Never repeat the same scene across generations.\\n\\nCapture the image as if photographed by a world-class commercial advertising photographer using a professional full-frame camera with premium cinema-quality lighting, ultra-realistic textures, physically accurate materials, HDR lighting, natural shadows, subtle reflections, shallow depth of field, crisp focus on the product, premium color grading, magazine-quality composition, luxury brand aesthetics, photorealistic rendering, and extremely high detail.\\n\\nThe product must remain the primary focal point and occupy a visually strong position in the composition. Keep the entire product visible unless natural perspective requires minimal occlusion. Never crop important branding or text.\\n\\nNegative instructions: no redesign, no AI-generated packaging, no altered labels, no modified colors, no translated text, no spelling changes, no distorted proportions, no fake logos, no duplicated products unless contextually appropriate, no extra accessories attached to the product, no unrealistic reflections on the packaging, no melted labels, no warped geometry, no floating objects, no low quality, no blur on branding, no watermark, no extra text, no random graphics, no oversaturation, no cartoon style, no illustration, no CGI appearance.\",\n  \"reference_strength\": 1.0,\n  \"identity_preservation\": \"maximum\",\n  \"style\": \"photorealistic premium commercial advertising\",\n  \"quality\": \"ultra\",\n  \"aspect_ratio\": \"auto\"\n}"
+        },
+        {
+          "id": "itm-79130e75",
+          "type": "prompt",
+          "title": "تحويل اللوجو لأبيض وأسود جاهز للـ Vector",
+          "tag": "لوجو",
+          "desc": "بيحوّل اللوجو لنسخة أسود على أبيض مسطحة بحواف حادة، مناسبة لعمل Image Trace في Illustrator من غير ما يغيّر أي حاجة في التصميم. ملحوظة: النص مكتوب فيه (gold) فغيّرها للون اللوجو بتاعك.",
+          "text": "Convert this logo into a clean black-and-white vector-ready version.\n\nRequirements:\n- Keep the logo 100% identical to the original.\n- Do NOT redesign, reinterpret, simplify, or modify any element.\n- Preserve the exact proportions, layout, typography, spacing, curves, and architectural building lines.\n- Remove all colors, gradients, shadows, reflections, textures, and background.\n- Convert every gold element to solid black (#000000) and the background to pure white (#FFFFFF).\n- Keep all text exactly the same.\n- Maintain sharp, crisp edges suitable for Adobe Illustrator Image Trace.\n- Produce a flat monochrome logo with no anti-aliasing, no blur, and no extra effects.\n- The result should look like an original vector logo prepared for SVG, AI, EPS, or PDF conversion."
+        },
+        {
+          "id": "itm-3c13f8c3",
+          "type": "prompt",
+          "title": "هوية بصرية كاملة من اللوجو (Brand Guidelines)",
+          "tag": "هوية",
+          "desc": "من لوجو واحد بيطلع لك عرض هوية بصرية كامل: ألوان وخطوط وعناصر جرافيك وقرطاسية وعبوات وموكاب ولافتات وموقع وسوشيال، في شكل Brand Guidelines فاخر، واللوجو بيفضل زي ما هو.",
+          "text": "{\n  \"prompt\": \"Using the provided logo as the only brand reference, create a complete, premium, modern, and commercially viable visual identity system while preserving the logo exactly as provided. Do not redesign, modify, redraw, simplify, or alter the logo in any way. Analyze the logo's style, geometry, colors, typography, personality, and visual language, then expand it into a cohesive brand identity suitable for a world-class company. Generate a unified identity that includes a primary color palette, secondary colors, accent colors, neutral palette, typography recommendations (headings, subheadings, body text), icon style, graphic elements, abstract brand patterns, geometric shapes, visual motifs, spacing system, layout grid, image treatment style, photography direction, illustration style (if appropriate), UI inspiration, social media design language, stationery system, business card, letterhead, envelope, presentation cover, document templates, email signature, ID card, notebook, folder, shopping bag, packaging concepts, apparel mockups, vehicle branding, billboard concept, storefront signage, website homepage concept, mobile UI direction, brand guidelines pages, logo usage examples, clear space rules, minimum size, color applications, monochrome versions, dark mode and light mode applications. Present everything as a luxury brand guideline document with clean layouts, premium editorial composition, consistent visual hierarchy, Swiss-inspired design principles, minimalist aesthetics, world-class branding quality, Behance-worthy presentation, Apple-level attention to detail, realistic materials, elegant mockups, soft studio lighting, ultra-clean composition, photorealistic rendering, 8K quality, highly detailed, award-winning brand identity presentation.\",\n  \"negative_prompt\": \"logo redesign, altered logo, distorted logo, low quality, cluttered layout, inconsistent branding, random colors, poor typography, watermark, text errors, duplicate elements, pixelation, unrealistic mockups, messy composition, oversaturated colors, low resolution, cartoon style\",\n  \"style\": \"Premium Brand Identity\",\n  \"quality\": \"Ultra\",\n  \"presentation\": \"Luxury Brand Guidelines\",\n  \"resolution\": \"8K\"\n}"
+        },
+        {
+          "id": "itm-4fb045cc",
+          "type": "prompt",
+          "title": "تحريك اللوجو بدخلة 3D سينمائية",
+          "tag": "تحريك",
+          "desc": "قالب جاهز تكتب فيه اسم اللوجو ووصف دقيق لعناصره بين الأقواس [ ]، وبيطلع فيديو حوالي 10 ثواني: اللوجو بيقوم من وضع مائل لوضع واقف بكاميرا سينمائية وصوت هادي، على خلفية استوديو أبيض.",
+          "text": "Animate the provided [LOGO NAME] logo image into a premium cinematic 3D reveal on a clean white studio background. Preserve the logo exactly as given — same shape, proportions, colors, typography, and spacing. Do not redesign, deform, or alter any part of it.\n[DESCRIBE EACH DISTINCT ELEMENT OF THE LOGO HERE, one by one — e.g., \"The logo consists of: (1) the text '[X]' in [color], (2) a [shape] in [color] positioned [where relative to the text], (3) [any other graphic element] positioned [where].\" For any open/partial shape (arc, crescent, incomplete circle, etc.), explicitly state that it is OPEN and NOT a closed circle or ring, describe where each end starts and ends relative to other elements, and state that the two ends never touch. This section must be rewritten fresh for every new logo — do not reuse the TMG description.]\nThis exact configuration of elements — their shapes, positions, connections (or lack of connections), and proportions — must be preserved throughout the entire animation with zero changes.\nRender the logo as a solid 3D object with realistic depth, subtle beveled edges, soft studio lighting, physically accurate soft shadows, and gentle reflections.\nMotion: Start on a close, low-angle shot of the logo lying low and slightly tilted, as if resting on a studio floor. The camera slowly dollies in and orbits around the logo while it smoothly rotates and tilts upward, rising from the low tilted position into a confident upright, centered pose. End on a stable hero shot: the complete logo centered, upright, sharp, and fully readable, with a subtle depth-of-field falloff in the background.\nPacing: Smooth easing throughout, no sudden movements, ~10 seconds total, corporate motion-design aesthetic.\nAudio: Soft low-frequency whoosh during the camera's initial move, a subtle metallic shimmer as the logo rotates, a smooth deep impact as it settles upright, and a light tonal accent on the final hero frame. Keep the sound restrained and premium — no aggressive or exaggerated effects.\nAvoid: extra text, added graphics, people, objects covering the logo, distortion, morphing, melting, duplicated or merged elements, closing any open shapes into full circles/rings, connecting separate elements together, any change to size, curvature, or position of any element, color shifts, altered typography, or any deformation of the logo."
+        },
+        {
+          "id": "itm-47e1b4f1",
+          "type": "prompt",
+          "title": "ترميم وتكبير صور الأشخاص الضعيفة (حتى 10K)",
+          "tag": "تحسين",
+          "desc": "بيرمّم الصور المبكسلة أو الضبابية أو المضغوطة ويكبّرها، ويرجّع تفاصيل الوش والعيون والشعر والجلد والأسنان من غير ما يغيّر الملامح أو الكادر أو الخلفية.",
+          "text": "{\n  \"task\": \"Ultra-High-Fidelity AI Image Restoration, Super Resolution and Photorealistic Detail Recovery\",\n  \"primary_objective\": \"Restore and upscale the provided low-resolution, pixelated, blurry, compressed, or degraded image to the highest possible visual quality while preserving the exact identity, facial structure, anatomy, proportions, expression, pose, composition, and visual characteristics of the original subject with absolute fidelity.\",\n  \"input_image\": {\n    \"type\": \"reference_image\",\n    \"instruction\": \"Treat the uploaded image as the single and absolute source of truth. Do not reinterpret, redesign, beautify, or replace the subject. Every visible feature in the original image must remain consistent with the source.\"\n  },\n  \"identity_preservation\": {\n    \"priority\": \"ABSOLUTE_HIGHEST\",\n    \"preserve_identity\": true,\n    \"identity_lock\": true,\n    \"face_lock\": true,\n    \"facial_structure_lock\": true,\n    \"preserve_exact_facial_geometry\": true,\n    \"preserve_exact_face_shape\": true,\n    \"preserve_exact_head_shape\": true,\n    \"preserve_exact_eye_shape\": true,\n    \"preserve_exact_eye_spacing\": true,\n    \"preserve_exact_eyebrow_shape\": true,\n    \"preserve_exact_nose_shape\": true,\n    \"preserve_exact_nose_width\": true,\n    \"preserve_exact_nose_length\": true,\n    \"preserve_exact_lip_shape\": true,\n    \"preserve_exact_mouth_structure\": true,\n    \"preserve_exact_jawline\": true,\n    \"preserve_exact_cheek_structure\": true,\n    \"preserve_exact_chin_shape\": true,\n    \"preserve_exact_ear_structure\": true,\n    \"preserve_exact_skin_tone\": true,\n    \"preserve_exact_age_appearance\": true,\n    \"preserve_exact_expression\": true,\n    \"preserve_exact_emotion\": true,\n    \"preserve_original_asymmetry\": true,\n    \"preserve_natural_imperfections\": true,\n    \"do_not_change_identity\": true,\n    \"do_not_make_subject_more_attractive\": true,\n    \"do_not_make_subject_younger\": true,\n    \"do_not_make_subject_older\": true,\n    \"do_not_change_gender\": true,\n    \"do_not_change_ethnicity\": true,\n    \"do_not_modify_facial_proportions\": true,\n    \"do_not_reconstruct_face_as_a_new_face\": true\n  },\n  \"restoration_strategy\": {\n    \"method\": \"intelligent_pixel_reconstruction_and_super_resolution\",\n    \"recover_missing_detail\": true,\n    \"reconstruct_lost_information\": true,\n    \"restore_original_detail\": true,\n    \"restore_fine_texture\": true,\n    \"restore_micro_details\": true,\n    \"restore_high_frequency_details\": true,\n    \"remove_pixelation\": true,\n    \"remove_block_compression_artifacts\": true,\n    \"remove_jpeg_artifacts\": true,\n    \"remove_blur\": true,\n    \"reduce_noise\": true,\n    \"reduce_digital_artifacts\": true,\n    \"recover_edge_definition\": true,\n    \"recover_fine_contours\": true,\n    \"recover_subtle_texture\": true,\n    \"preserve_original_lighting\": true,\n    \"preserve_original_shadows\": true,\n    \"preserve_original_highlights\": true,\n    \"preserve_original_color_balance\": true,\n    \"preserve_original_depth\": true,\n    \"preserve_original_camera_characteristics\": true\n  },\n  \"facial_detail_recovery\": {\n    \"priority\": \"EXTREMELY_HIGH\",\n    \"enhance_face_detail\": true,\n    \"recover_realistic_skin_texture\": true,\n    \"recover_natural_skin_microtexture\": true,\n    \"restore_visible_pores\": true,\n    \"restore_fine_lines\": true,\n    \"restore_subtle_wrinkles\": true,\n    \"restore_natural_skin_variation\": true,\n    \"restore_facial_micro_details\": true,\n    \"preserve_natural_skin_roughness\": true,\n    \"preserve_realistic_skin_surface\": true,\n    \"preserve_realistic_subsurface_detail\": true,\n    \"no_skin_smoothing\": true,\n    \"no_beauty_filter\": true,\n    \"no_airbrushing\": true,\n    \"no_plastic_skin\": true,\n    \"no_porcelain_skin\": true,\n    \"no_artificial_skin_texture\": true,\n    \"no_over_sharpening\": true,\n    \"no_halo_artifacts\": true,\n    \"no_fake_detail\": true\n  },\n  \"eyes\": {\n    \"restore_eye_detail\": true,\n    \"preserve_exact_eye_shape\": true,\n    \"preserve_exact_iris_pattern\": true,\n    \"preserve_exact_pupil_position\": true,\n    \"restore_natural_eyelashes\": true,\n    \"restore_eyelid_detail\": true,\n    \"restore_natural_eye_reflections\": true,\n    \"do_not_enlarge_eyes\": true,\n    \"do_not_change_eye_color\": true,\n    \"do_not_change_eye_expression\": true,\n    \"do_not_create_artificial_eye_detail\": true\n  },\n  \"hair\": {\n    \"restore_individual_hair_strands_when_supported_by_source\": true,\n    \"recover_hair_texture\": true,\n    \"preserve_original_hairline\": true,\n    \"preserve_original_hair_shape\": true,\n    \"preserve_original_hair_color\": true,\n    \"preserve_natural_hair_density\": true,\n    \"do_not_change_hairstyle\": true,\n    \"do_not_add_unrealistic_hair\": true,\n    \"do_not_create_artificial_hair_patterns\": true\n  },\n  \"teeth_and_mouth\": {\n    \"restore_teeth_visibility_when_supported_by_original_pixels\": true,\n    \"repair_pixelation_and_compression_on_teeth\": true,\n    \"restore_natural_tooth_edges\": true,\n    \"restore_natural_tooth_texture\": true,\n    \"preserve_original_tooth_alignment\": true,\n    \"preserve_original_tooth_shape\": true,\n    \"preserve_original_tooth_color\": true,\n    \"correct_only_artifacts_caused_by_pixelation_or_image_degradation\": true,\n    \"do_not_create_new_teeth\": true,\n    \"do_not_change_number_of_teeth\": true,\n    \"do_not_perfectly_align_teeth\": true,\n    \"do_not_whiten_teeth_unless_original_information_supports_it\": true,\n    \"do_not_modify_smile\": true,\n    \"do_not_change_mouth_shape\": true\n  },\n  \"clothing_and_body\": {\n    \"preserve_original_clothing\": true,\n    \"preserve_original_body_proportions\": true,\n    \"preserve_original_pose\": true,\n    \"preserve_original_posture\": true,\n    \"restore_fabric_texture\": true,\n    \"restore_material_detail\": true,\n    \"restore_edges_and_contours\": true,\n    \"do_not_change_body_shape\": true,\n    \"do_not_change_clothing_design\": true,\n    \"do_not_add_accessories\": true,\n    \"do_not_remove_accessories\": true\n  },\n  \"background_and_environment\": {\n    \"preserve_original_background\": true,\n    \"preserve_original_environment\": true,\n    \"restore_background_detail_only_when_supported_by_source\": true,\n    \"remove_compression_artifacts\": true,\n    \"preserve_original_depth_of_field\": true,\n    \"preserve_original_bokeh\": true,\n    \"preserve_original_background_blur\": true,\n    \"do_not_replace_background\": true,\n    \"do_not_reimagine_background\": true,\n    \"do_not_add_objects\": true,\n    \"do_not_remove_objects\": true\n  },\n  \"resolution\": {\n    \"target_quality\": \"maximum_possible\",\n    \"target_resolution\": \"up_to_10K\",\n    \"output_resolution\": \"10K_if_supported\",\n    \"super_resolution\": true,\n    \"multi_stage_upscaling\": true,\n    \"progressive_detail_recovery\": true,\n    \"high_frequency_detail_reconstruction\": true,\n    \"pixel_level_precision\": true,\n    \"maximum_native_detail\": true\n  },\n  \"zoom_test_requirement\": {\n    \"enabled\": true,\n    \"instruction\": \"The final image must remain highly detailed and visually coherent when viewed at extreme zoom levels. Facial features must not morph, drift, distort, or change identity when zooming into the face.\",\n    \"preserve_identity_under_zoom\": true,\n    \"preserve_facial_geometry_under_zoom\": true,\n    \"preserve_skin_texture_under_zoom\": true,\n    \"preserve_eye_structure_under_zoom\": true,\n    \"preserve_nose_structure_under_zoom\": true,\n    \"preserve_mouth_structure_under_zoom\": true,\n    \"preserve_teeth_structure_under_zoom\": true,\n    \"preserve_hair_detail_under_zoom\": true,\n    \"no_detail_morphing\": true,\n    \"no_face_drift\": true,\n    \"no_identity_drift\": true,\n    \"no_texture_inconsistency\": true\n  },\n  \"photorealism\": {\n    \"style\": \"true_photographic_realism\",\n    \"real_camera_look\": true,\n    \"natural_optical_detail\": true,\n    \"realistic_skin_rendering\": true,\n    \"realistic_micro_contrast\": true,\n    \"realistic_texture_depth\": true,\n    \"realistic_light_response\": true,\n    \"realistic_material_response\": true,\n    \"no_cgi_appearance\": true,\n    \"no_3d_render_appearance\": true,\n    \"no_ai_generated_look\": true,\n    \"no_synthetic_texture\": true\n  },\n  \"image_integrity\": {\n    \"preserve_original_composition\": true,\n    \"preserve_original_crop\": true,\n    \"preserve_original_camera_angle\": true,\n    \"preserve_original_perspective\": true,\n    \"preserve_original_focal_length_appearance\": true,\n    \"preserve_original_lighting_direction\": true,\n    \"preserve_original_color_grading\": true,\n    \"preserve_original_contrast\": true,\n    \"preserve_original_exposure\": true,\n    \"preserve_original_white_balance\": true,\n    \"preserve_original_shadows\": true,\n    \"preserve_original_highlights\": true\n  },\n  \"negative_constraints\": [\n    \"DO NOT change the person's identity\",\n    \"DO NOT alter facial geometry\",\n    \"DO NOT alter facial proportions\",\n    \"DO NOT change eye shape or eye spacing\",\n    \"DO NOT change nose shape\",\n    \"DO NOT change lips or mouth shape\",\n    \"DO NOT change jawline or chin\",\n    \"DO NOT change expression\",\n    \"DO NOT change age\",\n    \"DO NOT beautify the person\",\n    \"DO NOT make the person younger\",\n    \"DO NOT smooth skin\",\n    \"DO NOT use beauty filters\",\n    \"DO NOT airbrush skin\",\n    \"DO NOT create plastic-looking skin\",\n    \"DO NOT invent unrealistic pores\",\n    \"DO NOT hallucinate facial features\",\n    \"DO NOT create a new face\",\n    \"DO NOT replace the original face\",\n    \"DO NOT modify teeth unnecessarily\",\n    \"DO NOT whiten teeth artificially\",\n    \"DO NOT change tooth alignment\",\n    \"DO NOT add or remove teeth\",\n    \"DO NOT change hair style\",\n    \"DO NOT change body proportions\",\n    \"DO NOT change clothing\",\n    \"DO NOT change background\",\n    \"DO NOT add objects\",\n    \"DO NOT remove objects\",\n    \"DO NOT introduce artificial sharpening\",\n    \"DO NOT create halos around edges\",\n    \"DO NOT create oversharpening artifacts\",\n    \"DO NOT create double edges\",\n    \"DO NOT create unnatural textures\",\n    \"DO NOT introduce AI artifacts\",\n    \"DO NOT hallucinate unsupported details\",\n    \"DO NOT reinterpret ambiguous facial features\",\n    \"DO NOT sacrifice identity for sharpness\",\n    \"DO NOT sacrifice authenticity for resolution\"\n  ],\n  \"final_quality_control\": {\n    \"perform_final_identity_check\": true,\n    \"perform_facial_geometry_check\": true,\n    \"perform_anatomical_consistency_check\": true,\n    \"perform_texture_consistency_check\": true,\n    \"perform_edge_integrity_check\": true,\n    \"perform_artifact_detection\": true,\n    \"perform_zoom_consistency_check\": true,\n    \"reject_any_identity_change\": true,\n    \"reject_any_facial_morphing\": true,\n    \"reject_any_unnecessary_beautification\": true,\n    \"reject_any_fake_skin_smoothing\": true,\n    \"reject_any_artificial_detail\": true,\n    \"final_result\": \"The output must look like the exact same original photograph captured with an extremely high-end professional camera and an exceptionally high-resolution sensor, not like an AI-generated recreation or a redesigned version of the original.\"\n  },\n  \"output\": {\n    \"quality\": \"maximum_possible\",\n    \"resolution\": \"up_to_10K\",\n    \"sharpness\": \"extreme_but_natural\",\n    \"detail\": \"maximum_realistic_micro_detail\",\n    \"skin\": \"natural_unretouched_realistic_texture_with_visible_pores\",\n    \"identity\": \"100_percent_preserved\",\n    \"facial_fidelity\": \"maximum\",\n    \"photorealism\": \"maximum\",\n    \"artifact_free\": true,\n    \"final_instruction\": \"Enhance the image as aggressively as technically possible in resolution and recoverable detail, but never alter what the person actually looks like. Resolution and clarity may increase dramatically; identity, anatomy, facial geometry, expression, and original visual information must remain unchanged.\"\n  }\n}"
+        },
+        {
+          "id": "itm-b4322a34",
+          "type": "prompt",
+          "title": "كاريكاتير 3D مبالغ فيه من صورتك",
+          "tag": "شخصيات",
+          "desc": "ترفع صورة شخص وبيطلع منه كاريكاتير 3D بمبالغة واضحة (رقبة طويلة ورأس كبير وملامح مش متماثلة) مع الحفاظ على الشبه، بإضاءة استوديو ناعمة ونسبة 4:5.",
+          "text": "Create an exaggerated 3D caricature with obvious, deliberate distortion and a clean, polished finish. Use the person from the provided reference image. Preserve the person's identity, facial features, skin tone, and distinctive traits, but reimagine them in a bold 3D caricature with a long neck, a large head-to-neck ratio, and slightly asymmetrical facial structure. Draw them as a humanoid 3D character with smooth, studio-quality skin and carefully rendered details, avoiding any random texture or blur.\nUse neutral studio lighting with soft shadows and even illumination, without harsh contrast, against a neutral gray or pale white background. The overall look should be quirky, trendy, distinctive, and character-focused rather than cute or realistic.\nCinematic 3D rendering quality: Ultra HD, highly realistic, pure materials, free from freckles, dirt, grain, blurring, spots, text, logos, and watermarks. Aspect ratio 4:5."
+        },
+        {
+          "id": "itm-0d750db6",
+          "type": "prompt",
+          "title": "قاموس كلمات التحكم في الصور (Modifiers)",
+          "tag": "قاموس",
+          "desc": "أكتر من 130 كلمة قصيرة زي /cinematic و/softlight و/productphoto بتضيفها لأي وصف صورة عشان تتحكم في الإضاءة والزاوية والستايل والخلفية. تقدر تخلط أكتر من كلمة مع بعض.",
+          "text": "الـ\"/\" هنا مجرد طريقة مختصرة لتوجيه الـAI، ومش شرط تكون أوامر رسمية في كل أدوات الذكاء الاصطناعي.\n\nكل Modifier بيضيف اتجاه معين للنتيجة، وتقدر تخلط أكتر من واحد مع بعض.\n\n━━━━━━━━━━━━━━\n\n🛍️ 1. المنتجات والإعلانات\n\n\"/productphoto\"\nتصوير المنتج بشكل احترافي كأنه متصور في جلسة تصوير.\n\n\"/commercial\"\nيخلي الصورة بطابع تجاري مناسب للإعلانات.\n\n\"/advertising\"\nيوجه الصورة ناحية شكل إعلان احترافي.\n\n\"/sellit\"\nيقدم المنتج بطريقة تسويقية جذابة.\n\n\"/luxury\"\nيدي المنتج إحساس بالفخامة والرقي.\n\n\"/premium\"\nمظهر High-End وراقي.\n\n\"/catalog\"\nتصوير مرتب زي صور الكتالوجات.\n\n\"/ecommerce\"\nمناسب لصور المنتجات للمتاجر الإلكترونية.\n\n\"/packshot\"\nيركز على المنتج ويخليه واضح ونظيف.\n\n\"/hero\"\nيخلي المنتج هو البطل الأساسي في المشهد.\n\n━━━━━━━━━━━━━━\n\n📸 2. التصوير والكاميرا\n\n\"/portrait\" → تصوير بورتريه.\n\"/closeup\" → لقطة قريبة جدًا للتفاصيل.\n\"/macro\" → تفاصيل صغيرة جدًا.\n\"/wideangle\" → زاوية واسعة.\n\"/topview\" → تصوير من أعلى.\n\"/lowangle\" → زاوية منخفضة تجعل العنصر أقوى.\n\"/highangle\" → زاوية مرتفعة.\n\"/dutchangle\" → ميلان بالكاميرا لإحساس ديناميكي.\n\"/depthoffield\" → إحساس بعمق الصورة.\n\"/bokeh\" → خلفية ضبابية ناعمة.\n\"/studio\" → إحساس تصوير استوديو احترافي.\n\"/fisheye\" → منظور واسع جدًا وتشوه بصري.\n\n🎥 3. العدسات والتصوير السينمائي\n\n\"/35mm\" → منظور سينمائي طبيعي.\n\"/50mm\" → منظور قريب من العين.\n\"/85mm\" → مناسب للبورتريه والعزل.\n\"/telephoto\" → ضغط للمسافات وعزل أقوى.\n\"/widelens\" → مساحة أكبر داخل الكادر.\n\"/shallowfocus\" → تركيز قوي على العنصر الأساسي.\n\"/deepfocus\" → وضوح المقدمة والخلفية.\n\"/aerial\" → إحساس تصوير جوي.\n\n━━━━━━━━━━━━━━\n\n💡 4. الإضاءة\n\n\"/softlight\" → إضاءة ناعمة وظلال خفيفة.\n\"/hardlight\" → إضاءة قوية وظلال حادة.\n\"/sidelight\" → إضاءة جانبية تبرز التفاصيل.\n\"/backlight\" → مصدر الضوء خلف العنصر.\n\"/rimlight\" → إضاءة على الحواف لفصل العنصر.\n\"/dramatic\" → إضاءة قوية ودرامية.\n\"/bright\" → مظهر مشرق ونظيف.\n\"/darkmood\" → إضاءة داكنة وغامضة.\n\"/goldenhour\" → إضاءة دافئة مثل الغروب.\n\"/neon\" → إضاءة نيون.\n\"/volumetric\" → أشعة ضوء ظاهرة في الجو.\n\"/softbox\" → إحساس إضاءة استوديو.\n\n━━━━━━━━━━━━━━\n\n🖼️ 5. الخلفيات والبيئة\n\n\"/whitebackground\" → خلفية بيضاء نظيفة.\n\"/blackbackground\" → خلفية سوداء ودرامية.\n\"/minimal\" → تقليل العناصر والفوضى.\n\"/clean\" → مظهر مرتب ونظيف.\n\"/darkstudio\" → استوديو داكن وفخم.\n\"/nature\" → بيئة طبيعية.\n\"/urban\" → بيئة حضرية وشوارع.\n\"/seamless\" → خلفية متصلة وهادئة.\n\"/gradientbackground\" → خلفية بتدرج لوني.\n\"/transparent\" → بدون خلفية إذا كان الموديل يدعمها.\n\"/abstractbackground\" → خلفية تجريدية وإبداعية.\n\n━━━━━━━━━━━━━━\n\n🎨 6. الستايل\n\n\"/cinematic\" → مظهر سينمائي.\n\"/photorealistic\" → واقعية فوتوغرافية.\n\"/editorial\" → إحساس تصوير المجلات.\n\"/fashion\" → تصوير أزياء احترافي.\n\"/vintage\" → مظهر قديم وكلاسيكي.\n\"/retro\" → ستايل مستوحى من الماضي.\n\"/futuristic\" → شكل مستقبلي.\n\"/cyberpunk\" → نيون وأجواء تقنية مستقبلية.\n\"/surreal\" → نتيجة غير واقعية ومختلفة.\n\"/3d\" → مظهر ثلاثي الأبعاد.\n\"/illustration\" → مظهر رسومي.\n\"/conceptart\" → إحساس Concept Art.\n\"/fineart\" → إحساس فني راقي.\n\n━━━━━━━━━━━━━━\n\n🌈 7. الألوان والمود\n\n\"/colorful\" → ألوان قوية ومتنوعة.\n\"/monochrome\" → لون واحد ودرجاته.\n\"/blackandwhite\" → أبيض وأسود.\n\"/warmtones\" → ألوان دافئة.\n\"/cooltones\" → ألوان باردة.\n\"/moody\" → جو هادئ أو غامض.\n\"/epic\" → إحساس ضخم وملحمي.\n\"/vibrant\" → ألوان مشبعة وحيوية.\n\"/pastel\" → ألوان ناعمة.\n\"/desaturated\" → ألوان قليلة التشبع.\n\"/highcontrast\" → تباين قوي.\n\"/mutedcolors\" → ألوان هادئة ومطفية.\n\n━━━━━━━━━━━━━━\n\n📐 8. التكوين\n\n\"/minimalcomposition\" → تكوين بسيط.\n\"/centered\" → العنصر في المنتصف.\n\"/symmetrical\" → تكوين متناظر.\n\"/dynamic\" → تكوين مليء بالحركة.\n\"/negative_space\" → مساحة فارغة مناسبة للنص.\n\"/storytelling\" → الصورة تحكي قصة.\n\"/socialmedia\" → مناسب للسوشيال ميديا.\n\"/poster\" → تكوين بوستر إعلاني.\n\"/magazine\" → إحساس تصميم مجلة.\n\"/ruleofthirds\" → توزيع العناصر بقاعدة الأثلاث.\n\"/balanced\" → تكوين متوازن.\n\n━━━━━━━━━━━━━━\n\n👤 9. الأشخاص والبورتريه\n\n\"/headshot\" → الرأس والكتفين.\n\"/fullbody\" → الجسم كامل.\n\"/fashionportrait\" → بورتريه أزياء.\n\"/beauty\" → تصوير Beauty.\n\"/streetportrait\" → بورتريه في الشارع.\n\"/candid\" → إحساس لقطة عفوية.\n\"/editorialportrait\" → بورتريه بأسلوب المجلات.\n\"/dramaticportrait\" → بورتريه بإضاءة درامية.\n\"/professionalheadshot\" → صورة شخصية احترافية.\n\"/environmentalportrait\" → الشخص داخل بيئته.\n\n━━━━━━━━━━━━━━\n\n🧊 10. الـ3D والخامات\n\n\"/3drender\" → Render ثلاثي الأبعاد.\n\"/clayrender\" → شكل Clay.\n\"/metallic\" → خامة معدنية.\n\"/chrome\" → خامة كروم لامعة.\n\"/glossy\" → سطح لامع.\n\"/matte\" → سطح مطفي.\n\"/liquid\" → خامة سائلة.\n\"/holographic\" → تأثير هولوجرافي.\n\"/miniature\" → عالم مصغر.\n\"/isometric\" → منظور Isometric.\n\"/toy\" → إحساس لعبة أو مجسم.\n\n━━━━━━━━━━━━━━\n\n✏️ 11. اللوجوهات والهوية\n\n\"/logo\" → تصميم أو تقديم شعار.\n\"/logomockup\" → عرض الشعار على Mockup.\n\"/brandidentity\" → تقديم هوية بصرية.\n\"/minimal_logo\" → شعار بسيط.\n\"/monogram\" → شعار مبني على الحروف.\n\"/emblem\" → شعار Emblem.\n\"/wordmark\" → شعار يعتمد على الكتابة.\n\"/3dlogo\" → شعار ثلاثي الأبعاد.\n\"/embossed\" → شعار بارز على الخامة.\n\n━━━━━━━━━━━━━━\n\n🤯 12. الأوامر الغريبة والممتعة\n\n\"/viral\" → نتيجة ملفتة للسوشيال.\n\"/makeitluxury\" → حوّلها لفكرة فاخرة.\n\"/makeitcinematic\" → زوّد الإحساس السينمائي.\n\"/makeitminimal\" → بسّط المشهد.\n\"/makeitepic\" → خلّي الفكرة ضخمة.\n\"/makeitfunny\" → اتجاه كوميدي.\n\"/makeitweird\" → نتيجة غريبة وغير متوقعة.\n\"/makeitmagazine\" → إحساس جلسة تصوير مجلة.\n\"/surprise_me\" → سيب الـAI يفاجئك.\n\"/dreamlike\" → إحساس حالم وخيالي.\n\"/impossible\" → فكرة تتحدى الواقع.\n\"/tinyworld\" → عالم صغير داخل المشهد.\n\"/giant\" → العنصر ضخم بشكل مبالغ فيه.\n\"/toyversion\" → حوّل العنصر لمجسم لعبة.\n\"/movieposter\" → قدم المشهد كأنه بوستر فيلم.\n\n━━━━━━━━━━━━━━\n\n🔥 والأهم:\n\nمش لازم تستخدم Modifier واحد بس.\n\nاخلط بينهم حسب النتيجة اللي عايزها:\n\n\"Perfume /productphoto /luxury /darkstudio /rimlight /commercial\"\n\n\"Portrait /cinematic /85mm /bokeh /dramatic /editorial\"\n\n\"Coffee /topview /minimal /warmtones /commercial\"\n\n\"Cat /giant /cinematic /epic /urban /dramatic\""
+        },
+        {
+          "id": "itm-584b7b73",
+          "type": "link",
+          "title": "MeiGen",
+          "desc": "مكتبة Prompts لصور وفيديو الذكاء الاصطناعي، وكل برومبت معاه الصورة الناتجة والموديل. تنسخه وتجرّبه على ChatGPT أو Gemini أو غيرهم.",
+          "url": "https://www.meigen.ai/",
+          "tag": "مجاني"
+        }
+      ]
+    },
+    {
+      "id": "fonts",
+      "title": "خطوط",
+      "icon": "Aa",
+      "desc": "خطوط عربي وإنجليزي لمشاريعك، مجانية وتجارية.",
+      "cover": "assets/img/sections/fonts.svg",
+      "items": [
+        {
+          "id": "itm-7d36198d",
+          "type": "link",
+          "title": "Google Fonts (عربي)",
+          "desc": "خطوط مجانية، وفيها فلتر للخطوط العربي",
+          "url": "https://fonts.google.com/?subset=arabic",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-75b4e1dd",
+          "type": "link",
+          "title": "1001 Free Fonts (عربي)",
+          "desc": "تجميعة خطوط عربي للتحميل",
+          "url": "https://www.1001freefonts.com/arab-fonts.php",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-9d309a4c",
+          "type": "link",
+          "title": "عرب فونت (Arb Fonts)",
+          "desc": "خطوط عربي للتحميل",
+          "url": "https://arbfonts.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-cd5fffea",
+          "type": "link",
+          "title": "iFonts",
+          "desc": "موقع خطوط للتحميل",
+          "url": "https://ifonts.xyz/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-085be6c5",
+          "type": "link",
+          "title": "DaFont",
+          "desc": "من أشهر مواقع الخطوط، راجع الترخيص قبل الاستخدام التجاري",
+          "url": "https://www.dafont.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-3190f994",
+          "type": "link",
+          "title": "Font Squirrel",
+          "desc": "خطوط مجانية للاستخدام التجاري",
+          "url": "https://www.fontsquirrel.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-9dd76d86",
+          "type": "link",
+          "title": "Adobe Fonts",
+          "desc": "مكتبة خطوط مع اشتراك Creative Cloud",
+          "url": "https://fonts.adobe.com/",
+          "tag": "مدفوع"
+        },
+        {
+          "id": "itm-5b2b8d29",
+          "type": "link",
+          "title": "MyFonts",
+          "desc": "أكبر متجر خطوط، ومعاه أداة معرفة الخط من الصورة",
+          "url": "https://www.myfonts.com/",
+          "tag": "مدفوع"
+        }
+      ]
+    },
+    {
+      "id": "images",
+      "title": "صور جاهزة (ستوك)",
+      "icon": "▣",
+      "desc": "صور ستوك جاهزة للاستخدام، ومعظمها مجاني.",
+      "cover": "assets/img/sections/images.svg",
+      "items": [
+        {
+          "id": "itm-b2a29d4a",
+          "type": "link",
+          "title": "Unsplash",
+          "desc": "صور عالية الجودة مجانية",
+          "url": "https://unsplash.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-44bd4833",
+          "type": "link",
+          "title": "Pexels",
+          "desc": "صور وفيديوهات مجانية",
+          "url": "https://www.pexels.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-b37cef91",
+          "type": "link",
+          "title": "Pixabay",
+          "desc": "صور وفيكتور وفيديو بدون حقوق",
+          "url": "https://pixabay.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-9d725e66",
+          "type": "link",
+          "title": "Rawpixel",
+          "desc": "صور وملفات Public Domain مجانية",
+          "url": "https://www.rawpixel.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-8b3a3f9d",
+          "type": "link",
+          "title": "Freepik",
+          "desc": "فيكتور وPSD وصور، النسخة المجانية محتاجة ذكر المصدر",
+          "url": "https://www.freepik.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-2fefb719",
+          "type": "link",
+          "title": "Envato Elements",
+          "desc": "اشتراك بمكتبة ضخمة: قوالب وفيكتور وخطوط وموشن وموسيقى",
+          "url": "https://elements.envato.com/",
+          "tag": "مدفوع"
+        },
+        {
+          "id": "itm-45193073",
+          "type": "link",
+          "title": "Shutterstock",
+          "desc": "أكبر مكتبات الصور والفيكتور والفيديو الجاهزة للاستخدام التجاري. بالاشتراك أو بالصورة.",
+          "url": "https://www.shutterstock.com/",
+          "tag": "مدفوع"
+        }
+      ]
+    },
+    {
+      "id": "vector",
+      "title": "فيكتور وأيقونات",
+      "icon": "✎",
+      "desc": "مواقع فيكتور وأيقونات وإيلستريشن جاهزة لـ Illustrator وFigma.",
+      "cover": "assets/img/sections/vector.svg",
+      "items": [
+        {
+          "id": "itm-fb572351",
+          "type": "link",
+          "title": "unDraw",
+          "desc": "رسومات فيكتور مجانية تقدر تغيّر ألوانها",
+          "url": "https://undraw.co/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-11aac59b",
+          "type": "link",
+          "title": "SVG Repo",
+          "desc": "أيقونات وفيكتور SVG مجانية",
+          "url": "https://www.svgrepo.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-eb33dadb",
+          "type": "link",
+          "title": "Flaticon",
+          "desc": "أيقونات بصيغ مختلفة",
+          "url": "https://www.flaticon.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-cecbe288",
+          "type": "link",
+          "title": "Vecteezy",
+          "desc": "فيكتور وصور وفيديو، والمجاني بيحتاج ذكر المصدر",
+          "url": "https://www.vecteezy.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-a4c123b1",
+          "type": "link",
+          "title": "Freepik: فيكتور",
+          "desc": "أكبر مكتبة فيكتور وإيلستريشن وقوالب جاهزة للتعديل",
+          "url": "https://www.freepik.com/vectors",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-612dd272",
+          "type": "link",
+          "title": "Iconscout",
+          "desc": "أيقونات وإيلستريشن وأنيميشن Lottie بصيغ متعددة",
+          "url": "https://iconscout.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-d1371c17",
+          "type": "link",
+          "title": "Icons8",
+          "desc": "أيقونات وإيلستريشن بأكتر من ستايل، وتحميل SVG",
+          "url": "https://icons8.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-149d4395",
+          "type": "link",
+          "title": "The Noun Project",
+          "desc": "ملايين الأيقونات بأسلوب موحد من مصممين من العالم",
+          "url": "https://thenounproject.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-36b3216f",
+          "type": "link",
+          "title": "Iconfinder",
+          "desc": "أيقونات بصيغة SVG وPNG مجاني ومدفوع",
+          "url": "https://www.iconfinder.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-daeeb975",
+          "type": "link",
+          "title": "Streamline",
+          "desc": "مكتبات أيقونات احترافية بستايلات كتير",
+          "url": "https://www.streamlinehq.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-729fae92",
+          "type": "link",
+          "title": "Blush",
+          "desc": "إيلستريشن قابلة للتخصيص من فنانين، تركّب منها شخصيات ومشاهد",
+          "url": "https://blush.design/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-3d5a4fd1",
+          "type": "link",
+          "title": "Storyset",
+          "desc": "إيلستريشن متحركة وثابتة وتقدر تغيّر ألوانها",
+          "url": "https://storyset.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-2aabfe22",
+          "type": "link",
+          "title": "Open Peeps",
+          "desc": "شخصيات مرسومة باليد تركّبها بالشكل اللي تحبه",
+          "url": "https://www.openpeeps.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-8f219e9c",
+          "type": "link",
+          "title": "Iconify",
+          "desc": "محرك بحث لأكتر من 200 ألف أيقونة مفتوحة المصدر",
+          "url": "https://iconify.design/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-b0eb53f1",
+          "type": "link",
+          "title": "Phosphor Icons",
+          "desc": "أيقونات مرنة بأوزان مختلفة وSVG جاهز",
+          "url": "https://phosphoricons.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-6947ccf2",
+          "type": "link",
+          "title": "Lucide",
+          "desc": "أيقونات بسيطة وواضحة مفتوحة المصدر",
+          "url": "https://lucide.dev/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-5ec84d8d",
+          "type": "link",
+          "title": "Adobe Stock: فيكتور",
+          "desc": "فيكتور وإيلستريشن احترافية جوه Illustrator مباشرة",
+          "url": "https://stock.adobe.com/",
+          "tag": "مدفوع"
+        }
+      ]
+    },
+    {
+      "id": "montage",
+      "title": "مونتاج وفيديو",
+      "icon": "✂",
+      "desc": "برامج مونتاج ولقطات وأصوات جاهزة لفيديوهاتك.",
+      "cover": "assets/img/sections/montage.svg",
+      "items": [
+        {
+          "id": "itm-f30f5a63",
+          "type": "link",
+          "title": "Pexels Videos",
+          "desc": "لقطات فيديو مجانية",
+          "url": "https://www.pexels.com/videos/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-bfaa0300",
+          "type": "link",
+          "title": "Pixabay Videos",
+          "desc": "لقطات فيديو بدون حقوق",
+          "url": "https://pixabay.com/videos/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-c7b0d206",
+          "type": "link",
+          "title": "Mixkit",
+          "desc": "فيديوهات وموسيقى وتأثيرات صوت مجانية",
+          "url": "https://mixkit.co/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-dc2570e6",
+          "type": "link",
+          "title": "Coverr",
+          "desc": "لقطات فيديو مجانية للخلفيات",
+          "url": "https://coverr.co/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-11c75e41",
+          "type": "link",
+          "title": "Freesound",
+          "desc": "مؤثرات صوتية من مجتمع كبير، راجع ترخيص كل ملف",
+          "url": "https://freesound.org/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-3fb2fb3c",
+          "type": "link",
+          "title": "Shotcut",
+          "desc": "برنامج مونتاج مجاني ومفتوح المصدر",
+          "url": "https://shotcut.org/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-bc51ab24",
+          "type": "link",
+          "title": "Pixabay Music",
+          "desc": "موسيقى ومؤثرات صوت بدون حقوق",
+          "url": "https://pixabay.com/music/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-0d4be177",
+          "type": "link",
+          "title": "CapCut",
+          "desc": "مونتاج سهل على الموبايل والكمبيوتر",
+          "url": "https://www.capcut.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-88e4e3ca",
+          "type": "link",
+          "title": "DaVinci Resolve",
+          "desc": "برنامج مونتاج وكلر احترافي، ونسخته الأساسية مجانية",
+          "url": "https://www.blackmagicdesign.com/products/davinciresolve",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-a2484c03",
+          "type": "link",
+          "title": "Clipchamp",
+          "desc": "مونتاج من المتصفح",
+          "url": "https://clipchamp.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-204dba9c",
+          "type": "link",
+          "title": "Kapwing",
+          "desc": "تعديل فيديو وترجمة وأدوات سريعة أونلاين",
+          "url": "https://www.kapwing.com/",
+          "tag": "مجاني محدود"
+        }
+      ]
+    },
+    {
+      "id": "motion",
+      "title": "تحريك",
+      "icon": "◎",
+      "desc": "أدوات الموشن والأنيميشن للمشاريع والواجهات.",
+      "cover": "assets/img/sections/motion.svg",
+      "items": [
+        {
+          "id": "itm-a79217da",
+          "type": "link",
+          "title": "Blender",
+          "desc": "برنامج 3D وأنيميشن مفتوح المصدر ومجاني بالكامل",
+          "url": "https://www.blender.org/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-604a84c9",
+          "type": "link",
+          "title": "Mixamo",
+          "desc": "حركات جاهزة لشخصيات 3D (محتاج حساب Adobe مجاني)",
+          "url": "https://www.mixamo.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-1121abeb",
+          "type": "link",
+          "title": "Animista",
+          "desc": "تأثيرات حركة CSS جاهزة تنسخها وتستخدمها",
+          "url": "https://animista.net/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-b82fdec6",
+          "type": "link",
+          "title": "Easings.net",
+          "desc": "مرجع لمنحنيات الحركة (Easing) عشان تطلع الحركة أنعم وأكتر طبيعية",
+          "url": "https://easings.net/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-3bfd45d7",
+          "type": "link",
+          "title": "LottieFiles",
+          "desc": "أنيميشن جاهزة وأدوات تحريك مجانية",
+          "url": "https://lottiefiles.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-469e65d8",
+          "type": "link",
+          "title": "Rive",
+          "desc": "تحريك تفاعلي للواجهات",
+          "url": "https://rive.app/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-5cf3dbe5",
+          "type": "link",
+          "title": "Jitter",
+          "desc": "موشن جرافيك من المتصفح بسهولة، وتصدّر فيديو أو Lottie",
+          "url": "https://jitter.video/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-0ae2e0d8",
+          "type": "link",
+          "title": "SVGator",
+          "desc": "تحريك ملفات SVG وتصديرها للويب والواجهات",
+          "url": "https://www.svgator.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-fde1a321",
+          "type": "link",
+          "title": "Lottielab",
+          "desc": "محرر Lottie أونلاين لعمل أنيميشن خفيفة للمواقع والتطبيقات",
+          "url": "https://lottielab.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-b828b98e",
+          "type": "link",
+          "title": "Spline",
+          "desc": "تصميم وتحريك ثلاثي الأبعاد وتفاعلي من المتصفح",
+          "url": "https://spline.design/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-4612d10c",
+          "type": "link",
+          "title": "Cavalry",
+          "desc": "موشن جرافيك احترافي، وفيه نسخة مجانية",
+          "url": "https://cavalry.scenegroup.co/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-4439fb87",
+          "type": "link",
+          "title": "Adobe After Effects",
+          "desc": "المعيار في الموشن جرافيك والمؤثرات البصرية",
+          "url": "https://www.adobe.com/products/aftereffects.html",
+          "tag": "مدفوع"
+        },
+        {
+          "id": "itm-deea0dea",
+          "type": "link",
+          "title": "Motion Array",
+          "desc": "قوالب وبريسيتس للموشن والمونتاج بنظام اشتراك",
+          "url": "https://motionarray.com/",
+          "tag": "مدفوع"
+        },
+        {
+          "id": "itm-9ef2d998",
+          "type": "link",
+          "title": "Prompt Motion",
+          "desc": "معرض لفيديوهات موشن متعملة بـ Claude، ومعاها الـ Prompts والـ Skills اللي ورا كل فيديو. تنسخ البرومبت وتجرّبه على مشروعك.",
+          "url": "https://prompt-motion.com/",
+          "tag": "مجاني"
+        }
+      ]
+    },
+    {
+      "id": "ideas",
+      "title": "أفكار وتغذية بصرية",
+      "icon": "✺",
+      "desc": "مصادر إلهام وتغذية بصرية لأفكارك: أعمال تصميم، براندينج، تايبوجرافي، مواقع، وبوسترات.",
+      "cover": "assets/img/sections/ideas.svg",
+      "items": [
+        {
+          "id": "itm-6b048195",
+          "type": "link",
+          "title": "Behance",
+          "desc": "إلهام وأفكار تصميم من مصممين حول العالم",
+          "url": "https://www.behance.net/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-9739a78c",
+          "type": "link",
+          "title": "Pinterest",
+          "desc": "لوحات مودبورد ومراجع وأفكار",
+          "url": "https://www.pinterest.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-a3147333",
+          "type": "link",
+          "title": "Dribbble",
+          "desc": "لقطات من أعمال المصممين: واجهات، لوجوهات، إيلستريشن وموشن",
+          "url": "https://dribbble.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-416394d0",
+          "type": "link",
+          "title": "Awwwards",
+          "desc": "أفضل تصميمات المواقع في العالم، ومعاها جوايز وتحليلات",
+          "url": "https://www.awwwards.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-02c7390f",
+          "type": "link",
+          "title": "Siteinspire",
+          "desc": "معرض مواقع مرتبة حسب الستايل والنوع",
+          "url": "https://www.siteinspire.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-8919b031",
+          "type": "link",
+          "title": "Lapa Ninja",
+          "desc": "آلاف تصميمات الـ Landing Pages للإلهام",
+          "url": "https://www.lapa.ninja/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-c1df962f",
+          "type": "link",
+          "title": "Collect UI",
+          "desc": "تجميعة تصميمات واجهات مرتبة حسب العنصر (أزرار، فورمز، كروت)",
+          "url": "https://collectui.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-9c27a9e2",
+          "type": "link",
+          "title": "Fonts In Use",
+          "desc": "خطوط مستخدمة في تصميمات حقيقية: بوسترات، براندات، وأغلفة",
+          "url": "https://fontsinuse.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-a4118677",
+          "type": "link",
+          "title": "Typewolf",
+          "desc": "إلهام تايبوجرافي، وتوصيات بالخطوط وتزويجها",
+          "url": "https://www.typewolf.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-51af67fb",
+          "type": "link",
+          "title": "Brand New",
+          "desc": "تحليل لهويات بصرية ولوجوهات جديدة وتغييرات البراندات",
+          "url": "https://www.underconsideration.com/brandnew/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-321561b3",
+          "type": "link",
+          "title": "The Dieline",
+          "desc": "إلهام تصميم عبوات وباكدجينج",
+          "url": "https://thedieline.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-b804ff9e",
+          "type": "link",
+          "title": "Packaging of the World",
+          "desc": "مشاريع باكدجينج من كل الدنيا للإلهام",
+          "url": "https://packagingoftheworld.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-1df03752",
+          "type": "link",
+          "title": "Abduzeedo",
+          "desc": "مقالات وأفكار في التصميم والبراندينج والإيلستريشن",
+          "url": "https://abduzeedo.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-0337659d",
+          "type": "link",
+          "title": "Muzli",
+          "desc": "خلاصة يومية من أفضل أفكار التصميم على الإنترنت",
+          "url": "https://muz.li/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-a752f230",
+          "type": "link",
+          "title": "Motionographer",
+          "desc": "إلهام موشن جرافيك وأنيميشن من أحسن الاستوديوهات",
+          "url": "https://motionographer.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-423abcd5",
+          "type": "link",
+          "title": "Mobbin",
+          "desc": "شاشات وتصميمات تطبيقات حقيقية من أكبر الشركات",
+          "url": "https://mobbin.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-5256da85",
+          "type": "link",
+          "title": "Savee",
+          "desc": "مكتبة صور ومراجع بصرية تحفظها في لوحات",
+          "url": "https://savee.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-80697519",
+          "type": "link",
+          "title": "Are.na",
+          "desc": "مساحة تجمّع فيها مراجعك وأفكارك بشكل بصري",
+          "url": "https://www.are.na/",
+          "tag": "مجاني محدود"
+        }
+      ]
+    },
+    {
+      "id": "sites",
+      "title": "مواقع هتحتاجها",
+      "icon": "◈",
+      "desc": "مواقع صغيرة بتوفّر عليك وقت في الشغل اليومي.",
+      "cover": "assets/img/sections/sites.svg",
+      "items": [
+        {
+          "id": "itm-3cbb62f1",
+          "type": "link",
+          "title": "Photopea",
+          "desc": "فوتوشوب على المتصفح مجانًا",
+          "url": "https://www.photopea.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-96027d87",
+          "type": "link",
+          "title": "Squoosh",
+          "desc": "ضغط وتحويل الصور بدون ما الجودة تتدمر",
+          "url": "https://squoosh.app/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-4103ff4e",
+          "type": "link",
+          "title": "Color Hunt",
+          "desc": "باليتات ألوان جاهزة تختار منها وتنسخ الأكواد",
+          "url": "https://colorhunt.co/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-da8f1680",
+          "type": "link",
+          "title": "Adobe Color",
+          "desc": "عجلة ألوان، وتطلّع لك باليتة من أي صورة",
+          "url": "https://color.adobe.com/",
+          "tag": "مجاني"
+        },
+        {
+          "id": "itm-3067dec0",
+          "type": "link",
+          "title": "Coolors",
+          "desc": "مولّد باليتات ألوان",
+          "url": "https://coolors.co/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-e7305fa3",
+          "type": "link",
+          "title": "Remove.bg",
+          "desc": "إزالة الخلفية بضغطة",
+          "url": "https://www.remove.bg/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-a81e7534",
+          "type": "link",
+          "title": "Figma",
+          "desc": "تصميم واجهات وتعاون على نفس الملف أونلاين",
+          "url": "https://www.figma.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-2452be13",
+          "type": "link",
+          "title": "Pixlr",
+          "desc": "محرر صور أونلاين سريع بشكل قريب من فوتوشوب",
+          "url": "https://pixlr.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-10b0b703",
+          "type": "link",
+          "title": "Clipdrop",
+          "desc": "أدوات ذكاء اصطناعي للصور: إزالة خلفية، رفع جودة، وغيرها",
+          "url": "https://clipdrop.co/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-ea8dba6a",
+          "type": "link",
+          "title": "TinyPNG",
+          "desc": "ضغط صور PNG وJPG بحجم أصغر",
+          "url": "https://tinypng.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-7fb6c877",
+          "type": "link",
+          "title": "iLoveIMG",
+          "desc": "أدوات صور سريعة: قص وتحويل وضغط وتغيير مقاس",
+          "url": "https://www.iloveimg.com/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-2327e7fa",
+          "type": "link",
+          "title": "Manus",
+          "desc": "وكيل ذكاء اصطناعي بينفّذ مهام كاملة لوحده: بحث وتحليل وتقارير وسلايدز وبناء مواقع. فيه رصيد يومي مجاني، والمهام الكبيرة بتستهلك رصيد.",
+          "url": "https://manus.im/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-ddc3d2a3",
+          "type": "link",
+          "title": "Flowith",
+          "desc": "مساحة عمل بالذكاء الاصطناعي على كانفاس مفتوح بدل الشات الطويل، وفيها وكيل (Agent Neo) وبتشتغل بأكتر من موديل. فيه خطة مجانية.",
+          "url": "https://flowith.io/",
+          "tag": "مجاني محدود"
+        },
+        {
+          "id": "itm-1a7ca142",
+          "type": "link",
+          "title": "Duck.ai",
+          "desc": "شات ذكاء اصطناعي من DuckDuckGo بخصوصية عالية، من غير حساب، وبتختار من أكتر من موديل. مجاني بحد يومي.",
+          "url": "https://duck.ai/",
+          "tag": "مجاني محدود"
+        }
+      ]
+    },
+    {
+      "id": "links",
+      "title": "روابط مهمة",
+      "icon": "⛓",
+      "desc": "روابط مهمة.",
+      "cover": "assets/img/sections/links.svg",
+      "items": []
+    },
+    {
+      "id": "files",
+      "title": "ملفات",
+      "icon": "⬇",
+      "desc": "ملفات وموارد جاهزة للتحميل.",
+      "cover": "assets/img/sections/files.svg",
+      "items": [
+        {
+          "id": "itm-a7d5c6e4",
+          "type": "file",
+          "title": "ملفاتي على درايف",
+          "desc": "ملفات ومصادر أشاركها معاكم، حمّلوا اللي يفيدكم",
+          "url": "https://drive.google.com/drive/folders/1PRQ2BOolQ_-EJHN_OtYHDA3jF5cO01G6?usp=sharing",
+          "tag": "درايف"
+        },
+        {
+          "id": "itm-d2e9b7c1",
+          "type": "file",
+          "title": "ملفات إضافية على درايف",
+          "desc": "مجلد تاني فيه ملفات ومصادر أشاركها معاكم، حمّلوا اللي يفيدكم",
+          "url": "https://drive.google.com/drive/folders/1GaOl2Ha0AII8QSIhiuOCyA7380DVfQVl?usp=sharing",
+          "tag": "درايف"
+        }
+      ]
+    }
+  ]
+}

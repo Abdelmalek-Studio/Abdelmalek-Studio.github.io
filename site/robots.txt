@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+# بعد تحديد الدومين شغّل: node tools/seo.js --repo اسم-المستودع  (أو --domain https://YOUR-DOMAIN) وهيضيف canonical وsitemap وسطر Sitemap هنا
