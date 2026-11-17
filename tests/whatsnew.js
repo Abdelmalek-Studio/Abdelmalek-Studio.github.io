@@ -35,7 +35,7 @@ const D0 = L.loadData(L.path.join(L.SITE_DIR, "data/data.js")); let DATA = null;
   p = await open(d2); await p.click("#tabs .newchip"); await p.waitForSelector("#whatsnew");
   T("valid notes shown; invalid ones (bad date / empty title / no date / non-objects) silently skipped, no crash", await p.locator(".unote").count() === 2 && p.errs.length === 0, p.errs);
   T("note titles escaped (no <b>), text escaped, nothing executes", await p.locator(".unote h4").first().innerText() === "تحديث لوحدو" || (await p.locator(".unote h4").allInnerTexts()).includes("أدوات <b>جديدة</b>"));
-  T("no injected elements from note text", await p.locator(".unote b, .unote img").count() === 0 && !(await p.evaluate(() => window.__n)));
+  T("no injected elements from note text", await p.locator(".unote b, .unote img:not(.ficon)").count() === 0 && !(await p.evaluate(() => window.__n)));
   const note = p.locator(".unote", {hasText: "أدوات"}); T("note shows its linked items: unknown id ignored, duplicate id once", await note.locator(".cwrap").count() === 2);
   T("an item both linked in a note and dated the same day is not shown twice", (await p.locator(`#whatsnew [data-id="${it(2, 0).id}"]`).count()) === 1);
   T("note-only date (no items) still gets its own date heading", (await p.locator(".dh time").evaluateAll(n => n.map(x => x.getAttribute("datetime")))).includes("2026-11-09"));

@@ -186,3 +186,62 @@ section.sec + section.sec{margin-top:34px}
   .reportbtn{top:10px;bottom:auto;inset-inline-end:94px}
   .cwrap:has(.reportbtn) .card{padding-bottom:16px}
 }
+
+/* ---------- لوجو الموقع جنب العنوان (كل الشاشات) ----------
+   مربع أبيض صغير حواليه عشان اللوجوهات الغامقة (GitHub مثلًا) تبان على الخلفية الغامقة */
+.ficon{flex:none;width:26px;height:26px;border-radius:8px;padding:3px;background:#fff;object-fit:contain;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+.card h3:has(.ficon){display:flex;align-items:center;gap:10px}
+.fcard .ficon{width:22px;height:22px;border-radius:7px;padding:2px}
+
+/* ---------- الموبايل: تصميم مضغوط قريب من الكمبيوتر ---------- */
+@media(max-width:560px){
+  header.top{background:rgb(var(--bg-rgb))}
+
+  /* الهيرو: الصورة صغيرة جنب الاسم بدل ما تاخد نص الشاشة، والصفحة تبان بعدها على طول */
+  .hero{padding:16px 0 12px;gap:12px}
+  .hero .who{flex-direction:row;align-items:center;gap:12px;width:100%}
+  .who::before{display:none}   /* توهّج الصورة كان بيتمدد على عرض الصف كله ويعمل تمرير أفقي */
+  .avatar-ring{padding:3px;border-radius:24px}
+  .avatar{width:72px;height:72px;border-radius:21px;font-size:28px}
+  .avatar img.mark{padding:12px}
+  .hero .owner{width:auto;flex:1 1 auto;min-width:0;justify-content:flex-start;font-size:15px}
+  .hero .intro{width:100%;min-width:0}
+  .hero h1{font-size:27px;line-height:1.05}
+  .hero p.tag{font-size:14px;margin:8px 0 4px;line-height:1.6}
+  .hero p.about{font-size:12.5px;line-height:1.75}
+  /* السوشيال: أيقونات أصغر في صفوف مترتبة، والصف الأخير متوسّط */
+  .socials{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 0;margin-top:14px}
+  .socials a.ico{width:40px;height:40px;margin:0 calc((20% - 40px) / 2);flex:none}
+  .socials a.ico svg{width:19px;height:19px}
+
+  /* التابات: شريط واحد بيتحرك بالصباع بدل صفين كبار */
+  nav.tabs .chip{min-height:44px;padding:0 10px 0 8px;gap:7px;font-size:14px;border-radius:13px}
+  nav.tabs .chip::before{width:28px;height:28px;border-radius:8px;font-size:15px}
+  nav.tabs .chip::after{min-width:22px;padding:3px 7px;font-size:11.5px}
+  .cgroup{padding:10px var(--pad)}
+
+  /* الكروت: خطوط ومسافات أصغر زي الكمبيوتر */
+  .card{padding:12px 14px;gap:5px;border-radius:15px}
+  .card h3{font-size:15px;line-height:22px}
+  .card p{font-size:12.5px;line-height:20px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .go{font-size:12px;line-height:18px}
+  .meta{gap:6px}
+  .kind,.badge{font-size:10.5px;line-height:16px}
+  .badge{padding:2px 9px}   /* line-height أرقام صحيحة: عشان ارتفاع الكروت ميبقاش كسري والمسافات بينها تفضل 12px بالظبط */
+  .favbtn,.sharebtn{width:34px;height:34px;top:8px}
+  .favbtn{inset-inline-end:8px}.sharebtn{inset-inline-end:48px}
+  .reportbtn{top:8px;width:34px;height:34px;inset-inline-end:88px}
+  .cwrap .card .meta{padding-inline-end:0}
+  .cwrap:has(.sharebtn) .card .meta{padding-inline-end:0}
+  .cwrap:has(.sharebtn) .card{padding-top:48px}
+  .cwrap:has(.sharebtn) .card .meta{position:absolute;top:13px;inset-inline-start:14px;inset-inline-end:130px}
+  .grid{gap:12px}
+  .ficon{width:24px;height:24px;border-radius:7px}
+
+  /* الأدوات المميزة */
+  .fgrid{gap:8px}
+  .fcard{padding:10px 12px}
+  .fcard strong{font-size:14px}
+  .featured{margin-bottom:16px}
+  section.sec + section.sec{margin-top:22px}
+}

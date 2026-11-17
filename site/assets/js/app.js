@@ -523,6 +523,8 @@ $("#content").addEventListener("click", e => {
 // صورة نتيجة البرومبت لو مفتحتش بنشيلها ويفضل الكارت نصي
 $("#content").addEventListener("error", e => { const i = e.target; if (i.tagName === "IMG" && i.closest && i.closest(".pthumb")) { const c = i.closest(".pcard"); i.closest(".pthumb").remove(); if (c) c.classList.remove("has-img"); } }, true);
 
+// لوجو الموقع اللي مش موجود/فشل تحميله: بنشيله من الكارت (الكارت يفضل سليم من غيره)
+document.addEventListener("error", e => { const i = e.target; if (i && i.tagName === "IMG" && i.hasAttribute("data-ficon")) i.remove(); }, true);
 // صورة الفيديو: لو maxres مش موجودة نرجع لـ hqdefault
 $("#content").addEventListener("error", e => {
   const i = e.target;

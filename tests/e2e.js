@@ -34,8 +34,8 @@ async function responsiveSuite(b){
   T(tag+"header: items keep ≥12px from screen edge",hd.edge>=12,"edge="+Math.round(hd.edge));
   // 3) الصورة الشخصية والاسم
   const hr=await p.evaluate(()=>{const a=document.querySelector("#avatar").getBoundingClientRect(),o=document.querySelector("#owner").getBoundingClientRect(),n=document.querySelector("#hName"),im=document.querySelector("#avatar img");
-    return{avIn:a.left>=0&&a.right<=innerWidth&&a.width>=100,avSq:Math.abs(a.width-a.height)<2,imgOk:!!im&&im.complete&&im.naturalWidth>0,under:o.top>=a.bottom-1&&Math.abs((o.left+o.right)/2-(a.left+a.right)/2)<40,ownIn:o.left>=0&&o.right<=innerWidth,nameIn:n.scrollWidth<=n.clientWidth+1&&n.getBoundingClientRect().right<=innerWidth+1&&n.getBoundingClientRect().left>=-1}});
-  T(tag+"hero: photo visible/square/loaded, owner under photo, name not clipped",hr.avIn&&hr.avSq&&hr.imgOk&&hr.under&&hr.ownIn&&hr.nameIn,JSON.stringify(hr));
+    return{avIn:a.left>=0&&a.right<=innerWidth&&a.width>=64,avSq:Math.abs(a.width-a.height)<2,imgOk:!!im&&im.complete&&im.naturalWidth>0,under:(o.top>=a.bottom-1&&Math.abs((o.left+o.right)/2-(a.left+a.right)/2)<40)||(Math.abs((o.top+o.bottom)/2-(a.top+a.bottom)/2)<40&&(o.right<=a.left+1||o.left>=a.right-1)),ownIn:o.left>=0&&o.right<=innerWidth,nameIn:n.scrollWidth<=n.clientWidth+1&&n.getBoundingClientRect().right<=innerWidth+1&&n.getBoundingClientRect().left>=-1}});
+  T(tag+"hero: photo visible/square/loaded (≥64px), owner beside or under photo, name not clipped",hr.avIn&&hr.avSq&&hr.imgOk&&hr.under&&hr.ownIn&&hr.nameIn,JSON.stringify(hr));
   // 4) التابات الثابتة أثناء التمرير
   const st=await p.evaluate(async()=>{const o=[];for(const y of [900,2600,5200]){window.scrollTo(0,y);await new Promise(r=>setTimeout(r,250));const hh=document.querySelector("header.top").getBoundingClientRect();o.push(hh.top===0&&hh.height>0)}window.scrollTo(0,0);return o});
   T(tag+"header stays pinned at 3 scroll positions",st.every(Boolean),JSON.stringify(st));
@@ -49,7 +49,7 @@ async function responsiveSuite(b){
   const gr=await p.evaluate(()=>{let bad=[],maxCols=0;document.querySelectorAll(".grid").forEach((g,gi)=>{const cs=[...g.children].map(c=>({l:c.offsetLeft,r:c.offsetLeft+c.offsetWidth,t:c.offsetTop,b:c.offsetTop+c.offsetHeight}));const gw={l:0,r:g.clientWidth};   // offset-based: مش متأثر بحركة الظهور / hover
     cs.forEach((r,i)=>{if(r.l<gw.l-1||r.r>gw.r+1)bad.push("out:"+gi+"/"+i);cs.forEach((q,j)=>{if(j>i&&!(r.r<=q.l+.5||q.r<=r.l+.5||r.b<=q.t+.5||q.b<=r.t+.5))bad.push("overlap:"+gi+"/"+i+"-"+j)})});
     const rows={};cs.forEach(r=>{(rows[r.t]=rows[r.t]||[]).push(r)});Object.values(rows).forEach(row=>{maxCols=Math.max(maxCols,row.length);row.sort((a,b)=>a.l-b.l);for(let i=1;i<row.length;i++){const gap=row[i].l-row[i-1].r;if(gap<12||gap>16)bad.push("gap"+Math.round(gap))}});
-    const ys=Object.keys(rows).map(Number).sort((a,b)=>a-b);for(let i=1;i<ys.length;i++){const prevB=Math.max(...rows[ys[i-1]].map(r=>r.b));const gap=ys[i]-prevB;if(gap<12||gap>16)bad.push("vgap"+Math.round(gap))}});
+    const ys=Object.keys(rows).map(Number).sort((a,b)=>a-b);for(let i=1;i<ys.length;i++){const prevB=Math.max(...rows[ys[i-1]].map(r=>r.b));const gap=ys[i]-prevB;if(gap<11||gap>17)bad.push("vgap"+Math.round(gap))   /* ±1px: القياس بـ offsetTop/offsetHeight (أرقام صحيحة) فارتفاع كارت الفيديو الكسري (16:9) ممكن يطلع فرق 1px حسابيًا مع إن المسافة الفعلية 12px */}});
     return{bad:[...new Set(bad)].slice(0,6),maxCols,tracks:[...document.querySelectorAll(".grid")].map(g=>getComputedStyle(g).gridTemplateColumns.split(" ").filter(Boolean).length)}});
  // عدد الأعمدة المتوقع بالظبط لكل مقاس (مش "على الأقل").
  // مرحلة التصميم: الموقع بقى بيملا الشاشة (بدل عمود ثابت 1100px) والأقسام سايدبار على الديسكتوب (≥1000px) — فاتغيّرت القيم المتوقعة للمقاسات الكبيرة
