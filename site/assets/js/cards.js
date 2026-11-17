@@ -5,7 +5,7 @@ function ytId(url){
 }
 const ytThumb = (url, q = "maxresdefault") => { const id = ytId(url); return id ? `https://img.youtube.com/vi/${id}/${q}.jpg` : ""; };
 
-/* لوجو الموقع (favicon) جنب العنوان: بيتحمّل بس لما الكارت يقرب من الشاشة (lazy)، ولو فشل بيتشال لوحده (شوف مستمع error في app.js) */
+/* لوجو الموقع (favicon) جنب العنوان: بيتحمّل بس لما الكارت يقرب من الشاشة (lazy)، ولو فشل بيتبدّل بأيقونة عامة بنفس المقاس (شوف مستمع error في app.js) */
 const siteHost = u => { try { const x = new URL(String(u ?? "")); return /^https?:$/.test(x.protocol) ? x.hostname : ""; } catch { return ""; } };
 const siteIcon = u => { const h = siteHost(u); return h ? `<img class="ficon" data-ficon src="https://www.google.com/s2/favicons?sz=64&domain=${encodeURIComponent(h)}" alt="" width="26" height="26" loading="lazy" decoding="async" referrerpolicy="no-referrer">` : ""; };
 

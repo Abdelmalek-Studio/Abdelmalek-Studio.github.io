@@ -13,10 +13,11 @@ const PROD = ["routing.js", "favorites.js", "whatsnew.js", "search-filters.js", 
 const rows = [];
 function run(f, label, kind, env = {}, skip = false, plain = false) {
   if (skip) { rows.push({label, kind, total: 0, failed: 0, state: "لم يُنفَّذ (--quick)"}); return; }
-  const t = Date.now(); const r = spawnSync(process.execPath, [path.join(__dirname, f)], {cwd: ROOT, env: {...process.env, ...env}, encoding: "utf8", maxBuffer: 1 << 28});
+  const t = Date.now(); const r = spawnSync(process.execPath, [path.join(__dirname, f)], {cwd: ROOT, env: {...process.env, NODE_OPTIONS: ((process.env.NODE_OPTIONS || "") + " --require " + path.join(__dirname, "_stub-net.js").replace(/\\/g, "/")).trim(), ...env}, encoding: "utf8", maxBuffer: 1 << 28});
   const out = (r.stdout || "") + (r.stderr || ""); fs.writeFileSync(path.join(LOGS, label.replace(/[^\w.-]+/g, "_") + ".log"), out);
   const m = [...out.matchAll(/TOTAL\s+(\d+)\s+FAILED\s+(\d+)/g)].pop(), total = m ? +m[1] : 0, failed = m ? +m[2] : (plain && r.status !== 0 ? 1 : 0), crashed = plain ? false : (!m || /CRASH/.test(out));
   rows.push({label, kind, total, failed, state: crashed ? "لم يكتمل (انهار)" : failed ? "فشل" : "نجح", secs: Math.round((Date.now() - t) / 1000)});
+  if (failed && !crashed) out.split("\n").filter(l => /FAIL/.test(l) && !/TOTAL/.test(l)).slice(0, 6).forEach(l => console.log("   ↳ " + l.slice(0, 400)));   // يطبع سبب الفشل في لوج GitHub مباشرة
   console.log(`${label.padEnd(34)} ${String(total).padStart(4)} اختبار | فشل ${failed} | ${rows[rows.length - 1].state} | ${rows[rows.length - 1].secs}s`);
 }
 if (!fs.existsSync(path.join(ROOT, "node_modules/playwright")) && !process.env.NODE_PATH) console.warn("تنبيه: playwright مش متسطّب (npm install) أو NODE_PATH مش متظبط.");

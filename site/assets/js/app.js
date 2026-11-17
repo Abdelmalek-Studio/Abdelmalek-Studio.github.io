@@ -523,8 +523,9 @@ $("#content").addEventListener("click", e => {
 // صورة نتيجة البرومبت لو مفتحتش بنشيلها ويفضل الكارت نصي
 $("#content").addEventListener("error", e => { const i = e.target; if (i.tagName === "IMG" && i.closest && i.closest(".pthumb")) { const c = i.closest(".pcard"); i.closest(".pthumb").remove(); if (c) c.classList.remove("has-img"); } }, true);
 
-// لوجو الموقع اللي مش موجود/فشل تحميله: بنشيله من الكارت (الكارت يفضل سليم من غيره)
-document.addEventListener("error", e => { const i = e.target; if (i && i.tagName === "IMG" && i.hasAttribute("data-ficon")) i.remove(); }, true);
+// لوجو الموقع اللي مش موجود/فشل تحميله: بنبدّله بأيقونة عامة بنفس المقاس (الكارت ميتحركش)
+const FICON_FALLBACK = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239aa0aa' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18'/%3E%3C/svg%3E";
+document.addEventListener("error", e => { const i = e.target; if (i && i.tagName === "IMG" && i.hasAttribute("data-ficon") && !i.hasAttribute("data-fb")) { i.setAttribute("data-fb", ""); i.src = FICON_FALLBACK; } }, true);   // أيقونة كرة أرضية بدل اللوجو: نفس المقاس فمفيش اهتزاز في الكارت
 // صورة الفيديو: لو maxres مش موجودة نرجع لـ hqdefault
 $("#content").addEventListener("error", e => {
   const i = e.target;
