@@ -28,13 +28,19 @@ function cardHTML(it, idx){
 
   /* فيديو يوتيوب: الصورة المصغرة ظاهرة بره، والضغط على الكارت بيفتح الفيديو */
   const vid = it.type === "video" ? ytId(it.url) : "";
-  const thumb = vid
-    ? `<div class="thumb"><img src="${esc(ytThumb(it.url))}" data-fallback="${esc(ytThumb(it.url, "hqdefault"))}" alt="" loading="lazy"><span class="play" aria-hidden="true"></span></div>`
-    : "";
   const isChannel = /youtube\.com\/(@|channel\/|c\/|user\/)/i.test(String(it.url));
   const label = it.type === "file" ? "تحميل / فتح ↗" : it.type === "video" ? "مشاهدة على يوتيوب ↗" : isChannel ? "افتح القناة ↗" : "افتح الموقع ↗";
-  return `<a class="card${vid ? " vcard" : ""}" data-id="${esc(it.id || "")}"${vid && it.autoTitle ? ` data-yt="${esc(vid)}"` : ""} href="${esc(safeUrl(it.url))}"${blank(it.url)}>${thumb}${tag}
-    <h3>${vid ? "" : siteIcon(it.url)}${esc(it.title)}</h3>${it.desc ? `<p>${esc(it.desc)}</p>` : ""}<span class="go">${label}</span></a>`;
+  if (vid) {
+    const thumb = `<div class="thumb"><img src="${esc(ytThumb(it.url))}" data-fallback="${esc(ytThumb(it.url, "hqdefault"))}" alt="" loading="lazy"><span class="play" aria-hidden="true"></span></div>`;
+    return `<a class="card vcard" data-id="${esc(it.id || "")}"${it.autoTitle ? ` data-yt="${esc(vid)}"` : ""} href="${esc(safeUrl(it.url))}"${blank(it.url)}>${thumb}${tag}
+      <h3>${esc(it.title)}</h3>${it.desc ? `<p>${esc(it.desc)}</p>` : ""}<span class="go">${label}</span></a>`;
+  }
+
+  /* لينك/ملف: كارت موحّد ونضيف — شارة السعر مثبتة فوق في نفس المكان دايمًا، لوجو الموقع + اسمه في سطر واحد، وسطر وصف واحد بس */
+  const pv = priceOf(it);
+  const pbadge = pv ? `<span class="pbadge${pv === "مجاني" ? " free" : pv === "مدفوع" ? " paid" : " ltd"}">${esc(pv)}</span>` : "";
+  return `<a class="card lcard" data-id="${esc(it.id || "")}" href="${esc(safeUrl(it.url))}"${blank(it.url)}>${pbadge}
+    <h3>${siteIcon(it.url)}<span class="t">${esc(it.title)}</span></h3>${it.desc ? `<p>${esc(it.desc)}</p>` : ""}${it.type === "file" ? `<span class="go">${label}</span>` : ""}</a>`;
 }
 
 /* كارت صغير للأدوات المميزة: الـ Prompt بيفتح النافذة، والباقي لينك */

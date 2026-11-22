@@ -30,7 +30,7 @@ const clean = (r, w) => r.x === undefined && r.polluted === undefined && r.nodes
   const raw = await L.download(a, "#download", tmp); T("exported file has no raw U+2028/U+2029 line separators (valid as a JS source)", !/[\u2028\u2029]/.test(raw));
   T("exported data.js is pure JSON assignment: re-parses to the same object", JSON.stringify(L.parseData(raw)) === JSON.stringify(exH));
   /* ===== B) روابط خطيرة في اللوحة ===== */
-  const U = L.clone(CUR); const ui = items(U); const bad = ["javascript:window.__x=1", "JaVaScRiPt:window.__x=2", " javascript:window.__x=3", "\tjava\nscript:window.__x=4", "data:text/html,<script>window.__x=5</script>", "vbscript:x", "file:///etc/passwd", "//evil.example/x"];
+  const U = L.clone(CUR); const ui = items(U).filter(i => i.type === "link"); const bad = ["javascript:window.__x=1", "JaVaScRiPt:window.__x=2", " javascript:window.__x=3", "\tjava\nscript:window.__x=4", "data:text/html,<script>window.__x=5</script>", "vbscript:x", "file:///etc/passwd", "//evil.example/x"];
   bad.forEach((u, k) => { ui[k].url = u; }); U.site.socials[0].url = "javascript:window.__x=6"; ui[8].image = "javascript:window.__x=8"; U.sections[0].cover = "x\");}</style><img src=x onerror=window.__x=1>";
   await a.setInputFiles("#restore", wf("u.json", U)); await a.waitForTimeout(600);
   await a.click("#download").catch(() => {}); await a.waitForTimeout(400); const et = await a.innerText("#errbox");
@@ -44,10 +44,10 @@ const clean = (r, w) => r.x === undefined && r.polluted === undefined && r.nodes
   const c1 = await mkA(); await c1.setInputFiles("#file", wf("code.js", code)); await c1.waitForTimeout(500); const rc = await injected(c1);
   T("admin: data.js with extra trailing code → code is NEVER executed", rc.x === undefined, rc.x);
   const wrapped = "window.STUDIO_DATA = (function(){window.__x='IIFE';return " + JSON.stringify(CUR) + ";})();"; await c1.setInputFiles("#file", wf("iife.js", wrapped)); await c1.waitForTimeout(500);
-  T("admin: data.js built from a function call is refused/not executed", (await injected(c1)).x === undefined && (await c1.locator(".item").count()) === 144);
+  T("admin: data.js built from a function call is refused/not executed", (await injected(c1)).x === undefined && (await c1.locator(".item").count()) === 147);
   const pp = JSON.stringify(CUR).replace('{"version"', '{"__proto__":{"polluted":"yes"},"constructor":{"prototype":{"polluted":"yes"}},"version"'); await c1.setInputFiles("#restore", wf("pp.json", pp)); await c1.waitForTimeout(500);
   const rp = await injected(c1); T("admin: __proto__/constructor.prototype keys can't pollute Object.prototype", rp.polluted === undefined, rp);
-  const pe = L.parseData(await L.download(c1, "#download", tmp)); T("admin: export after prototype-pollution attempt keeps all 144 items and Object.prototype stays clean", cnt(pe) === 144 && (await injected(c1)).polluted === undefined, cnt(pe));
+  const pe = L.parseData(await L.download(c1, "#download", tmp)); T("admin: export after prototype-pollution attempt keeps all 147 items and Object.prototype stays clean", cnt(pe) === 147 && (await injected(c1)).polluted === undefined, cnt(pe));
   function cnt(d) { return (d.sections || []).reduce((n, s) => n + s.items.length, 0); }
   // اسم الملف نفسه معادي
   const fn = path.join(tmp, `"><img src=x onerror=window.__x=1>.json`); fs.writeFileSync(fn, JSON.stringify(CUR)); await c1.setInputFiles("#restore", fn); await c1.waitForTimeout(500);
@@ -55,28 +55,28 @@ const clean = (r, w) => r.x === undefined && r.polluted === undefined && r.nodes
   T("no JS errors in admin security tests", a.errs.length + c1.errs.length === 0, a.errs.concat(c1.errs));
 
   /* ===== D) الموقع: بيانات معادية ===== */
-  SERVED = L.dataJs(H1); const s = await env.mk(); await s.goto(env.BASE); await s.waitForSelector(".card, .fcard");
+  SERVED = L.dataJs(H1); const s = await env.mk(); await s.goto(env.BASE); await s.waitForSelector("#tabs .chip, .fcard");
   T("site: hostile titles/desc/site fields render as text (no execution, no injected nodes)", clean(await injected(s)), await injected(s));
   T("site: payload visible as literal text", (await s.innerText("body")).includes("<img src=x"));
   for (const h of ["#v=new", "#s=" + H1.sections[1].id, "#t=prompt", "#v=fav"]) { await s.evaluate(h => { location.hash = h; }, h); await s.waitForTimeout(150); T(`site: hostile data in view ${h.slice(0, 20)} is safe`, clean(await injected(s)), await injected(s)); }
-  const pr = items(H1).find(i => i.type === "prompt"); await s.goto(env.BASE + "#i=" + pr.id); await s.reload(); await s.waitForSelector(".card, .fcard"); await s.waitForTimeout(500);
+  const pr = items(H1).find(i => i.type === "prompt"); await s.goto(env.BASE + "#i=" + pr.id); await s.reload(); await s.waitForSelector("#tabs .chip, .fcard"); await s.waitForTimeout(500);
   T("site: prompt modal with hostile text/tool is safe", clean(await injected(s)) && (await s.locator("#modal, [role=dialog]").first().innerText().catch(() => "")).includes("<img"), await injected(s));
   await s.evaluate(() => { try { localStorage.setItem("as-fav", JSON.stringify(["x", "<img src=x onerror=window.__x=1>"])); localStorage.setItem("as-fav-groups", JSON.stringify({v: 1, groups: [{id: "g-aaaaaa", name: "<img src=x onerror=window.__x=2>"}, {id: "__proto__", name: "p"}], map: {"__proto__": "g-aaaaaa", "constructor": "g-aaaaaa"}})); } catch (e) {} });
-  await s.goto(env.BASE + "#v=fav"); await s.reload(); await s.waitForSelector("#content"); await s.waitForTimeout(300);
+  await s.goto(env.BASE + "#v=fav"); await s.reload(); await s.waitForSelector("#content", {state: "attached"}); await s.waitForTimeout(300);
   T("site: poisoned localStorage (fav ids / group names / __proto__ keys) renders safely", clean(await injected(s)), await injected(s));
   /* hash معادي */
   const hashes = ["#q=" + encodeURIComponent(PAY), "#i=" + encodeURIComponent(PAY), "#s=" + encodeURIComponent(PAY) + "&t=" + encodeURIComponent(PAY) + "&p=" + encodeURIComponent(PAY) + "&c=" + encodeURIComponent(PAY) + "&g=" + encodeURIComponent(PAY) + "&v=" + encodeURIComponent(PAY), "#" + encodeURIComponent("\"><img src=x onerror=window.__x=1>"), "#__proto__=1&constructor=2"];
-  for (const h of hashes) { await s.goto(env.BASE + h); await s.reload(); await s.waitForSelector("#content"); await s.waitForTimeout(250); T(`site: hostile URL hash is inert (${h.slice(0, 18)}…)`, clean(await injected(s)), await injected(s)); }
+  for (const h of hashes) { await s.goto(env.BASE + h); await s.reload(); await s.waitForSelector("#content", {state: "attached"}); await s.waitForTimeout(250); T(`site: hostile URL hash is inert (${h.slice(0, 18)}…)`, clean(await injected(s)), await injected(s)); }
   T("site: no JS errors with hostile data", s.errs.length === 0, s.errs);
 
   /* ===== E) الموقع: روابط خطيرة في البيانات ===== */
-  SERVED = L.dataJs(U); const u = await env.mk(); await u.goto(env.BASE); await u.waitForSelector(".card, .fcard");
+  SERVED = L.dataJs(U); const u = await env.mk(); await u.goto(env.BASE); await u.waitForSelector("#tabs .chip, .fcard");
   const hrefs = async () => u.evaluate(() => [...document.querySelectorAll("a[href]")].map(a => a.getAttribute("href")));
   const okH = h => /^(https?:|mailto:|#|assets\/|\.\.?\/|\/|tel:)/i.test(h.trim()) && !/^\s*(javascript|data|vbscript|file):/i.test(h);
   let hs = await hrefs(); T("site: no <a href> with javascript:/data:/vbscript:/file: anywhere (home)", hs.every(okH), hs.filter(h => !okH(h)));
   let badHrefs = [], seen = 0; for (const sec of U.sections.filter(x => x.items.length)) { await u.evaluate(id => { location.hash = "#s=" + id; }, sec.id); await u.waitForTimeout(80); hs = await hrefs(); seen += hs.length; badHrefs.push(...hs.filter(h => !okH(h))); }
   T(`site: every section view (${seen} links checked): no unsafe href`, seen > 100 && badHrefs.length === 0, badHrefs);
-  await u.evaluate(() => { location.hash = "#t=link"; }); await u.waitForTimeout(120); const bl = u.locator('a.card[href="#"]'); const nb = await bl.count();
+  let nb = 0, bl = u.locator('a.card[href="#"]'); for (const sec of U.sections.filter(x => x.items.length)) { await u.evaluate(id => { location.hash = "#s=" + id; }, sec.id); await u.waitForTimeout(100); nb = await bl.count(); if (nb) break; }
   if (nb) { const pg = u.context().pages().length; await bl.first().click().catch(() => {}); await u.waitForTimeout(300); T("site: clicking a card with a neutralised URL runs nothing and opens no new tab", (await injected(u)).x === undefined && u.context().pages().length === pg, {pagesBefore: pg, pagesAfter: u.context().pages().length}); } else T("site: neutralised URL cards exist (hostile URLs became href=#)", false, "no href=# card found");
   T("site: <img src>/background from javascript: image or hostile cover not used", await u.evaluate(() => ![...document.querySelectorAll("img")].some(i => /^\s*javascript:/i.test(i.getAttribute("src") || "")) && !/javascript:|onerror/i.test(document.documentElement.innerHTML.replace(/<script[\s\S]*?<\/script>/g, ""))), "");
   T("site: no code executed with dangerous URLs", clean(await injected(u)), await injected(u));

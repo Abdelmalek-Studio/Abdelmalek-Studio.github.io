@@ -38,6 +38,13 @@ const items = d => d.sections.flatMap(s => s.items);
   T("the only deltas vs legacy besides price/category are the 2 documented ones (site.visitors=false, Magnific description)", intended.visitors === false && intended.magnificDescChanged, intended);
   delete rest.site.visitors; mg.desc = mgLegacy.desc;  items(rest).forEach(i => { if (i.featured === true) delete i.featured; });
   items(rest).forEach(i => { if (i.id === "itm-61fcdbd3" && i.title === "Pinterest (صفحتي)") i.title = "Pinterest"; });   // تعديل مقصود رابع (مراجعة): تمييز Pinterest بتاع صاحب الموقع عن Pinterest العام   // الأدوات المميزة (featured) تعديل مقصود تالت: 6 عناصر موجودة فعلًا
+  // تعديلات مقصودة (إعادة التصميم): ترتيب الأقسام (الفيديوهات الأول وشغلي آخر الصفحة) + نص tagline/about الجديد
+  rest.sections.sort((a, b) => legacy.sections.findIndex(x => x.id === a.id) - legacy.sections.findIndex(x => x.id === b.id));
+  rest.site.tagline = legacy.site.tagline; rest.site.about = legacy.site.about; rest.site.photo = legacy.site.photo;   // الصورة الجديدة (photo.jpg الأصلية بدل webp)
+  // تغيير مقصود: قسم «شغلي» اتضاف له YouTube وLinkedIn وTikTok (من روابط السوشيال الموجودة) ووصفه اتحدّث
+  { const w = rest.sections.find(x => x.id === "work"), lw = legacy.sections.find(x => x.id === "work"); w.items = w.items.filter(i => lw.items.some(j => j.id === i.id)); w.desc = lw.desc; }
+  // تعديل مقصود موثّق (مراجعة): قسم «روابط مهمة» كان فاضي (0 عنصر) واتشال من البيانات الحالية — بنشيله من القديمة قبل المقارنة
+  legacy.sections = legacy.sections.filter(s => !(s.id === "links" && s.items.length === 0));
   T("project's current data.js == legacy + price/category + those 2 documented changes ONLY (nothing else touched)", JSON.stringify(rest) === JSON.stringify(legacy));
   T("project's current data.js already migrated (re-running changes nothing)", /price: 0 \| category: 0/.test(run(L.path.join(L.ROOT, "site/data/data.js"), ["--dry"]).stdout));
   /* 3) حالات خاصة */
@@ -54,7 +61,7 @@ const items = d => d.sections.flatMap(s => s.items);
   T("edge: file with partial migration is stable on re-run", eh1 === eh2);
   /* 4) نفس قواعد القراءة في الموقع واللوحة */
   const env = await H.start(); const site = await env.mk(), adm = await env.mk();
-  await site.goto(env.BASE); await site.waitForSelector(".card"); await adm.goto(env.ADMIN); await adm.waitForSelector(".item");
+  await site.goto(env.BASE); await site.waitForSelector("#tabs .chip", {state: "attached"}); await adm.goto(env.ADMIN); await adm.waitForSelector(".item");
   const matrix = [{tag: "مجاني"}, {tag: "مجاني محدود"}, {tag: "مدفوع"}, {tag: "صور"}, {tag: "  مدفوع "}, {tag: 5}, {}, {tag: "مجاني", price: ""}, {tag: "مجاني", price: "مدفوع"}, {tag: "صور", category: ""}, {tag: "صور", category: "لوجو"}, {price: "free"}, {price: "مجاني", category: "صور"}, {tag: "مدفوع", category: "x"}, {price: null}, {category: null, tag: "مجاني"}];
   const calc = m => page => page.evaluate(arr => arr.map(i => [priceOf(i), categoryOf(i)]), m);
   const a = await calc(matrix)(site), b = await calc(matrix)(adm);

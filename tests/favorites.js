@@ -3,15 +3,15 @@ const L = require("./lib"), H = L.harness("favorites"), {T} = H;
 const D = L.loadData(L.path.join(L.SITE_DIR, "data/data.js")), ALL = D.sections.flatMap(s => s.items);
 (async () => {
   const env = await H.start(), BASE = env.BASE;
-  const open = async (init, hash = "") => { const p = await env.mk(); if (init) await p.addInitScript(init, undefined); await p.goto(BASE + hash); await p.waitForSelector(".card, #favorites"); return p; };
+  const open = async (init, hash = "#s=" + FS.id) => { const p = await env.mk(); if (init) await p.addInitScript(init, undefined); await p.goto(BASE + hash); await p.waitForSelector("#tabs .chip, #favorites", {state: "attached"}); await p.waitForTimeout(350); return p; };
   const ls = (p, k) => p.evaluate(k => localStorage.getItem(k), k);
   const favView = async p => { await p.click("#favnav"); await p.waitForSelector("#favorites"); };
   const cards = p => p.locator("#content .cwrap").count();
   const chips = p => p.locator("[data-gchip]").allInnerTexts();
-  const ids = ALL.slice(0, 6).map(i => i.id), OLD = JSON.stringify([...ids.slice(0, 3), "itm-deleted-long-ago"]);
+  const FS = D.sections.find(x => x.items.filter(i => i.id).length >= 6), ids = FS.items.filter(i => i.id).slice(0, 6).map(i => i.id)   /* الرئيسية من غير كروت → بنفتح قسم فيه الكروت */, OLD = JSON.stringify([...ids.slice(0, 3), "itm-deleted-long-ago"]);
 
   /* ===== المفضلة القديمة (قبل ظهور المجموعات) ===== */
-  let p = await env.mk(); await p.goto(BASE); await p.evaluate(v => localStorage.setItem("as-fav", v), OLD); await p.reload(); await p.waitForSelector(".card");
+  let p = await env.mk(); await p.goto(BASE); await p.evaluate(v => localStorage.setItem("as-fav", v), OLD); await p.reload(); await p.waitForSelector("#tabs .chip", {state: "attached"}); await L.go(p, FS.id);
   T("old favorites (saved by the previous version) still show hearts on cards", await p.locator(".favbtn.on").count() === 3);
   T("favorites counter counts only existing items (stale id ignored)", await p.locator("#favcount").innerText() === "3");
   await favView(p); T("old favorites listed in «مفضلاتي»", await cards(p) === 3);
@@ -64,33 +64,33 @@ const D = L.loadData(L.path.join(L.SITE_DIR, "data/data.js")), ALL = D.sections.
   const fin = JSON.parse(await ls(p, "as-fav")); T("old favorite ids (incl. the stale one) are all still stored after all group operations", ["itm-deleted-long-ago", ...ids.slice(0, 3)].filter(x => x !== victim).every(x => fin.includes(x)), fin);
   T("deleting group asked for confirmation", p.dialogs.some(d => /تحذف/.test(d)));
   /* ===== عمل مفضلة جديدة بعد المجموعات ===== */
-  await p.click("[data-favback]"); await p.locator(`.favbtn[data-fav="${ids[5]}"]`).click(); await favView(p).catch(() => {}); T("new favorites after groups exist work normally", JSON.parse(await ls(p, "as-fav")).includes(ids[5]));
+  await p.click("[data-favback]"); await L.go(p, FS.id); await p.locator(`.favbtn[data-fav="${ids[5]}"]`).click(); await favView(p).catch(() => {}); T("new favorites after groups exist work normally", JSON.parse(await ls(p, "as-fav")).includes(ids[5]));
 
   /* ===== تخزين تالف / خبيث ===== */
   const bad = [["{{{", "not JSON"], ["null", "null"], ['"str"', "string"], ["[]", "array"], ['{"groups":"x"}', "groups not array"], ['{"groups":[{"id":"bad id","name":"x"},{"id":"g-abc123"},{"id":"g-abc123","name":"ok"},{"id":"g-abc123","name":"dup"},{"id":5,"name":"n"}],"map":{"a":"g-abc123","b":"nope","c":5,"__proto__":"g-abc123"}}', "mixed garbage"],
     [JSON.stringify({groups: Array.from({length: 40}, (_, k) => ({id: "g-" + String(k).padStart(4, "0") + "a", name: "n" + k})), map: {}}), "40 groups"], [JSON.stringify({groups: [{id: "g-x1y2z3", name: "<img src=x onerror=window.__g=2>"}], map: {}}), "xss name"]];
   let badRes = [];
   for (const [val, why] of bad) {
-    const q = await env.mk(); await q.goto(BASE); await q.evaluate(([v, f]) => { localStorage.setItem("as-fav-groups", v); localStorage.setItem("as-fav", f); }, [val, JSON.stringify(ids.slice(0, 2))]); await q.reload(); await q.waitForSelector(".card");
+    const q = await env.mk(); await q.goto(BASE); await q.evaluate(([v, f]) => { localStorage.setItem("as-fav-groups", v); localStorage.setItem("as-fav", f); }, [val, JSON.stringify(ids.slice(0, 2))]); await q.reload(); await q.waitForSelector("#tabs .chip", {state: "attached"});
     await favView(q); const n = await q.locator("[data-gchip]").count(); if (q.errs.length || await q.evaluate(() => window.__g) || n > 14 || await cards(q) !== 2) badRes.push(why + ":" + q.errs[0] + n);
     await q.locator("[data-gnew]").click(); await q.fill("#gname", "جديدة"); await q.keyboard.press("Enter"); if (q.errs.length) badRes.push(why + " after add");
     await q.context().close();
   }
   T(`${bad.length} corrupt/hostile group storages: no errors, sanitized, favorites intact, still usable`, badRes.length === 0, badRes);
   const bf = [["{{{"], ['{"a":1}'], ['"x"'], ["[1,null,{},[],\"" + "x".repeat(200) + "\"," + JSON.stringify(ids[0]) + "]"]]; let bfBad = [];
-  for (const [v] of bf) { const q = await env.mk(); await q.goto(BASE); await q.evaluate(v => localStorage.setItem("as-fav", v), v); await q.reload(); await q.waitForSelector(".card"); const t = await q.locator("#favcount").innerText().catch(() => ""); if (q.errs.length) bfBad.push(v.slice(0, 10)); await q.context().close(); }
+  for (const [v] of bf) { const q = await env.mk(); await q.goto(BASE); await q.evaluate(v => localStorage.setItem("as-fav", v), v); await q.reload(); await q.waitForSelector("#tabs .chip", {state: "attached"}); const t = await q.locator("#favcount").innerText().catch(() => ""); if (q.errs.length) bfBad.push(v.slice(0, 10)); await q.context().close(); }
   T("corrupt as-fav (old key) never breaks the site", bfBad.length === 0, bfBad);
-  T("a valid id inside a polluted as-fav array is still recognized", await (async () => { const q = await env.mk(); await q.goto(BASE); await q.evaluate(v => localStorage.setItem("as-fav", v), bf[3][0]); await q.reload(); await q.waitForSelector(".card"); return await q.locator(".favbtn.on").count() === 1; })());
+  T("a valid id inside a polluted as-fav array is still recognized", await (async () => { const q = await env.mk(); await q.goto(BASE); await q.evaluate(v => localStorage.setItem("as-fav", v), bf[3][0]); await q.reload(); await q.waitForSelector("#tabs .chip", {state: "attached"}); await L.go(q, FS.id); return await q.locator(".favbtn.on").count() === 1; })());
   /* URL */
   const u1 = await open(null, "#v=fav&g=g-nonexist"); T("unknown group in URL ignored (shows all favorites view)", await u1.locator("#favorites").count() === 1 && await u1.locator("[data-gchip].on").count() <= 1 && u1.errs.length === 0);
-  const u2 = await env.mk(); await u2.goto(BASE); await u2.evaluate(() => { localStorage.setItem("as-fav", '["' + document.querySelector(".favbtn").dataset.fav + '"]'); localStorage.setItem("as-fav-groups", '{"v":1,"groups":[{"id":"g-aaa111","name":"س"}],"map":{}}'); }); await u2.goto(BASE + "#v=fav&g=none"); await u2.reload(); await u2.waitForSelector("#favorites");
+  const u2 = await env.mk(); await u2.goto(BASE + "#s=" + FS.id); await u2.waitForSelector(".favbtn"); await u2.evaluate(() => { localStorage.setItem("as-fav", '["' + document.querySelector(".favbtn").dataset.fav + '"]'); localStorage.setItem("as-fav-groups", '{"v":1,"groups":[{"id":"g-aaa111","name":"س"}],"map":{}}'); }); await u2.goto(BASE + "#v=fav&g=none"); await u2.reload(); await u2.waitForSelector("#favorites");
   T("#g=none shows the no-group view", await cards(u2) === 1);
   /* لوحة المفاتيح */
   const k = await open(null); await k.locator(".favbtn").first().focus(); await k.keyboard.press("Enter"); T("favorite toggles with keyboard (Enter) and exposes aria-pressed", await k.locator(".favbtn").first().getAttribute("aria-pressed") === "true");
   await k.keyboard.press("Space"); T("Space toggles back", await k.locator(".favbtn").first().getAttribute("aria-pressed") === "false");
   /* ثبات عبر جلسات */
-  const ctx = await env.browser.newContext(); const a = await ctx.newPage(); await a.goto(BASE); await a.waitForSelector(".card"); await a.locator(".favbtn").nth(1).click(); await a.close();
-  const b = await ctx.newPage(); await b.goto(BASE); await b.waitForSelector(".card"); T("favorites persist across tabs/sessions of the same browser", await b.locator(".favbtn.on").count() === 1);
+  const ctx = await env.browser.newContext(); const a = await ctx.newPage(); await a.goto(BASE + "#s=" + FS.id); await a.waitForSelector(".favbtn"); await a.locator(".favbtn").nth(1).click(); await a.close();
+  const b = await ctx.newPage(); await b.goto(BASE + "#s=" + FS.id); await b.waitForSelector(".favbtn"); T("favorites persist across tabs/sessions of the same browser", await b.locator(".favbtn.on").count() === 1);
   T("no JS errors in any favorites scenario", p.errs.length === 0 && k.errs.length === 0, p.errs);
   await H.end(env);
 })().catch(e => { console.error("CRASH", e); process.exit(2); });

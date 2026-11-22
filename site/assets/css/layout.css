@@ -10,7 +10,7 @@ header.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);backgroun
 .search input{width:100%;background:var(--card);border:1px solid var(--line);color:var(--text);padding:9px 14px;border-radius:12px;font:inherit;font-size:14px;outline:none}
 .search input:focus{border-color:var(--accent)}
 .hero{padding:54px 0 34px;display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap}
-.avatar{width:140px;height:140px;border-radius:34px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;font-size:54px;font-weight:800;overflow:hidden;flex:none;box-shadow:0 24px 60px -24px var(--accent2)}
+.avatar{display:grid;place-items:center;font-weight:800;overflow:hidden;flex:none}
 .avatar img{width:100%;height:100%;object-fit:cover}
 .avatar img.mark{object-fit:contain;padding:20px}
 .hero h1{font-size:clamp(34px,6vw,60px);font-weight:800;line-height:1;margin-top:-.06em;direction:ltr;text-align:right;letter-spacing:-.01em}
@@ -63,7 +63,7 @@ section.sec h2 i{font-style:normal;flex:none;display:grid;place-items:center;wid
 .sec-head.has-cover .sec-text{text-shadow:0 1px 10px rgba(0,0,0,.65)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
 footer{border-top:1px solid var(--line);color:var(--muted);text-align:center;padding:26px 0;font-size:13px;margin-top:30px}
-@media(max-width:560px){.brand{flex:1 1 0;justify-content:flex-end}section.sec{scroll-margin-top:calc(var(--hdr,106px) + 64px)}.sec-head{--sh-min:76px;--sh-pad:11px 14px;--sh-gap:8px;--sh-mb:12px;--sh-rad:16px;--sh-mark:56px;flex-wrap:wrap}section.sec h2 i{width:38px;height:38px;font-size:18px}.bar{flex-wrap:wrap;gap:8px}.search{max-width:none;flex-basis:100%;order:3;margin-inline-start:0}.avatar{width:104px;height:104px;border-radius:26px}.avatar img.mark{padding:14px}}
+@media(max-width:560px){.brand{flex:1 1 0;justify-content:flex-end}section.sec{scroll-margin-top:calc(var(--hdr,106px) + 64px)}.sec-head{--sh-min:76px;--sh-pad:11px 14px;--sh-gap:8px;--sh-mb:12px;--sh-rad:16px;--sh-mark:56px;flex-wrap:wrap}section.sec h2 i{width:38px;height:38px;font-size:18px}.bar{flex-wrap:wrap;gap:8px}.search{max-width:none;flex-basis:100%;order:3;margin-inline-start:0}.avatar img.mark{padding:14px}}
 
 @media(max-width:400px){.brand{font-size:15px;gap:8px}.bar{gap:8px}}
 

@@ -50,4 +50,10 @@ function harness(title) {
 }
 const tmpdir = () => fs.mkdtempSync(path.join(os.tmpdir(), "asf-"));
 async function download(page, sel, dir) { const [d] = await Promise.all([page.waitForEvent("download"), page.click(sel)]); const f = path.join(dir, "d" + Math.random().toString(36).slice(2) + ".txt"); await d.saveAs(f); return fs.readFileSync(f, "utf8"); }
-module.exports = {ROOT, SITE_DIR, PREFIX, parseData, loadData, clone, dataJs, server, harness, tmpdir, download, fs, path, chromium};
+const homeN = () => 0;   // الرئيسية = تعريف + الأقسام الرئيسية بس (من غير كروت)
+// تنقل بين الأقسام بعد توحيد التصميم (تصنيفات رئيسية ← فرعية): بنفتح القسم من الرابط زي ما المستخدم/الرابط المحفوظ بيعمل
+async function go(page, id) { await page.evaluate(i => { location.hash = "#s=" + i; }, id); await page.waitForTimeout(450); }
+// عنوان القسم المفتوح حالياً («الكل» لو الرئيسية)
+async function curTitle(page) { return page.evaluate(() => { const ss = [...document.querySelectorAll("#content > section.sec")]; if (ss.length !== 1) return "الكل"; const h = ss[0].querySelector("h2").cloneNode(true); h.querySelectorAll("i").forEach(i => i.remove()); return h.textContent.trim(); }); }
+
+module.exports = {homeN, go, curTitle, ROOT, SITE_DIR, PREFIX, parseData, loadData, clone, dataJs, server, harness, tmpdir, download, fs, path, chromium};

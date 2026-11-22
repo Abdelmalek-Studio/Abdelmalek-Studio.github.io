@@ -6,7 +6,7 @@ const PR = ["مجاني", "مجاني محدود", "مدفوع"];
 let DATA = null;
 (async () => {
   const env = await H.start({"/Abdelmalek-Studio/data/data.js": (q, r) => { if (!DATA) return false; r.writeHead(200, {"content-type": "text/javascript"}); r.end(L.dataJs(DATA)); return true; }});
-  const open = async (d, hash = "", o) => { DATA = d; const p = await env.mk(o); await p.goto(env.BASE + hash); await p.waitForSelector(".card, .empty"); return p; };
+  const open = async (d, hash = "", o) => { DATA = d; const p = await env.mk(o); await p.goto(env.BASE + hash); await p.waitForSelector("#tabs .chip, .empty"); return p; };
   const n = p => p.locator("#content .cwrap").count();
   const nav = async (p, hash) => { await p.evaluate(h => { location.hash = h; }, hash); await p.waitForTimeout(30); };
   // المرجع المستقل (من البيانات القديمة بقاعدتها): السعر = tag لو كلمة سعر
@@ -25,7 +25,9 @@ let DATA = null;
   for (const s of [{id: ""}, ...secs]) {
     const inf = s.id ? secInfo(s) : {cats: [], price: false}, items = s.id ? s.items : D0.sections.flatMap(x => x.items);
     for (const pr of ["all", ...PR]) for (const c of ["all", ...inf.cats, "bogus-cat"]) {
-      const exp = items.filter(i => (!inf.price || pr === "all" || (pr === "مجاني" ? ["", "مجاني"].includes(effPrice(i)) : effPrice(i) === pr)) && (!inf.cats.length || c === "all" || !inf.cats.includes(c) || cat(i) === c)).length;
+      // المرحلة 4: فلتر موحّد (الكل/مجاني/مدفوع) — «مجاني محدود» كقيمة URL بقت غير صالحة فبتتجاهل (= الكل)، و«مجاني» بيشمل المجاني المحدود وغير المسعّر
+      const pEff = pr === "مجاني محدود" ? "all" : pr;
+      const exp = !s.id ? L.homeN(D0) : items.filter(i => (!inf.price || pEff === "all" || (pEff === "مجاني" ? effPrice(i) !== "مدفوع" : effPrice(i) === pEff)) && (!inf.cats.length || c === "all" || !inf.cats.includes(c) || cat(i) === c)).length;
       const h = "#" + new URLSearchParams({...(s.id ? {s: s.id} : {}), ...(pr !== "all" ? {p: pr} : {}), ...(c !== "all" ? {c} : {})}).toString();
       await nav(p, h === "#" ? "#a=1" : h); const got = (await n(p)) || 0; checked++;
       if (got !== exp && !(exp === 0 && await p.locator(".empty").count())) bad.push(`${s.id || "ALL"}/${pr}/${c}: ${got}≠${exp}`);
@@ -38,9 +40,9 @@ let DATA = null;
   await nav(p, "#s=prompts&p=" + encodeURIComponent("مدفوع")); T("price filter doesn't exist in prompts: «p=مدفوع» is ignored (all prompts shown), no price row", (await n(p)) === D0.sections.find(s => s.id === "prompts").items.length && await p.locator("[data-fp]").count() === 0);
   await nav(p, "#s=video&p=" + encodeURIComponent("مجاني")); T("videos: no filters at all, all 3 shown", (await n(p)) === 3 && await p.locator(".controls").isHidden()); await nav(p, "#s=files&p=" + encodeURIComponent("مجاني")); T("files: no filters at all, all 2 shown", (await n(p)) === 2 && await p.locator(".controls").isHidden());
   await nav(p, "#s=work&c=" + encodeURIComponent("سوشيال")); T("category filter works in «شغلي» (سوشيال)", (await n(p)) === D0.sections.find(s => s.id === "work").items.filter(i => cat(i) === "سوشيال").length && (await n(p)) > 0);
-  await nav(p, "#c=" + encodeURIComponent("صور")); T("no filters on the home view: stray #c is ignored, no chip rows", await p.locator("[data-fu], [data-fp]").count() === 0 && (await n(p)) === legAll.length);
+  await nav(p, "#c=" + encodeURIComponent("صور")); T("no filters on the home view: stray #c is ignored, no chip rows", await p.locator("[data-fu], [data-fp]").count() === 0 && (await n(p)) === L.homeN(D0));
   await nav(p, "#s=vector&p=" + encodeURIComponent("مدفوع") + "&c=" + encodeURIComponent("مكتبات فيكتور شاملة")); T("selected filter chips expose aria-pressed + .on", await p.locator('[data-fp="مدفوع"][aria-pressed="true"].on').count() === 1 && await p.locator('[data-fu="مكتبات فيكتور شاملة"][aria-pressed="true"].on').count() === 1 && await p.locator('[data-fp="all"][aria-pressed="false"]').count() === 1);
-  await nav(p, "#s=ai-both"); const abPrices = await p.locator("[data-fp]").evaluateAll(l => l.map(x => x.dataset.fp)); T("Magnific nuance: price chips reflect each tool's own status — ai-both has no free-only tool so no «مجاني» chip", abPrices.join() === "all,مجاني محدود,مدفوع", abPrices);
+  await nav(p, "#s=ai-both"); const abPrices = await p.locator("[data-fp]").evaluateAll(l => l.map(x => x.dataset.fp)); T("price chips: ai-both shows the 3 unified chips (الكل/مجاني/مدفوع)", abPrices.join() === "all,مجاني,مدفوع", abPrices);
 
   /* ===== العلاقة price / category / tag القديم ===== */
   const base = L.clone(D0); const s2 = base.sections.find(s => s.items.filter(i => i.type === "link").length >= 8 && !/مجاني|مدفوع|صور|لوجو/.test(s.title)), I = s2.items.filter(i => i.type === "link");
@@ -51,11 +53,11 @@ let DATA = null;
   Object.assign(I[4], {title: "EEE-five", tag: 5, price: "free"});                                  // قيم غريبة
   Object.assign(I[5], {title: "FFF-six", desc: "", tag: "مجاني محدود", price: "مجاني محدود", category: "ادوات"});
   I.slice(0, 6).forEach(i => { i.desc = "x"; delete i.keywords; delete i.kw; delete i.tool; });   // نعزل الحقول التانية عشان نختبر tag/price/category بس
-  p = await open(base, "#s=" + s2.id); const card = t => p.locator(`.cwrap:has(h3:text-is("${t}")) .badge`).allInnerTexts();
+  p = await open(base, "#s=" + s2.id); const card = t => p.locator(`.cwrap:has(h3 .t:text-is("${t}")) .pbadge`).allInnerTexts();   // المرحلة 4: كارت اللينك بقى عليه شارة السعر (pbadge) بس — التصنيف بيظهر في شيبات الفلتر مش على الكارت
   T("badge: cleared price shows NO price badge (legacy tag ignored)", (await card("AAA-one")).length === 0, await card("AAA-one"));
   T("badge: price beats a conflicting tag", (await card("BBB-two")).join() === "مجاني", await card("BBB-two"));
-  T("badge: category beats tag; legacy tag price-word + category shows category", (await card("CCC-three")).join() === "لوجو" || (await card("CCC-three")).join().includes("لوجو"), await card("CCC-three"));
-  T("badge: legacy tag-only item still shows its price (red = paid)", (await card("DDD-four")).join() === "مدفوع" && await p.locator('.cwrap:has(h3:text-is("DDD-four")) .badge.paid').count() === 1);
+  T("badge: category no longer renders on link cards (it lives in the filter chips) — CCC shows only its price badge", (await card("CCC-three")).join() === "مجاني", await card("CCC-three"));
+  T("badge: legacy tag-only item still shows its price (red = paid)", (await card("DDD-four")).join() === "مدفوع" && await p.locator('.cwrap:has(h3 .t:text-is("DDD-four")) .pbadge.paid').count() === 1);
   T("badge: invalid values render nothing weird", (await card("EEE-five")).every(t => ["", "5"].includes(t.trim()) || t.length < 3), await card("EEE-five"));
   await nav(p, "#s=" + s2.id + "&p=" + encodeURIComponent("مدفوع")); let titles = await p.locator("#content h3").allInnerTexts();
   T("price filter «مدفوع»: only DDD-four (legacy) — AAA (cleared) and BBB (price=free) excluded", titles.includes("DDD-four") && !titles.includes("AAA-one") && !titles.includes("BBB-two"), titles.filter(t => /^[A-F]{3}-/.test(t)));
@@ -77,7 +79,7 @@ let DATA = null;
   T("search by domain finds the tool", (await hit(host)).some(t => t.includes(t0.title)), host); T("search by full URL (pasted link) finds it", (await hit(t0.url)).some(t => t.includes(t0.title)));
   const prm = all.find(i => i.type === "prompt"); T("prompt text is searchable", (await hit(prm.text.slice(20, 50))).some(t => t.includes(prm.title)));
   T("«prompts» word finds prompts", (await hit("برومبت")).length >= 11);
-  await p.fill("#q", "   "); await p.waitForTimeout(40); T("whitespace-only search = no search", (await n(p)) === 144 && await p.locator("#qclear").isHidden() === false || (await n(p)) === 144);
+  await p.fill("#q", "   "); await p.waitForTimeout(40); T("whitespace-only search = no search", (await n(p)) === L.homeN(D0) && await p.locator("#qclear").isHidden() === false || (await n(p)) === L.homeN(D0));
   for (const q of ["<script>window.__s=1</script>", "\"'><img src=x onerror=window.__s=2>", "a".repeat(3000), "\\", "(", "[", ".*", "%", "😀"]) { await p.fill("#q", q); await p.waitForTimeout(30); }
   T("hostile / regex-looking / huge queries: no error, nothing executes", p.errs.length === 0 && !(await p.evaluate(() => window.__s)), p.errs);
   await p.fill("#q", "<img src=x onerror=window.__s=3>"); T("the query is echoed as text in results line / empty state", await p.locator("#content img[src=x]").count() === 0 && await p.locator("#results img").count() === 0);
@@ -85,16 +87,16 @@ let DATA = null;
   T("suggestions list appears with kinds (فكرة/قسم/أداة), ARIA combobox state", await p.locator("#suggest .sg").count() > 0 && await p.locator("#q").getAttribute("aria-expanded") === "true");
   await p.keyboard.press("ArrowDown"); await p.keyboard.press("ArrowDown"); await p.keyboard.press("ArrowUp"); T("arrow keys move aria-activedescendant/aria-selected", await p.locator("#suggest .sg[aria-selected=true]").count() === 1 && !!(await p.locator("#q").getAttribute("aria-activedescendant")));
   await p.keyboard.press("Escape"); T("Esc closes suggestions first and keeps the text", await p.locator("#suggest").isHidden() && (await p.inputValue("#q")) === "can");
-  await p.keyboard.press("Escape"); T("second Esc clears the search", (await p.inputValue("#q")) === "" && (await n(p)) === 144);
+  await p.keyboard.press("Escape"); T("second Esc clears the search", (await p.inputValue("#q")) === "" && (await n(p)) === L.homeN(D0));
   await p.fill("#q", "canva"); await p.keyboard.press("Tab"); await p.waitForTimeout(250); T("blur closes the suggestions", await p.locator("#suggest").isHidden());
   await p.fill("#q", "zzzqq"); T("no results: message echoes query, offers clear/all/ideas/sections", await p.locator(".empty .e-t").innerText().then(t => t.includes("zzzqq")) && await p.locator("[data-qclear]").count() === 1 && await p.locator("[data-clearall2]").count() === 1 && await p.locator(".empty [data-q]").count() >= 3 && await p.locator(".empty [data-sec]").count() >= 3);
-  await p.locator(".empty [data-sec]").first().click(); T("«browse a section» from empty state clears search and opens it", (await p.inputValue("#q")) === "" && await p.locator("#tabs .chip.on").innerText() !== "الكل");
-  await p.fill("#q", "zzzqq"); await p.locator("[data-clearall2]").click(); T("«show all» resets search + section + filters", (await n(p)) === 144 && (await p.inputValue("#q")) === "");
+  await p.locator(".empty [data-sec]").first().click(); T("«browse a section» from empty state clears search and opens it", (await p.inputValue("#q")) === "" && await L.curTitle(p) !== "الكل");
+  await p.fill("#q", "zzzqq"); await p.locator("[data-clearall2]").click(); T("«show all» resets search + section + filters", (await n(p)) === L.homeN(D0) && (await p.inputValue("#q")) === "");
   await nav(p, "#s=sites&p=" + encodeURIComponent("مدفوع") + "&q=zzzqq"); await p.waitForSelector(".empty"); await p.locator("[data-reset]").click(); T("«clear filters» keeps the query but drops filters", (await p.inputValue("#q")) === "zzzqq" && await p.locator('[data-fp="all"].on').count() === 1);
   await p.fill("#q", ""); await nav(p, "#"); await p.fill("#q", "canva"); await p.waitForTimeout(60); const nc = await n(p);
-  T("«مسح الكل» button appears with a query and resets everything", await p.locator(".clearall").isVisible() && (await (async () => { await p.locator(".clearall").click(); return (await n(p)) === 144; })()));
-  await p.fill("#q", "ai"); await p.locator('#tabs .chip[data-id="vector"]').click(); await p.locator('[data-fp="مجاني"]').click(); const url = await p.evaluate(() => location.hash);
-  const p2 = await env.mk(); await p2.goto(env.BASE + url); await p2.waitForSelector(".card, .empty"); T("query + section + price round-trips through the URL (new tab)", (await p2.inputValue("#q")) === "ai" && (await n(p2)) === (await n(p)) && await p2.locator('[data-fp="مجاني"].on').count() === 1);
+  T("«مسح الكل» button appears with a query and resets everything", await p.locator(".clearall").isVisible() && (await (async () => { await p.locator(".clearall").click(); return (await n(p)) === L.homeN(D0); })()));
+  await L.go(p,"vector"); await p.fill("#q", "ai"); await p.waitForTimeout(100); await p.locator('[data-fp="مجاني"]').click(); const url = await p.evaluate(() => location.hash);
+  const p2 = await env.mk(); await p2.goto(env.BASE + url); await p2.waitForSelector("#tabs .chip, .empty"); T("query + section + price round-trips through the URL (new tab)", (await p2.inputValue("#q")) === "ai" && (await n(p2)) === (await n(p)) && await p2.locator('[data-fp="مجاني"].on').count() === 1);
 
   /* ===== موبايل ===== */
   const m = await open(null, "", {viewport: {width: 360, height: 700}, isMobile: true, hasTouch: true}); await m.fill("#q", "ca"); await m.waitForTimeout(150);

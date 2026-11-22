@@ -3,20 +3,19 @@ const L = require("./lib"), H = L.harness("whatsnew"), {T} = H;
 const D0 = L.loadData(L.path.join(L.SITE_DIR, "data/data.js")); let DATA = null;
 (async () => {
   const env = await H.start({"/Abdelmalek-Studio/data/data.js": (q, r) => { if (!DATA) return false; r.writeHead(200, {"content-type": "text/javascript"}); r.end(L.dataJs(DATA)); return true; }});
-  const open = async (d, hash = "") => { DATA = d; const p = await env.mk(); await p.goto(env.BASE + hash); await p.waitForSelector(".card, .empty"); return p; };
+  const open = async (d, hash = "") => { DATA = d; const p = await env.mk(); await p.goto(env.BASE + hash); await p.waitForSelector("#tabs .chip, .empty"); await p.waitForTimeout(350); return p; };
   const it = (si, k) => D0.sections[si].items[k];
   const mk = f => { const d = L.clone(D0); f(d); return d; };
 
   /* بدون أي بيانات: مفيش حاجة تظهر */
   let p = await open(null);
   T("no dated data → no tab, no block, no clutter", await p.locator("#tabs .newchip").count() === 0 && await p.locator("#latest").isHidden());
-  p = await open(null, "#v=new"); T("#v=new with no data falls back to normal page", await p.locator("#whatsnew").count() === 0 && await p.locator("#content .cwrap").count() === 144);
+  p = await open(null, "#v=new"); T("#v=new with no data falls back to normal page", await p.locator("#whatsnew").count() === 0 && await p.locator("#tabs .chip").count() === 6);
 
   /* عناصر بتاريخ فقط */
   const d1 = mk(d => { [[2, 0, "2026-11-05"], [2, 1, "2026-11-05"], [3, 0, "2026-10-01"], [4, 0, "2025-01-31"], [4, 1, "2026-11-07"]].forEach(([s, k, a]) => d.sections[s].items[k].added = a); });
   p = await open(d1);
-  T("dated items alone → tab + latest block appear (block = newest first, max 6)", await p.locator("#tabs .newchip").count() === 1 && await p.locator("#latest .fcard").count() === 5);
-  const firstTitle = await p.locator("#latest .fcard strong, #latest .fcard .ft").first().innerText().catch(() => ""); T("latest block newest first", firstTitle.includes(it(4, 1).title) || (await p.locator("#latest").innerText()).indexOf(it(4, 1).title) < (await p.locator("#latest").innerText()).indexOf(it(3, 0).title));
+  T("dated items alone → the what's-new chip appears (the home itself stays clean: no latest block outside)", await p.locator("#tabs .newchip").count() === 1 && await p.locator("#latest .fcard").count() === 0);
   await p.click("#tabs .newchip"); await p.waitForSelector("#whatsnew");
   const dates = await p.locator(".dh time").evaluateAll(n => n.map(x => x.getAttribute("datetime"))); T("grouped by date, newest first", JSON.stringify(dates) === '["2026-11-07","2026-11-05","2026-10-01","2025-01-31"]', dates);
   T("items under their own date (2 on 11-05)", (await p.locator(".dgroup").nth(1).locator(".cwrap").count()) === 2);
@@ -26,7 +25,7 @@ const D0 = L.loadData(L.path.join(L.SITE_DIR, "data/data.js")); let DATA = null;
   await p.reload(); await p.waitForSelector("#whatsnew"); T("reload stays", true);
   await p.goBack(); await p.waitForTimeout(150); T("Back leaves the view", await p.locator("#whatsnew").count() === 0); await p.goForward(); await p.waitForTimeout(150); T("Forward returns", await p.locator("#whatsnew").count() === 1);
   await p.fill("#q", "a"); await p.waitForTimeout(100); T("typing in search leaves the view and searches", await p.locator("#whatsnew").count() === 0);
-  p = await open(d1); await p.locator("#latest [data-newview]").click(); T("«عرض الكل» in latest block opens the view", await p.locator("#whatsnew").count() === 1);
+  p = await open(d1); await p.locator("#tabs .newchip").click(); await p.waitForTimeout(300); T("the what's-new chip opens the view", await p.locator("#whatsnew").count() === 1);
 
   /* ملاحظات + مراجع */
   const d2 = mk(d => { d.sections[2].items[0].added = "2026-11-05"; d.updates = [
@@ -39,7 +38,7 @@ const D0 = L.loadData(L.path.join(L.SITE_DIR, "data/data.js")); let DATA = null;
   const note = p.locator(".unote", {hasText: "أدوات"}); T("note shows its linked items: unknown id ignored, duplicate id once", await note.locator(".cwrap").count() === 2);
   T("an item both linked in a note and dated the same day is not shown twice", (await p.locator(`#whatsnew [data-id="${it(2, 0).id}"]`).count()) === 1);
   T("note-only date (no items) still gets its own date heading", (await p.locator(".dh time").evaluateAll(n => n.map(x => x.getAttribute("datetime")))).includes("2026-11-09"));
-  await p.goto(env.BASE); await p.waitForSelector(".card"); T("latest block works with notes-only data too", await p.locator("#latest").isVisible());
+  await p.goto(env.BASE); await p.waitForSelector("#tabs .chip", {state: "attached"}); T("what's-new chip works with notes-only data too", await p.locator("#tabs .newchip").isVisible());
 
   /* بيانات غريبة */
   const weird = [mk(d => { d.updates = "x"; }), mk(d => { d.updates = {a: 1}; }), mk(d => { d.updates = [{date: "2026-11-05", title: "t", items: "nope"}]; }), mk(d => { d.updates = [{date: "2026-11-05", title: "t", items: [1, null, {}]}]; }), mk(d => { d.sections[2].items[0].added = "yesterday"; d.sections[2].items[1].added = 20261105; d.sections[2].items[2].added = "2026-02-30"; }), mk(d => { d.updates = Array.from({length: 300}, (_, k) => ({date: "2026-01-" + String(k % 28 + 1).padStart(2, "0"), title: "u" + k})); })];

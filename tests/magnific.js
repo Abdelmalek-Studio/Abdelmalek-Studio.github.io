@@ -9,20 +9,22 @@ const PHRASE = "محتوى مجاني ومدفوع – أدوات AI مدفوع�
   T("data: description says stock = free + paid content, AI tools = fully paid; no longer claims a free AI credit", /Stock Assets[^.]*مجاني[^.]*مدفوع/.test(m.desc) && /الذكاء الاصطناعي[^.]*مدفوعة بالكامل/.test(m.desc) && !/رصيد يومي مجاني/.test(m.desc));
   T("data: price = «مجاني محدود» (mixed platform: not plain free, not plain paid); legacy tag untouched", m.price === "مجاني محدود" && m.tag === "مجاني محدود" && !("category" in m));
   T("data: url/id/type unchanged", m.url === "https://magnific.com/" && m.id === "itm-de9b5ce3" && m.type === "link");
-  const env = await H.start({}), p = await env.mk(); await p.goto(env.BASE + "#s=" + m.sec); await p.waitForSelector(".card");
+  const env = await H.start({}), p = await env.mk(); await p.goto(env.BASE + "#s=" + m.sec); await p.waitForSelector("#tabs .chip", {state: "attached"});
   const titles = async () => p.locator("#content h3").allInnerTexts(), has = async () => (await titles()).includes("Magnific");
   const nav = async h => { await p.evaluate(h => { location.hash = h; }, h); await p.waitForTimeout(120); };
-  T("site: card shows the «مجاني محدود» badge (not paid red, not free)", (await p.locator('.cwrap:has(h3:text-is("Magnific")) .badge').allInnerTexts()).join() === "مجاني محدود" && await p.locator('.cwrap:has(h3:text-is("Magnific")) .badge.paid').count() === 0);
-  T("site: card description shows the new wording", (await p.locator('.cwrap:has(h3:text-is("Magnific")) p').innerText()).includes(PHRASE));
-  await nav("#s=" + m.sec + "&p=" + encodeURIComponent("مجاني محدود")); T("filter «مجاني محدود» includes Magnific", await has());
-  await nav("#s=" + m.sec + "&p=" + encodeURIComponent("مجاني")); T("filter «مجاني» does NOT include Magnific (it is not entirely free)", !(await has()));
+  T("site: card shows the «مجاني محدود» price badge (not paid red, not free)", (await p.locator('.cwrap:has(h3 .t:text-is("Magnific")) .pbadge').allInnerTexts()).join() === "مجاني محدود" && await p.locator('.cwrap:has(h3 .t:text-is("Magnific")) .pbadge.paid').count() === 0 && await p.locator('.cwrap:has(h3 .t:text-is("Magnific")) .pbadge.free').count() === 0);
+  T("site: card description shows the new wording", (await p.locator('.cwrap:has(h3 .t:text-is("Magnific")) p').innerText()).includes(PHRASE));
+  await nav("#s=" + m.sec + "&p=" + encodeURIComponent("مجاني محدود")); T("old «مجاني محدود» URL value is ignored safely (merged into «مجاني»): Magnific still listed", await has());
+  await nav("#s=" + m.sec + "&p=" + encodeURIComponent("مجاني")); T("filter «مجاني» includes Magnific (limited-free counts as free in the unified filter)", await has());
   await nav("#s=" + m.sec + "&p=" + encodeURIComponent("مدفوع")); T("filter «مدفوع» does NOT include Magnific (it has free content)", !(await has()));
   await nav("#s=" + m.sec); T("without a price filter Magnific is listed", await has());
-  for (const q of ["Magnific", "magnific", "Freepik AI", "stock assets", "أدوات AI مدفوعة", "محتوى مجاني ومدفوع"]) { await nav("#q=" + encodeURIComponent(q)); await p.waitForSelector(".card, .empty"); T(`search «${q}» finds Magnific`, await has()); }
+  for (const q of ["Magnific", "magnific", "Freepik AI", "stock assets", "أدوات AI مدفوعة", "محتوى مجاني ومدفوع"]) { await nav("#q=" + encodeURIComponent(q)); await p.waitForSelector("#tabs .chip, .empty"); T(`search «${q}» finds Magnific`, await has()); }
   // تغيير مقصود (المرحلة 2): فلتر السعر بقى جوه أقسام المواقع والأدوات بس، فالعدّ بيتم قسم قسم ومجموعه لازم يطابق البيانات (مفيش عنصر اتحرّك)
   const priced = D.sections.filter(s => new Set(s.items.filter(i => i.type === "link").map(i => String(i.price ?? "")).filter(Boolean)).size >= 2), counts = {}, ref = {};
-  for (const f of ["مجاني", "مجاني محدود", "مدفوع"]) { counts[f] = 0; ref[f] = 0; for (const s of priced) { await nav("#s=" + s.id + "&p=" + encodeURIComponent(f)); await p.waitForSelector(".card, .empty"); counts[f] += await p.locator("#content .cwrap").count(); ref[f] += s.items.filter(i => (f === "مجاني" ? ["", "مجاني"] : [f]).includes(String(i.price ?? ""))).length; } }
-  T(`price-filter counts across the ${priced.length} tools sections still match the data (no other item moved)`, counts["مجاني"] === ref["مجاني"] && counts["مجاني محدود"] === ref["مجاني محدود"] && counts["مدفوع"] === ref["مدفوع"] && priced.some(s => s.id === m.sec), {counts, ref});
+  // المرحلة 4: فلتر موحّد — «مجاني» بيشمل المجاني المحدود وغير المسعّر، ومفيش شيب «مجاني محدود» منفصل
+  const pvOf = i => { const v = String(("price" in i ? i.price : i.tag) ?? "").trim(); return ["مجاني", "مجاني محدود", "مدفوع"].includes(v) ? v : ""; };
+  for (const f of ["مجاني", "مدفوع"]) { counts[f] = 0; ref[f] = 0; for (const s of priced) { await nav("#s=" + s.id + "&p=" + encodeURIComponent(f)); await p.waitForSelector("#tabs .chip, .empty"); counts[f] += await p.locator("#content .cwrap").count(); ref[f] += s.items.filter(i => (f === "مجاني" ? pvOf(i) !== "مدفوع" : pvOf(i) === "مدفوع")).length; } }
+  T(`price-filter counts across the ${priced.length} tools sections still match the data (no other item moved)`, counts["مجاني"] === ref["مجاني"] && counts["مدفوع"] === ref["مدفوع"] && priced.some(s => s.id === m.sec), {counts, ref});
   await nav("#i=" + m.id); await p.waitForTimeout(500); T("permalink to Magnific opens and highlights it", await p.locator(`#content [data-id="${m.id}"]`).count() === 1);
   T("no JS errors on the site", p.errs.length === 0, p.errs);
   /* لوحة الإدارة */

@@ -93,7 +93,7 @@ let syncing = false;
 function applyRoute(st){
   syncing = true;
   try {
-    active = "all"; fprice = "all"; fcat = "all"; view = ""; favGroup = "all"; focusId = ""; gMode = ""; $("#q").value = "";
+    active = "all"; fprice = "all"; fcat = "all"; view = ""; favGroup = "all"; focusId = ""; gMode = ""; gsel = ""; $("#q").value = "";
     if (st.i && ITEMS.has(st.i)) { focusId = st.i; active = ITEMS.get(st.i).sec.id; }
     else {
       if (st.v === "fav" || (st.v === "new" && hasNews())) view = st.v;
@@ -173,6 +173,7 @@ function renderFavView(term, animate){
   if (favGroup !== "all" && favGroup !== "none" && !FavGroups.get(favGroup)) favGroup = "all";
   const cards = items.map(it => cwrap(it, groupSelect(it))).join("");
   const emptyMsg = !total ? "لسه مضفتش حاجة لمفضلاتك — اضغط على ♥ في أي كارت وهتلاقيه هنا." : term ? "مفيش نتائج للبحث ده في مفضلاتك." : "المجموعة دي فاضية — انقل إليها عناصر من القايمة المنسدلة تحت أي كارت.";
+  parkBoxes();
   $("#content").innerHTML = `<section class="sec favsec" id="favorites"><header class="fav-head"><h2><i aria-hidden="true">♥</i>مفضلاتي</h2><button type="button" class="fchip" data-favback>← رجوع للموقع</button></header>`
     + (total || FavGroups.list().length ? groupsBar() : "")
     + (items.length ? `<div class="grid">${cards}</div>` : `<div class="empty">${emptyMsg}</div>`) + `</section>`;
@@ -197,6 +198,7 @@ function renderNewView(animate){
     shown += rest.length;
     return `<div class="dgroup"><h3 class="dh"><time datetime="${esc(d)}">${esc(fmtDate(d))}</time></h3>${notes}${rest.length ? `<div class="grid">${rest.map(it => cwrap(it)).join("")}</div>` : ""}</div>`;
   }).join("");
+  parkBoxes();
   $("#content").innerHTML = `<section class="sec newsec" id="whatsnew"><header class="fav-head"><h2><i aria-hidden="true">✦</i>آخر الإضافات</h2><button type="button" class="fchip" data-favback>← رجوع للموقع</button></header>${html}</section>`;
   $("#results").textContent = "";
   renderFeatured(false); renderLatest(false);
@@ -211,6 +213,63 @@ const emptyHTML = (term, filtersOn) => {
     + (topics.length ? `<div class="e-sug"><span>أفكار للبحث:</span>${topics.map(t => `<button type="button" class="fchip" data-q="${esc(t.q)}">${esc(t.label.replace(/\s*\(.*\)\s*$/, ""))}</button>`).join("")}</div>` : "")
     + `<div class="e-sug"><span>أو تصفّح قسم:</span>${secs.map(s => `<button type="button" class="fchip" data-sec="${esc(s.id)}">${esc(s.title)}</button>`).join("")}</div></div>`;
 };
+/* ===== الموبايل بس: تصنيفات رئيسية + تصنيفات فرعية فوق نفس الأقسام (البيانات والديسكتوب زي ما هم) ===== */
+const MQ = matchMedia("(max-width:700px)"), isMobile = () => true;   // نفس التصميم والتنقل على كل المقاسات
+const GICON = {
+  ai: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/><path d="M18 15l.8 2.2L21 18l-2.2.8L18 21l-.8-2.2L15 18l2.2-.8z"/></svg>`,
+  edu: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg>`,
+  prm: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 8l-4 4 4 4"/><path d="M16 8l4 4-4 4"/><path d="M13.5 6l-3 12"/></svg>`,
+  res: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="10" r="1.8"/><path d="M4 17l5-4.5 4 3.5 3-2.5 4 3.5"/></svg>`,
+  tools: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.8 3 2.8 15 0 18M12 3c-2.8 3-2.8 15 0 18"/></svg>`,
+  me: `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="12" rx="2.5"/><path d="M9 8V6a2 2 0 012-2h2a2 2 0 012 2v2"/><path d="M3 13h18"/></svg>`
+};
+// التصنيفات الرئيسية (موبايل): كل واحد فيه أقسام فرعية من نفس الأقسام الموجودة — أي قسم جديد بيتضاف في أي تصنيف هنا أو بيروح لـ«مواقع مهمة» تلقائي
+const GROUPS = [
+  ["ai", "الذكاء الاصطناعي", ["ai-images", "ai-video", "ai-both", "daily"]],
+  ["edu", "الشروحات والتعليم", ["video"]],
+  ["prm", "البرومبتات", ["prompts"]],
+  ["res", "الاستوكات والموارد", ["images", "montage", "vector", "fonts", "files"]],
+  ["tools", "مواقع مهمة", ["sites", "motion", "ideas"]],
+  ["me", "شغلي", ["work"]]
+];
+let gsel = "";   // موبايل: التصنيف الرئيسي المفتوح (صفحة تصنيفاته الفرعية)
+const HOME_SECS = ["video", "prompts", "work"];
+const SLABEL = {images: "استوكات صور", montage: "فيديو وصوت ومونتاج", vector: "فيكتور وأيقونات", fonts: "خطوط", files: "ملفات للتحميل", "ai-both": "صور وفيديو AI", daily: "مساعدي AI اليومية", sites: "مواقع هتحتاجها", motion: "تحريك وموشن", ideas: "أفكار وتغذية بصرية", "ai-images": "صور AI", "ai-video": "فيديو AI"};
+const slabel = x => SLABEL[x.id] || x.title;   // الرئيسية على الموبايل: فيديوهات تعليمية + برومبتات + أدوات مميزة (الباقي من التصنيفات أو البحث)
+function mobileGroups(){
+  const live = SECTIONS.filter(x => (x.items || []).length), used = new Set();
+  const gs = GROUPS.map(([id, title, ids]) => { const secs = ids.map(i => live.find(x => x.id === i)).filter(Boolean); secs.forEach(x => used.add(x.id)); return {id, title, secs}; }).filter(g => g.secs.length);
+  const rest = live.filter(x => !used.has(x.id));   // أي قسم جديد مش متصنّف بيروح تحت «مواقع مهمة»
+  if (rest.length) { const t = gs.find(g => g.id === "tools"); if (t) t.secs.push(...rest); else gs.push({id: "tools", title: "مواقع مهمة", secs: rest}); }
+  return gs;
+}
+const groupOf = id => mobileGroups().find(g => g.secs.some(x => x.id === id));
+function showSec(id, term){
+  if (active !== "all") return active === id;
+  if (!isMobile() || view || term || fprice !== "all" || fcat !== "all") return true;
+  return false;   // الرئيسية: الهيرو + الأقسام الرئيسية بس (من غير كروت بره)
+}
+function landingHTML(g){
+  return `<section class="landing"><header class="sec-head"><span class="sec-mark" aria-hidden="true">${GICON[g.id] || ""}</span><div class="sec-text"><h2>${esc(g.title)}</h2></div></header>
+    <div class="tiles">` + g.secs.map(x => `<button type="button" class="tile" data-id="${esc(x.id)}"${hueStyle(x.id)}><span class="ti"><i${isImgIcon(x.icon) ? ' class="img"' : ""}>${iconHTML(x.icon)}</i><em>${(x.items || []).length}</em></span><b>${esc(slabel(x))}</b>${x.desc ? `<small>${esc(x.desc)}</small>` : ""}</button>`).join("") + `</div></section>`;
+}
+function renderSubTabs(){
+  const box = $("#subtabs"); if (!box) return;
+  const on = isMobile() && !view, g = !on ? null : gsel ? mobileGroups().find(x => x.id === gsel) : active !== "all" ? groupOf(active) : null;
+  if (!g) { box.hidden = true; box.innerHTML = ""; return; }
+  const inSec = active !== "all", multi = g.secs.length > 1;
+  box.innerHTML = `<div class="crumb"><button type="button" class="chip home" data-id="all">‹ الرئيسية</button>`
+    + (inSec && multi ? `<button type="button" class="chip home" data-g="${esc(g.id)}">‹ ${esc(g.title)}</button>` : (inSec ? `<span aria-current="page">${esc(g.title)}</span>` : "")) + `</div>`
+    + (inSec && multi ? `<div class="subrow">` + g.secs.map(x => `<button type="button" class="chip sub${x.id === active ? " on" : ""}" aria-pressed="${x.id === active}" data-id="${esc(x.id)}" data-n="${(x.items || []).length}">${esc(slabel(x))}</button>`).join("") + `</div>` : "");
+  box.hidden = false;
+}
+// عدد أعمدة الكروت حسب عرض الشاشة (لازم يطابق CSS) — الرئيسية بتعرض صفّين كاملين من البرومبتات
+const colsNow = () => { const w = innerWidth; return w < 561 ? 1 : w < 900 ? 3 : w < 1200 ? 4 : w < 1600 ? 5 : 6; };
+let lastCols = colsNow();
+addEventListener("resize", () => { const c = colsNow(); if (c !== lastCols) { lastCols = c; render(false); } });
+MQ.addEventListener("change", () => { gsel = ""; renderTabs(); render(false); });
+// نوع الشبكة: بيحدد شكل الكروت المصغّرة على الموبايل (فيديو / برومبت / أدوات)
+const gKind = items => { const n = t => items.filter(i => i.type === t).length; return n("video") > items.length / 2 ? "v" : n("prompt") > items.length / 2 ? "p" : "l"; };
 function render(animate){
   const term = termOf();
   flat.length = 0;
@@ -220,20 +279,33 @@ function render(animate){
   updateFavCount(); renderFilters(); updateClear();   // الأول: بيصحّح التصنيف/السعر لو مش بتوع القسم المفتوح، وبيحسب العدّادات
   if (view === "fav") return renderFavView(term, animate);
   if (view === "new") return renderNewView(animate);
+  const filtersOn0 = fprice !== "all" || fcat !== "all";
+  if (isMobile() && active === "all" && gsel && !term && !filtersOn0) {   // صفحة التصنيفات الفرعية لتصنيف رئيسي
+    const g = mobileGroups().find(x => x.id === gsel);
+    if (g) { parkBoxes(); $("#content").innerHTML = landingHTML(g); $("#results").innerHTML = ""; renderFeatured(false); renderLatest(false); FX.reveal($("#content"), !animate); return; }
+    gsel = "";
+  }
+  if (active === "all" && !term && !filtersOn0 && !gsel) {   // الرئيسية = تعريف + الأقسام الرئيسية بس، كل التفاصيل جوه الأقسام
+    parkBoxes(); $("#content").innerHTML = ""; $("#results").innerHTML = ""; renderFeatured(false); renderLatest(false); return;
+  }
+  const homeMode = isMobile() && active === "all" && !term && !filtersOn0 && !gsel;
   SECTIONS.forEach(sec => {
-    if (active !== "all" && active !== sec.id) return;
+    if (!showSec(sec.id, term)) return;
     const items = (sec.items || []).filter(it => matches(sec, it, term) && matchPrice(it, fprice) && matchCat(it, fcat));
     if (!items.length) return;
-    items.sort((a, b) => priceRank(a) - priceRank(b));   // الأول المجاني، بعده المجاني المحدود، وآخر حاجة المدفوع (الترتيب جوه كل مجموعة زي ما هو)
+    items.sort((a, b) => priceRank(a) - priceRank(b));
+    const total = items.length, lim = homeMode ? ({prompts: Math.max(6, colsNow() * 2), work: Math.max(4, colsNow())})[sec.id] || 0 : 0;   // الرئيسية: أول 6 برومبتات + زرار «عرض الكل»
+    if (lim && total > lim) items.length = lim;   // الأول المجاني، بعده المجاني المحدود، وآخر حاجة المدفوع (الترتيب جوه كل مجموعة زي ما هو)
     shown += items.length;
     const cover = safeImg(sec.cover);
     html += `<section class="sec" id="${esc(sec.id)}"${hueStyle(sec.id)}>
       <header class="sec-head${cover ? " has-cover" : ""}">${cover ? `<img class="sec-cover" src="${esc(cover)}" alt="" loading="lazy">` : ""}
         <span class="sec-mark" aria-hidden="true">${isImgIcon(sec.icon) ? "" : esc(sec.icon)}</span>
         <div class="sec-text"><h2><i${isImgIcon(sec.icon) ? ' class="img"' : ""}>${iconHTML(sec.icon)}</i>${esc(sec.title)}</h2>${sec.desc ? `<p>${esc(sec.desc)}</p>` : ""}</div>
-      </header><div class="grid">` + items.map(it => cwrap(it)).join("") + `</div></section>`;
+      </header><div class="grid g-${gKind(items)}">` + items.map(it => cwrap(it)).join("") + `</div>` + (lim && total > lim ? `<button type="button" class="morebtn" data-more data-id="${esc(sec.id)}">عرض كل ${esc(sec.title)} (${total}) ‹</button>` : "") + `</section>`;
   });
   const filtersOn = fprice !== "all" || fcat !== "all";
+  parkBoxes();
   $("#content").innerHTML = shown ? html : emptyHTML(term, filtersOn);
   const q = $("#q").value.trim(), asec = active !== "all" ? SECTIONS.find(x => x.id === active) : null;
   const share = (term || filtersOn) && shown ? ` <button type="button" class="fchip sres" data-shareres>مشاركة النتائج</button>` : "";
@@ -246,10 +318,24 @@ function render(animate){
   $("#results").innerHTML = (shown ? esc(cnt) + share : "") + elsewhere + clr;
   renderFeatured(!term && !filtersOn);
   renderLatest(!term && !filtersOn);
+  placeBoxes();
   FX.reveal($("#content"), !animate);
   fillVideoTitles();
 }
 
+// صناديق «أدوات مميزة» و«آخر الإضافات»: بتتحط جوه المحتوى بعد قسم البرومبتات (مش فوق)، وبتترجع مكانها الأصلي قبل أي إعادة رسم
+function parkBoxes(){
+  const r = $("#results");
+  ["#latest", "#featured"].forEach(id => { const b = $(id); if (b && b.parentNode !== r.parentNode) r.parentNode.insertBefore(b, r); });
+}
+function placeBoxes(){
+  if (!isMobile()) return;   // الديسكتوب: الصناديق في مكانها الأصلي
+  const c = $("#content"), secs = [...c.querySelectorAll(":scope > section.sec")];
+  const anchor = secs.find(x => x.id === "prompts") || secs[Math.min(1, secs.length - 1)];
+  if (!anchor) return;
+  let ref = anchor;
+  ["#featured", "#latest"].forEach(id => { const b = $(id); if (b.hidden) return; ref.after(b); ref = b; });
+}
 // الأدوات المميزة: العناصر اللي متعلّم عليها featured من لوحة الإدارة. لو مفيش، الجزء كله بيختفي
 function renderFeatured(allowed){
   const box = $("#featured");
@@ -275,7 +361,7 @@ function secFilterInfo(sec){
   const order = (Array.isArray(sec && sec.categories) ? sec.categories : []).filter(c => typeof c === "string" && c.trim()).map(c => c.trim());
   const cats = [...new Set([...order, ...used.keys()])].filter(c => used.has(c));
   const prices = new Set(items.filter(it => it.type === "link").map(priceOf).filter(Boolean));
-  return {cats: cats.length >= 2 ? cats : [], price: prices.size >= 2, prices: PRICES.filter(p => prices.has(p))};
+  return {cats: cats.length >= 2 ? cats : [], price: prices.size >= 2, paid: prices.has("مدفوع")};
 }
 function renderFilters(){
   const box = $("#filters"), sec = active !== "all" && !view ? SECTIONS.find(x => x.id === active) : null, info = sec ? secFilterInfo(sec) : {cats: [], price: false};
@@ -289,7 +375,7 @@ function renderFilters(){
   const n = (c, p) => base.filter(it => matchPrice(it, p) && matchCat(it, c)).length;
   const chip = (attr, val, label, cur, cnt) => `<button type="button" class="fchip${cur === val ? " on" : ""}" aria-pressed="${cur === val}" data-${attr}="${esc(val)}">${esc(label)}<b>${cnt}</b></button>`;
   box.innerHTML = (info.cats.length ? `<div class="fgroup" role="group" aria-label="تصنيفات ${esc(sec.title)}"><span class="flabel">التصنيف</span>${chip("fu", "all", "كل " + sec.title, fcat, n("all", fprice))}${info.cats.map(c => chip("fu", c, c, fcat, n(c, fprice))).join("")}</div>` : "")
-    + (info.price ? `<div class="fgroup" role="group" aria-label="السعر"><span class="flabel">السعر</span>${chip("fp", "all", "الكل", fprice, n(fcat, "all"))}${info.prices.map(p => chip("fp", p, p, fprice, n(fcat, p))).join("")}<span class="fnote">«مجاني محدود» = جزء مجاني وجزء مدفوع (التفاصيل في وصف كل أداة)</span></div>` : "")
+    + (info.price ? `<div class="fgroup" role="group" aria-label="السعر"><span class="flabel">السعر</span>${chip("fp", "all", "الكل", fprice, n(fcat, "all"))}${chip("fp", "مجاني", "مجاني", fprice, n(fcat, "مجاني"))}${info.paid ? chip("fp", "مدفوع", "مدفوع", fprice, n(fcat, "مدفوع")) : ""}<span class="fnote">«مجاني» بيشمل اللي فيه جزء مجاني (مجاني محدود)</span></div>` : "")
     + "";
 }
 // زرار «مسح الكل» وزرار × في البحث
@@ -309,13 +395,35 @@ function renderTabs(){
   const icoOf = s => { if (s.id === "all") return ""; const v = String(s.icon ?? "").trim(); return isImgIcon(v) ? ` style="--ic:url(&quot;${esc(new URL(safeImg(v), document.baseURI).href)}&quot;)"` : v ? ` data-i="${esc(v)}"` : ""; };
   const cntOf = s => s.id === "all" ? SECTIONS.reduce((n, x) => n + (x.items || []).length, 0) : (s.items || []).length;
   // الأيقونة والعدد بيترسموا بـ CSS من data-i / data-n (نص الزرار نفسه = اسم القسم بس)
+  if (isMobile()) {
+    const gs = mobileGroups(), onG = !view && active !== "all" ? groupOf(active) : null;
+    const curG = gsel || (onG && onG.id);
+    $("#tabs").innerHTML = gs.map(g => `<button class="chip gchip${curG === g.id ? " on" : ""}" aria-pressed="${curG === g.id}" ${g.secs.length > 1 ? `data-g="${esc(g.id)}"` : `data-id="${esc(g.secs[0].id)}"`} data-n="${g.secs.reduce((n, x) => n + x.items.length, 0)}">${GICON[g.id] || ""}<span>${esc(g.title)}</span></button>`).join("")
+      + (hasNews() ? `<button class="chip newchip gchip${view === "new" ? " on" : ""}" aria-pressed="${view === "new"}" data-view="new">✦ آخر الإضافات</button>` : "");
+  } else
   $("#tabs").innerHTML = all.map(s => `<button class="chip ${s.id===active && !view ?"on":""}" aria-pressed="${s.id===active && !view}" data-id="${esc(s.id)}" data-n="${cntOf(s)}"${icoOf(s)}${s.id === "all" ? ' title="الرئيسية — عرض كل الأقسام"' : ""}>${esc(s.title)}</button>`).join("")
     + (hasNews() ? `<button class="chip newchip${view === "new" ? " on" : ""}" aria-pressed="${view === "new"}" data-view="new">✦ آخر الإضافات</button>` : "");
   // درجة لون الخلفية (التوهّج) بتتغير مع القسم المفتوح
   const asec = !view && active !== "all" ? all.find(x => x.id === active) : null;
   $("#q").placeholder = asec ? `ابحث في «${asec.title}»…` : Q_PLACEHOLDER;
   document.documentElement.style.setProperty("--h", String(view || active === "all" ? BRAND_HUE : hueOf(active)));
+  document.body.classList.toggle("inner", !!(view || active !== "all" || gsel));   // داخل قسم/تصنيف: الشيبس بتتضغط على الموبايل
+  renderWhat(); renderSubTabs();
 }
+// «هتلاقي هنا»: ملخّص سريع بيشرح الموقع قبل ما الزائر يدخل. الضغط على أي واحدة بيفتح قسمها
+function renderWhat(){
+  const box = $("#hWhat"); if (!box) return;
+  const n = id => ((SECTIONS.find(s => s.id === id) || {}).items || []).length;
+  const skip = ["video", "prompts", "work", "daily"];
+  const tools = SECTIONS.filter(s => !skip.includes(s.id)).reduce((a, s) => a + (s.items || []).length, 0);
+  const rows = [["video", "▶", n("video"), "فيديو تعليمي"], ["prompts", "✦", n("prompts"), "Prompt جاهز"], ["sites", "★", tools, "أداة وموقع مصنّفين"]].filter(r => r[2]);
+  box.innerHTML = rows.map(r => `<button type="button" class="wchip" data-wgo="${r[0]}"><i aria-hidden="true">${r[1]}</i><b>${r[2]}</b> ${r[3]}</button>`).join("");
+}
+$("#hWhat").addEventListener("click", e => {
+  const b = e.target.closest("[data-wgo]"); if (!b) return;
+  const t = document.querySelector(`#tabs .chip[data-id="${b.dataset.wgo}"]`) || document.querySelector('#tabs .chip[data-id="all"]');
+  if (t) t.click();
+});
 
 $("#results").addEventListener("click", e => {
   if (e.target.closest("[data-clearall]")) { clearAll(); $("#q").focus({preventScroll: true}); return; }
@@ -323,15 +431,18 @@ $("#results").addEventListener("click", e => {
   if (!e.target.closest("[data-searchall]")) return;
   active = "all"; fprice = "all"; fcat = "all"; focusId = ""; renderTabs(); render(true); commit("push");
 });
-$("#tabs").addEventListener("click", e => {
-  const b = e.target.closest(".chip"); if (!b) return;
+function onTabClick(e){
+  const b = e.target.closest(".chip, .tile, [data-more]"); if (!b) return;
   if (b.dataset.view) { setView(b.dataset.view); return; }
-  active = b.dataset.id; focusId = ""; fprice = "all"; fcat = "all"; renderTabs(); render(true); commit("push");
+  if (b.dataset.g) { gsel = b.dataset.g; active = "all"; focusId = ""; fprice = "all"; fcat = "all"; renderTabs(); render(true); commit("replace"); const t0 = $("#navtop").getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) || 0); window.scrollTo({top: Math.max(0, t0), behavior: FX.reduce ? "auto" : "smooth"}); return; }
+  gsel = ""; active = b.dataset.id; focusId = ""; fprice = "all"; fcat = "all"; renderTabs(); render(true); commit("push");
   // الضغط على قسم: الشريط يبقى هو اللي فوق (تحت الهيدر على طول) والجزء بتاع الاسم والصورة يطلع لفوق، ومحتوى القسم تحت الشريط — بنزول ناعم
   const top = $("#navtop").getBoundingClientRect().top + window.scrollY - (parseInt(getComputedStyle(document.documentElement).getPropertyValue("--hdr")) || 0);
   if (Math.abs(window.scrollY - top) > 4) window.scrollTo({top: Math.max(0, top), behavior: FX.reduce ? "auto" : "smooth"});
-  if (matchMedia("(max-width:700px)").matches) { const on = $("#tabs .chip.on"); if (on) { const t = $("#tabs"); t.scrollLeft += on.getBoundingClientRect().left - t.getBoundingClientRect().left - (t.clientWidth - on.offsetWidth) / 2; } }   // موبايل بس: القسم النشط يتوسّط الشريط (من غير ما الصفحة تتحرك)
-});
+}
+$("#tabs").addEventListener("click", onTabClick);
+$("#subtabs").addEventListener("click", onTabClick);
+$("#content").addEventListener("click", e => { if (e.target.closest(".tile, [data-more]")) onTabClick(e); });
 $("#q").addEventListener("input", () => { focusId = ""; if (view === "new") { view = ""; document.body.classList.remove("fav-mode"); renderTabs(); } render(false); showSuggest(); commit("replace"); });
 $("#qclear").addEventListener("click", () => { $("#q").value = ""; hideSuggest(); focusId = ""; render(false); commit("replace"); $("#q").focus({preventScroll: true}); });
 
@@ -571,3 +682,4 @@ applyRoute(Route.parse(location.hash));
   tabs.addEventListener("scroll", upd, {passive: true}); addEventListener("resize", upd);
   if ("ResizeObserver" in window) new ResizeObserver(upd).observe(tabs);
   new MutationObserver(upd).observe(tabs, {childList: true}); upd(); })();
+setTimeout(() => document.documentElement.classList.add("ready"), 1200);   // حركة دخول الشيبس مرة واحدة بس عند فتح الموقع

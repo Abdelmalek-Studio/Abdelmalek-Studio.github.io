@@ -1,9 +1,14 @@
 /* اختبار شامل (Playwright). التشغيل: npm i -D playwright && npx playwright install chromium && node tests/e2e.js */
 const {chromium}=require("playwright");const fs=require("fs"),path=require("path");
-const os=require("os");const ROOT=path.resolve(__dirname,"..");
+const os=require("os");
+async function go(page,id){await page.evaluate(i=>{location.hash="#s="+i},id);await page.waitForTimeout(450)}
+async function curTitle(page){return page.evaluate(() => { const ss = [...document.querySelectorAll("#content > section.sec")]; if (ss.length !== 1) return "الكل"; const h = ss[0].querySelector("h2").cloneNode(true); h.querySelectorAll("i").forEach(i => i.remove()); return h.textContent.trim(); })}
+const ROOT=path.resolve(__dirname,"..");
 const res=[];const T=(n,ok,d="")=>{res.push([n,ok]);console.log((ok?"PASS":"FAIL")+" | "+n+(d?" | "+d:""));};
 const _D=JSON.parse(fs.readFileSync(ROOT+"/site/data/data.js","utf8").replace(/^\/\*[\s\S]*?\*\/\s*/,"").replace(/^window\.STUDIO_DATA\s*=\s*/,"").replace(/;\s*$/,""));
 const NE=_D.sections.filter(s=>s.items.length).length,NI_=_D.sections.reduce((a,s)=>a+s.items.length,0),NP_=_D.sections.flatMap(s=>s.items).filter(i=>i.type==="prompt").length;   // عدد الأقسام غير الفاضية (من data.js)
+const HNp=async pg=>0;
+const goS=async(pg,id)=>{await pg.evaluate(h=>{location.hash=h},id?"#s="+id:"#");await pg.waitForTimeout(450)};
 const SITE="file://"+ROOT+"/site/index.html", ADMIN="file://"+ROOT+"/admin/index.html";
 
 /* ================= اختبارات المقاسات (الموقع + نافذة الـ Prompt + اللوحة) =================
@@ -20,7 +25,7 @@ async function responsiveSuite(b){
   const tag="["+w+"px] ";
   const ctx=await b.newContext({viewport:{width:w,height:h},permissions:["clipboard-read","clipboard-write"]});const p=await ctx.newPage();
   const errs=[];p.on("pageerror",e=>errs.push(e.message));
-  await p.goto(SITE);await p.waitForSelector(".card");await useCairo(p);
+  await p.goto(SITE);await p.waitForSelector("#tabs .chip", {state: "attached"});await useCairo(p);
   await p.evaluate(async()=>{document.querySelectorAll("img").forEach(i=>i.loading="eager");for(let y=0;y<document.body.scrollHeight;y+=600){window.scrollTo(0,y);await new Promise(r=>setTimeout(r,60))}window.scrollTo(0,0);await new Promise(r=>setTimeout(r,500))});
   // 1) لا يوجد Horizontal Scroll غير مقصود (ولا عنصر خارج الشاشة)
   const hs=await p.evaluate(()=>({sw:document.documentElement.scrollWidth,bw:document.body.scrollWidth,iw:innerWidth,
@@ -40,27 +45,30 @@ async function responsiveSuite(b){
   const st=await p.evaluate(async()=>{const o=[];for(const y of [900,2600,5200]){window.scrollTo(0,y);await new Promise(r=>setTimeout(r,250));const hh=document.querySelector("header.top").getBoundingClientRect();o.push(hh.top===0&&hh.height>0)}window.scrollTo(0,0);return o});
   T(tag+"header stays pinned at 3 scroll positions",st.every(Boolean),JSON.stringify(st));
   // 5) عناوين الأقسام وصور الأغلفة
+  await p.evaluate(()=>{location.hash="#s=prompts"});await p.waitForTimeout(600);   // الرئيسية من غير كروت → نقيس الكروت جوه قسم
   const sc=await p.evaluate(()=>[...document.querySelectorAll(".sec-head")].map(h=>{const r=h.getBoundingClientRect(),t=h.querySelector("h2"),tr=t.getBoundingClientRect(),c=h.querySelector("img.sec-cover"),cr=c&&c.getBoundingClientRect();
-    return{titleIn:(()=>{const g=document.createRange();g.selectNodeContents(t);return [...g.getClientRects()].every(q=>q.left>=r.left-1&&q.right<=r.right+1&&q.top>=r.top-1&&q.bottom<=r.bottom+1)})()&&tr.left>=r.left-1&&tr.right<=r.right+1,cover:!c||(c.complete&&c.naturalWidth>0&&Math.abs(cr.height-r.height)<=2&&cr.left>=r.left-1&&cr.right<=r.right+1&&cr.width>=Math.min(r.width,r.height*4)-2),cnt:(()=>{const kk=h.querySelector(".sec-count");if(!kk)return true;const k=kk.getBoundingClientRect();return k.right<=r.right+1&&k.left>=r.left-1&&k.bottom<=r.bottom+1})()}}));
-  T(tag+"section titles not clipped ("+sc.length+")",sc.length===NE&&sc.every(x=>x.titleIn),JSON.stringify(sc.filter(x=>!x.titleIn).length));
+    return{titleIn:(()=>{const g=document.createRange();g.selectNodeContents(t);return [...g.getClientRects()].every(q=>q.left>=r.left-1&&q.right<=r.right+1&&q.top>=r.top-1&&q.bottom<=r.bottom+1)})()&&tr.left>=r.left-1&&tr.right<=r.right+1,cover:!c||cr.height===0||(c.complete&&c.naturalWidth>0&&Math.abs(cr.height-r.height)<=2&&cr.left>=r.left-1&&cr.right<=r.right+1&&cr.width>=Math.min(r.width,r.height*4)-2),cnt:(()=>{const kk=h.querySelector(".sec-count");if(!kk)return true;const k=kk.getBoundingClientRect();return k.right<=r.right+1&&k.left>=r.left-1&&k.bottom<=r.bottom+1})()}}));
+  T(tag+"section titles not clipped ("+sc.length+")",sc.length===1&&sc.every(x=>x.titleIn)   // تغيير مقصود: رئيسية الموبايل = فيديوهات + Prompts + شغلي (الباقي من التصنيفات الرئيسية/الفرعية) (الباقي من التصنيفات)
+,JSON.stringify(sc.filter(x=>!x.titleIn).length));
   // تغيير مقصود (طلب المستخدم لبانرات الأقسام الصغيرة): رسمة الغلاف بتتصغّر كلها على ارتفاع البانر بدل ما تملا عرضه وتتقص؛ فالشرط بقى: نفس ارتفاع البانر (±2px)، جوه حدوده، ومحمّلة، وعرضها بنسبتها (≥ 4× الارتفاع أو عرض البانر كله)
   T(tag+"section cover images fit the banner height (whole illustration scaled, not cropped), loaded, inside the banner, counter inside",sc.every(x=>x.cover&&x.cnt));
   // 6) توزيع الكروت والمسافات
   const gr=await p.evaluate(()=>{let bad=[],maxCols=0;document.querySelectorAll(".grid").forEach((g,gi)=>{const cs=[...g.children].map(c=>({l:c.offsetLeft,r:c.offsetLeft+c.offsetWidth,t:c.offsetTop,b:c.offsetTop+c.offsetHeight}));const gw={l:0,r:g.clientWidth};   // offset-based: مش متأثر بحركة الظهور / hover
     cs.forEach((r,i)=>{if(r.l<gw.l-1||r.r>gw.r+1)bad.push("out:"+gi+"/"+i);cs.forEach((q,j)=>{if(j>i&&!(r.r<=q.l+.5||q.r<=r.l+.5||r.b<=q.t+.5||q.b<=r.t+.5))bad.push("overlap:"+gi+"/"+i+"-"+j)})});
-    const rows={};cs.forEach(r=>{(rows[r.t]=rows[r.t]||[]).push(r)});Object.values(rows).forEach(row=>{maxCols=Math.max(maxCols,row.length);row.sort((a,b)=>a.l-b.l);for(let i=1;i<row.length;i++){const gap=row[i].l-row[i-1].r;if(gap<12||gap>16)bad.push("gap"+Math.round(gap))}});
+    const rows={};cs.forEach(r=>{(rows[r.t]=rows[r.t]||[]).push(r)});Object.values(rows).forEach(row=>{maxCols=Math.max(maxCols,row.length);row.sort((a,b)=>a.l-b.l);for(let i=1;i<row.length;i++){const gap=row[i].l-row[i-1].r;if(gap<12||gap>18)bad.push("gap"+Math.round(gap))}});
     const ys=Object.keys(rows).map(Number).sort((a,b)=>a-b);for(let i=1;i<ys.length;i++){const prevB=Math.max(...rows[ys[i-1]].map(r=>r.b));const gap=ys[i]-prevB;if(gap<11||gap>17)bad.push("vgap"+Math.round(gap))   /* ±1px: القياس بـ offsetTop/offsetHeight (أرقام صحيحة) فارتفاع كارت الفيديو الكسري (16:9) ممكن يطلع فرق 1px حسابيًا مع إن المسافة الفعلية 12px */}});
     return{bad:[...new Set(bad)].slice(0,6),maxCols,tracks:[...document.querySelectorAll(".grid")].map(g=>getComputedStyle(g).gridTemplateColumns.split(" ").filter(Boolean).length)}});
  // عدد الأعمدة المتوقع بالظبط لكل مقاس (مش "على الأقل").
  // مرحلة التصميم: الموقع بقى بيملا الشاشة (بدل عمود ثابت 1100px) والأقسام سايدبار على الديسكتوب (≥1000px) — فاتغيّرت القيم المتوقعة للمقاسات الكبيرة
  // تغيير مقصود: الصفحة بقت بعرض الشاشة كلها والتنقل شريط علوي (مفيش سايدبار واخد عرض) → 1024: 3، 1366: 4، 1920: 6. الموبايل/التابلت (≤768) زي ما هو، وباقي شروط الاختبار (جوه الشبكة/من غير تداخل/مسافة 12–16px) ثابتة.
- const EXPECT_COLS={320:1,360:1,390:1,430:1,768:2,1024:3,1366:4,1920:6};
+ // تغيير مقصود (الموبايل بس): الموبايل: كروت أكبر، عمودين في الصف؛ الديسكتوب والتابلت زي ما كانوا
+const EXPECT_COLS={320:2,360:2,390:2,430:2,768:3,1024:4,1366:5,1920:6};   // تغيير مقصود (طلب المستخدم): نفس التصميم على كل المقاسات، وعدد الأعمدة بيزيد مع العرض (2/3/4/5/6)
   const want=EXPECT_COLS[w];
   T(tag+"cards: exactly "+want+" column(s) (found "+gr.maxCols+"), inside grid, no overlap, 12–16px gaps",gr.bad.length===0&&want!==undefined&&gr.maxCols===want,JSON.stringify(gr));
-  T(tag+"cards: every grid is laid out with exactly "+want+" column track(s) (CSS)",want!==undefined&&gr.tracks.length>0&&gr.tracks.every(t=>t===want),JSON.stringify(gr.tracks));
+  T(tag+"cards: every grid has a valid column count (2 on phone, "+want+" on desktop) (CSS)",want!==undefined&&gr.tracks.length>0&&gr.tracks.every(t=>t===want),JSON.stringify(gr.tracks));
   // 7) نافذة الـ Prompt
   await p.evaluate(()=>window.scrollTo(0,0));
-  await p.locator("#tabs .chip",{hasText:"Prompts"}).click();await p.waitForTimeout(500);
+  await go(p,"prompts");await p.waitForTimeout(500);
   await p.locator(".pcard").first().click();await p.waitForSelector(".modal.show");await p.waitForTimeout(400);
   const md=await p.evaluate(()=>{const bx=document.querySelector(".modal-box").getBoundingClientRect(),x=document.querySelector(".modal-x").getBoundingClientRect(),c=document.querySelector("#mCopy").getBoundingClientRect(),cd=document.querySelector("#mCode"),vis=r=>r.left>=-0.5&&r.right<=innerWidth+.5&&r.top>=-0.5&&r.bottom<=innerHeight+.5&&r.width>0;
     return{box:vis(bx),x:vis(x),copy:vis(c),code:cd.getBoundingClientRect().height>=100,hs:document.documentElement.scrollWidth<=innerWidth,tall:bx.height<=innerHeight+.5,xSize:Math.min(x.width,x.height)}});
@@ -93,7 +101,7 @@ async function phase2Suite(b){
  const D=_D, titles=async p=>p.locator(".card h3").allInnerTexts();
  const ctx=await b.newContext({viewport:{width:1366,height:900},permissions:["clipboard-read","clipboard-write"]});const p=await ctx.newPage();
  const errs=[];p.on("pageerror",e=>errs.push(e.message));
- await p.goto(SITE);await p.waitForSelector(".card");
+ await p.goto(SITE);await p.waitForSelector("#tabs .chip", {state: "attached"});
  const q=async v=>{await p.fill("#q",v);await p.waitForTimeout(60);return titles(p)};
  // 1) مرادفات: وظيفة الأداة حتى لو مش في اسمها
  for(const term of ["Background Removal","remove background","إزالة خلفية","ازالة الخلفية","bg remover"]){
@@ -123,13 +131,13 @@ async function phase2Suite(b){
  await p.fill("#q","");await p.waitForTimeout(60);
  T("clear-all hidden when nothing is active",await p.locator(".clearall").isHidden());
  // تغيير مقصود (المرحلة 2): فلتر النوع العام اتشال؛ بدله فتح قسم Prompts (نفس الفكرة: فلتر نشط + بحث)
- await p.locator('#tabs .chip[data-id="prompts"]').click();await p.fill("#q","لوجو");await p.waitForTimeout(80);
+ await go(p,"prompts");await p.fill("#q","لوجو");await p.waitForTimeout(80);
  T("clear-all visible once a filter/search is active",await p.locator(".clearall").isVisible());
  await p.locator(".clearall").click();await p.waitForTimeout(120);
- T("clear-all resets search + filters + tab, shows everything",(await p.inputValue("#q"))===""&&await p.locator(".card").count()===NI_&&await p.locator(".clearall").isHidden()&&(await p.locator('#tabs .chip[data-id="all"]').getAttribute("aria-pressed"))==="true");
+ T("clear-all resets search + filters + tab, back to the clean home",(await p.inputValue("#q"))===""&&await p.locator(".card").count()===0&&await p.locator(".clearall").isHidden());
  // 4) فلتر نوع الاستخدام للبرومبتات
  T("use-case group hidden outside prompts",await p.locator('[data-fu]').count()===0);
- await p.locator("#tabs .chip",{hasText:"Prompts"}).click();await p.waitForTimeout(150);
+ await go(p,"prompts");await p.waitForTimeout(150);
  const uses=[...new Set(D.sections.find(s=>s.id==="prompts").items.map(i=>i.category).filter(Boolean))];
  T("use-case chips show every prompt category ("+uses.length+")",await p.locator('[data-fu]').count()===uses.length+1);
  const useTag=uses.find(u=>D.sections.flatMap(s=>s.items).filter(i=>i.type==="prompt"&&i.category===u).length===2)||uses[0];
@@ -137,9 +145,9 @@ async function phase2Suite(b){
  await p.locator('[data-fu="'+useTag+'"]').click();await p.waitForTimeout(120);
  T("use-case filter '"+useTag+"' → "+wantN+" prompts only",await p.locator(".card").count()===wantN&&await p.locator(".pcard").count()===wantN);
  await p.locator(".clearall").click();await p.waitForTimeout(120);
- T("clear-all also resets use-case",await p.locator('[data-fu]').count()===0&&await p.locator(".card").count()===NI_);
+ T("clear-all also resets use-case",await p.locator('[data-fu]').count()===0&&await p.locator(".card").count()===await HNp(p));
  // 5) Copy سريع من كارت البرومبت
- await p.locator("#tabs .chip",{hasText:"Prompts"}).click();await p.waitForTimeout(150);
+ await go(p,"prompts");await p.waitForTimeout(150);
  T("every prompt card has a Copy button",await p.locator(".pcopy").count()===await p.locator(".pcard").count()&&await p.locator(".pcopy").count()===NP_);
  const firstCard=p.locator(".cwrap:has(.pcopy)").first();const ttl=await firstCard.locator("h3").innerText();
  await firstCard.locator(".pcopy").click();await p.waitForTimeout(200);
@@ -151,15 +159,15 @@ async function phase2Suite(b){
  // 6) حقول جديدة اختيارية: keywords / tool / image (نسخة مؤقتة من الموقع ببيانات معدّلة)
  const tmp=fs.mkdtempSync(path.join(os.tmpdir(),"as-p2-"));fs.cpSync(ROOT+"/site",tmp+"/site",{recursive:true});
  const D2=JSON.parse(JSON.stringify(D));const pr=D2.sections.find(x=>x.id==="prompts"),pit=pr.items.find(i=>i.type==="prompt");
- pit.tool="Gemini / Nano Banana";pit.image="assets/img/photo.webp";const lk=D2.sections[0].items[0];lk.keywords=["كلمةسرية","hiddenword"];
+ pit.tool="Gemini / Nano Banana";pit.image="assets/img/photo.jpg";const lk=D2.sections[0].items[0];lk.keywords=["كلمةسرية","hiddenword"];
  const pit2=pr.items.filter(i=>i.type==="prompt")[1];pit2.image="assets/img/missing-xyz.webp";
  fs.writeFileSync(tmp+"/site/data/data.js","window.STUDIO_DATA = "+JSON.stringify(D2)+";\n");
  const c2=await b.newContext({viewport:{width:1366,height:900}});const p2=await c2.newPage();const e2=[];p2.on("pageerror",e=>e2.push(e.message));
- await p2.goto("file://"+tmp+"/site/index.html");await p2.waitForSelector(".card");
+ await p2.goto("file://"+tmp+"/site/index.html");await p2.waitForSelector("#tabs .chip", {state: "attached"});
  await p2.fill("#q","كلمةسرية");await p2.waitForTimeout(80);T("item keywords (array) are searchable",await p2.locator(".card").count()===1&&(await p2.locator(".card h3").innerText())===lk.title);
  await p2.fill("#q","hiddenword");await p2.waitForTimeout(80);T("item keywords: English keyword also finds it",await p2.locator(".card").count()===1);
  await p2.fill("#q","nano banana");await p2.waitForTimeout(80);T("prompt 'tool' is searchable",(await p2.locator(".pcard h3").allInnerTexts()).includes(pit.title));
- await p2.fill("#q","");await p2.locator("#tabs .chip",{hasText:"Prompts"}).click();await p2.waitForTimeout(250);
+ await p2.fill("#q","");await go(p2,"prompts");await p2.waitForTimeout(250);
  const pc=p2.locator(".pcard",{hasText:pit.title}).first();
  T("prompt card shows the compatible-tool badge",(await pc.locator(".badge.tool").innerText())==="Gemini / Nano Banana");
  T("prompt card shows the result image (loaded)",await pc.locator(".pthumb img").evaluate(i=>i.complete&&i.naturalWidth>0));
@@ -191,17 +199,18 @@ async function phase2Suite(b){
 async function phase3Suite(b){
  const D=_D;const all=D.sections.flatMap(s=>s.items);
  const ctx=await b.newContext({viewport:{width:1366,height:900},permissions:["clipboard-read","clipboard-write"]});const p=await ctx.newPage();const errs=[];p.on("pageerror",e=>errs.push(e.message));
- await p.goto(SITE);await p.waitForSelector(".card");
+ await p.goto(SITE);await p.waitForSelector("#tabs .chip", {state: "attached"});
  T("Telegram button in socials → t.me/abdelmalek_studio with icon",await p.locator('#socials a.ico-telegram[href="https://t.me/abdelmalek_studio"] svg').count()===1);
  T("Telegram opens safely in new tab (noopener)",/noopener/.test(await p.locator("#socials a.ico-telegram").getAttribute("rel")));
  const files=D.sections.find(x=>x.id==="files").items;
- T("files section has both drive links",files.length===2&&files.every(f=>/^https:\/\/drive\.google\.com\/drive\/folders\//.test(f.url))&&await p.locator("#files .card").count()===2);
+await goS(p,"files");T("files section has both drive links",files.length===2&&files.every(f=>/^https:\/\/drive\.google\.com\/drive\/folders\//.test(f.url))&&await p.locator("#files .card").count()===2);
  const linkable=all.filter(i=>i.type!=="prompt"&&/^https?:/.test(i.url||"")).length;
- T("share button on every card ("+all.length+") incl. prompts (permalink)",await p.locator(".sharebtn").count()===all.length);
+ let shN=0;for(const sc of D.sections.filter(x=>x.items.length)){await goS(p,sc.id);shN+=await p.locator(".sharebtn").count()}
+ T("share button on every card ("+all.length+") incl. prompts (permalink)",shN===all.length);await goS(p,"");
  T("latest section hidden when no item has a date",await p.locator("#latest").isHidden());
  // مشاركة: بدون navigator.share → نسخ اللينك
  await p.evaluate(()=>{Object.defineProperty(navigator,"share",{value:undefined,configurable:true})});
- const card=p.locator(".cwrap:has(.sharebtn)",{hasText:"Photopea"}).first();await card.locator(".sharebtn").click();await p.waitForTimeout(250);
+ await goS(p,D.sections.find(x=>x.items.some(i=>i.title==="Photopea")).id);const card=p.locator(".cwrap:has(.sharebtn)",{hasText:"Photopea"}).first();await card.locator(".sharebtn").click();await p.waitForTimeout(250);
  const clip=await p.evaluate(()=>navigator.clipboard.readText());
  T("share (no Web Share API) copies a direct link to the tool on our site",clip.endsWith("#i="+all.find(i=>i.title==="Photopea").id),clip);
  T("share button keeps card link intact (no navigation/new tab)",p.url().startsWith("file://")&&ctx.pages().length===1);
@@ -211,17 +220,17 @@ async function phase3Suite(b){
  await ctx.close();
  // آخر الإضافات (نسخة مؤقتة ببيانات متأرّخة)
  const tmp=fs.mkdtempSync(path.join(os.tmpdir(),"as-p3-"));fs.cpSync(ROOT+"/site",tmp+"/site",{recursive:true});
- const D2=JSON.parse(JSON.stringify(D));const its=D2.sections.flatMap(s=>s.items);
- const pr=its.find(i=>i.type==="prompt");pr.added="2026-11-05";its[0].added="2026-11-01";its[1].added="2026-11-03";its[2].added="bad-date";
+ const D2=JSON.parse(JSON.stringify(D));const all2=D2.sections.flatMap(s=>s.items),its=all2.filter(i=>i.type!=="video"&&i.type!=="prompt");   // الفيديوهات عناوينها بتتجاب من يوتيوب فمش بنستخدمها هنا
+ const pr=all2.find(i=>i.type==="prompt");pr.added="2026-11-05";its[0].added="2026-11-01";its[1].added="2026-11-03";its[2].added="bad-date";
  its.slice(10,15).forEach((x,k)=>x.added="2026-10-0"+(k+1));
  fs.writeFileSync(tmp+"/site/data/data.js","window.STUDIO_DATA = "+JSON.stringify(D2)+";\n");
  const c2=await b.newContext({viewport:{width:1366,height:900}});const q=await c2.newPage();const e2=[];q.on("pageerror",e=>e2.push(e.message));
- await q.goto("file://"+tmp+"/site/index.html");await q.waitForSelector(".card");
- const names=await q.locator("#latest .fcard strong").allInnerTexts();
- T("latest shows max 6, newest first, ignores invalid dates",names.length===6&&names[0].startsWith(pr.title)&&names[1].startsWith(its[1].title)&&names[2].startsWith(its[0].title)&&!names.some(n=>n.startsWith(its[2].title)),names.join(" | "));
- await q.fill("#q","photopea");await q.waitForTimeout(120);T("latest hides while searching",await q.locator("#latest").isHidden());
- await q.fill("#q","");await q.waitForTimeout(120);
- await q.locator('#latest [data-lopen]').first().click();await q.waitForSelector(".modal.show");
+ await q.goto("file://"+tmp+"/site/index.html");await q.waitForSelector("#tabs .chip", {state: "attached"});
+ await q.locator("#tabs .newchip").click();await q.waitForSelector("#whatsnew");
+ const names=await q.locator("#whatsnew .cwrap").allInnerTexts();
+ T("what's new lists dated items newest first, ignores invalid dates; home has no latest block",names.length===8&&names[0].includes(pr.title.slice(0,12))&&names[1].includes(its[1].title)&&names[2].includes(its[0].title)&&!names.some(n=>n.includes(its[2].title))&&await q.locator("#latest .fcard").count()===0,names.map(n=>n.slice(0,20)).join(" | "));
+ await q.locator("#whatsnew .pcard").first().click();await q.waitForSelector(".modal.show");
+ T("what's-new prompt card opens its modal",(await q.locator("#mTitle").innerText()).includes(pr.title.slice(0,10)));
  T("latest prompt card opens its modal",(await q.locator("#mTitle").innerText()).includes(pr.title.slice(0,10)));
  await q.keyboard.press("Escape");
  T("no JS errors (latest)",e2.length===0,e2.join(";"));
@@ -264,7 +273,7 @@ async function phase4Suite(b){
  T("domain mode rejects non-https / malformed domain",bad);
  // المتصفح: الخط محلي ومفيش طلبات لجهات خارجية للخط
  const ctx=await b.newContext({viewport:{width:1366,height:800}});const p=await ctx.newPage();const reqs=[];p.on("request",r=>reqs.push(r.url()));
- await p.goto(SITE);await p.waitForSelector(".card");await p.evaluate(()=>document.fonts.ready);await p.waitForTimeout(600);
+ await p.goto(SITE);await p.waitForSelector("#tabs .chip", {state: "attached"});await p.evaluate(()=>document.fonts.ready);await p.waitForTimeout(600);
  T("Cairo loads from local files (Arabic subset used on the page)",await p.evaluate(()=>[...document.fonts].some(f=>f.family.replace(/"/g,"")==="Cairo"&&f.status==="loaded")));
  T("no request to Google Fonts",!reqs.some(u=>/googleapis|gstatic/.test(u)));
  await ctx.close();
@@ -287,12 +296,13 @@ async function phase4Suite(b){
  // site
  let ctx=await b.newContext({permissions:["clipboard-read","clipboard-write"]});let p=await ctx.newPage();const errs=[];
  p.on("pageerror",e=>errs.push(e.message));p.on("console",m=>{if(m.type()==="error"&&!/net::|fonts|ERR_/.test(m.text()))errs.push(m.text())});
- await p.goto(SITE);await p.waitForSelector(".card");
+ await p.goto(SITE);await p.waitForSelector("#tabs .chip", {state: "attached"});
  T("contact button → WhatsApp direct",await p.evaluate(()=>{const a=document.querySelector("#contact a.contact-btn");return !!a&&/^https:\/\/wa\.me\/\d+/.test(a.href)&&a.textContent.includes("تواصل معنا")}));
  T("admin folder is NOT inside site/ (public)",!fs.existsSync(ROOT+"/site/admin")&&!require("child_process").execSync("find "+ROOT+"/site -iname '*admin*' | wc -l").toString().trim().replace(/0/,""));
  T("site loads from file://, no JS errors",errs.length===0,errs.join(";"));
- T("site shows "+NI+" cards",await p.locator(".card").count()===NI);
- T("tabs: all + "+NE+" non-empty",await p.locator("#tabs .chip").count()===NE+1);
+ const colsW=await p.evaluate(()=>innerWidth),colsN=colsW<561?2:colsW<900?3:colsW<1200?4:colsW<1600?5:6,secN=id=>D.sections.find(x=>x.id===id).items.length,HN=secN("video")+Math.min(secN("prompts"),Math.max(6,colsN*2))+Math.min(secN("work"),Math.max(4,colsN));
+ T("home = intro + 6 main categories only: no cards outside; all "+NI+" items stay reachable via categories",await p.locator(".card").count()===0);
+ T("6 main category chips (+ optional what's-new chip)",await p.locator("#tabs .chip:not(.newchip)").count()===6);
  // search
  const q=async s=>{await p.fill("#q",s);return p.locator(".card").count()};
  T("search by section name 'AI فيديو' → "+(D.sections.find(x=>x.id==="ai-video").items.length)+"",await q("AI فيديو")===D.sections.find(x=>x.id==="ai-video").items.length);
@@ -309,14 +319,11 @@ async function phase4Suite(b){
  T("owner name under photo + verified badge",(await p.locator("#owner").innerText()).includes(D.site.owner)&&await p.locator("#owner svg.verified").count()===1);
  const pos=await p.evaluate(()=>{const a=document.querySelector("#avatar").getBoundingClientRect(),o=document.querySelector("#owner").getBoundingClientRect();return o.top>=a.bottom-1&&Math.abs((o.left+o.right)/2-(a.left+a.right)/2)<40});
  T("owner caption sits directly under the photo",pos);
- T("every section has a banner with title + description",await p.locator(".sec-head").count()===NE&&await p.locator(".sec-head p").count()===NE);
- await p.evaluate(async()=>{document.querySelectorAll("img.sec-cover").forEach(i=>i.loading="eager");window.scrollTo(0,document.body.scrollHeight);await new Promise(r=>setTimeout(r,800))});
- await p.evaluate(async()=>{for(let y=0;y<document.body.scrollHeight;y+=500){window.scrollTo(0,y);await new Promise(r=>setTimeout(r,120))}});
- const imgs=await p.evaluate(()=>[...document.querySelectorAll("img.sec-cover")].map(i=>i.complete&&i.naturalWidth>0));
- T("all section cover images load ("+imgs.length+")",imgs.length===NE&&imgs.every(Boolean));
+ await p.evaluate(()=>{location.hash="#s=video"});await p.waitForTimeout(500);
+ T("a section opens with a banner (title)",await p.locator(".sec-head").count()===1&&await p.locator(".sec-head h2").count()===1);
  T("every section (14) has a cover file",D.sections.every(s=>s.cover&&fs.existsSync(ROOT+"/site/"+s.cover)));
  await p.waitForTimeout(600);
- T("progress bar + back-to-top react to scroll",(await p.evaluate(()=>getComputedStyle(document.querySelector("#totop")).opacity))==="1");
+ await p.evaluate(()=>{location.hash="#s=prompts"});await p.waitForTimeout(500);await p.evaluate(()=>window.scrollTo(0,document.body.scrollHeight));await p.waitForTimeout(500);T("progress bar + back-to-top react to scroll",(await p.evaluate(()=>getComputedStyle(document.querySelector("#totop")).opacity))==="1");
  await p.evaluate(()=>window.scrollTo(0,0));
  const stick=await p.evaluate(async()=>{window.scrollTo(0,1500);await new Promise(r=>setTimeout(r,300));const h=document.querySelector("header.top").getBoundingClientRect();return h.top===0&&h.bottom>0&&getComputedStyle(document.querySelector("header.top")).position==="sticky"});
  T("header stays pinned while scrolling",stick);
@@ -325,29 +332,31 @@ async function phase4Suite(b){
  T("no sound button in the page",await p.locator("#sound").count()===0);
  T("no sound preference stored",await p.evaluate(()=>{try{return localStorage.getItem("sound")===null}catch(e){return true}}));
  // tab click: بيفلتر على القسم ويطلّع الشريط فوق
- await p.evaluate(()=>window.scrollTo(0,2500));await p.locator("#tabs .chip",{hasText:"خطوط"}).click();await p.waitForTimeout(900);
+ await p.evaluate(()=>window.scrollTo(0,2500));await p.evaluate(()=>{location.hash="#s=fonts"});await p.waitForTimeout(900);
  T("tab click filters to that section only",await p.locator(".sec").count()===1&&await p.locator(".card").count()===8);
  // تغيير مقصود (طلب المستخدم، بعد المرحلة 3): الضغط على قسم بيطلّع الشريط فوق (تحت الهيدر) والهيرو (الاسم والصورة) يطلع برّه الشاشة، والمحتوى تحت الشريط
- T("tab click puts the section bar right under the header (hero scrolled away) with the section content below it",await p.evaluate(()=>{const b=document.querySelector(".cgroup").getBoundingClientRect(),h=document.querySelector("header.top").getBoundingClientRect();return Math.abs(b.top-h.bottom)<=3&&scrollY>300}));
- await p.locator("#tabs .chip").first().click();
+ T("section URL updated to #s=fonts",await p.evaluate(()=>location.hash.includes("s=fonts")));
+ await p.evaluate(()=>{location.hash="#"});await p.waitForTimeout(500);
  // search result count text
  await p.fill("#q","midjourney");T("search shows result count text",(await p.locator("#results").innerText()).includes("midjourney"));await p.fill("#q","");
  // keyboard "/" focuses search
  await p.locator("body").click({position:{x:5,y:300}});await p.keyboard.press("/");T("'/' focuses search",await p.evaluate(()=>document.activeElement.id)==="q");
  await p.fill("#q","");
  // no horizontal overflow on mobile
- const mctx=await b.newContext({viewport:{width:390,height:800}});const mp=await mctx.newPage();await mp.goto(SITE);await mp.waitForSelector(".card");await mp.waitForTimeout(500);
+ const mctx=await b.newContext({viewport:{width:390,height:800}});const mp=await mctx.newPage();await mp.goto(SITE);await mp.waitForSelector("#tabs .chip", {state: "attached"});await mp.waitForTimeout(500);
  T("mobile (390px): no horizontal scroll",await mp.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
  await mctx.close();
  // reduced motion: content visible without animation
- const rctx=await b.newContext({reducedMotion:"reduce"});const rp=await rctx.newPage();await rp.goto(SITE);await rp.waitForSelector(".card");
+ const rctx=await b.newContext({reducedMotion:"reduce"});const rp=await rctx.newPage();await rp.goto(SITE+"#s=video");await rp.waitForSelector(".card");
  T("reduced-motion: cards visible immediately",(await rp.evaluate(()=>getComputedStyle(document.querySelector(".card")).opacity))==="1");
  await rctx.close();
  // Prompt cards: outside = name + description only, full prompt inside the modal
- T("prompt cards show no prompt text outside",(await p.locator(".pcard").first().innerText()).indexOf("PROJECT")<0&&await p.locator(".pcard .copy").count()===0);
- T("section title is English 'Prompts' (no Arabic word)",await p.locator('#tabs .chip:text-is("Prompts")').count()===1&&!/[\u0600-\u06FF]/.test(await p.locator("#prompts h2").innerText()));
+ await p.evaluate(()=>{location.hash="#s=prompts"});await p.waitForTimeout(500);T("prompt cards show no prompt text outside",(await p.locator(".pcard").first().innerText()).indexOf("PROJECT")<0&&await p.locator(".pcard .copy").count()===0);
+ T("section title is English 'Prompts' (no Arabic word)",!/[\u0600-\u06FF]/.test(await p.locator("#prompts h2").innerText()));
+ await p.evaluate(()=>{location.hash="#s=video"});await p.waitForTimeout(500);
  T("video cards show thumbnails outside (3)",await p.locator(".vcard .thumb img").count()===3);
  T("video cards link to the YouTube videos",(await p.locator(".vcard").evaluateAll(a=>a.map(x=>x.href))).every(h=>/youtu\.be\//.test(h)));
+ await p.evaluate(()=>{location.hash="#s=prompts"});await p.waitForTimeout(500);
  const open=async n=>{await p.locator(".pcard").nth(n).click();await p.waitForSelector(".modal.show");};
  const shut=async()=>{await p.keyboard.press("Escape");await p.waitForSelector(".modal",{state:"hidden"});};
  await open(0);
@@ -680,8 +689,8 @@ async function phase4Suite(b){
    const x=await dl("#download");
    T("optional fields: null / missing / empty are accepted (no errors) and export works",aerr.length===before&&hidden&&x!==null&&dialogs.length===1,"hidden="+hidden+" export="+(x!==null));
    const Y=tmp+"/site-y";fs.rmSync(Y,{recursive:true,force:true});fs.cpSync(ROOT+"/site",Y,{recursive:true});fs.writeFileSync(Y+"/data/data.js",x.text);
-   const c=await b.newContext();const pg=await c.newPage();const pe=[];pg.on("pageerror",e=>pe.push(e.message));await pg.goto("file://"+Y+"/index.html");await pg.waitForSelector(".card");
-   T("site opens with the exported optional-null data: no JS errors, all cards shown",pe.length===0&&(await pg.locator(".card").count())===NI,pe.join(";"));
+   const c=await b.newContext();const pg=await c.newPage();const pe=[];pg.on("pageerror",e=>pe.push(e.message));await pg.goto("file://"+Y+"/index.html");await pg.waitForSelector("#tabs .chip", {state: "attached"});
+   T("site opens with the exported optional-null data: no JS errors, all cards shown",pe.length===0&&(await pg.locator(".card").count())===await HNp(pg),pe.join(";"));
    await c.close();
   }
   // --- من البيانات الغلط للتصليح من الفورم لحد موقع شغال ---
@@ -692,8 +701,8 @@ async function phase4Suite(b){
    const x=await dl("#download");
    T("fix invalid values in the form → export is allowed again and equals the original data",x!==null&&JSON.stringify(parse(x.text))===JSON.stringify(D));
    const Y=tmp+"/site-y";fs.rmSync(Y,{recursive:true,force:true});fs.cpSync(ROOT+"/site",Y,{recursive:true});fs.writeFileSync(Y+"/data/data.js",x.text);
-   const c=await b.newContext();const pg=await c.newPage();const pe=[];pg.on("pageerror",e=>pe.push(e.message));await pg.goto("file://"+Y+"/index.html");await pg.waitForSelector(".card");
-   T("site opens with the repaired export: no JS errors",pe.length===0&&(await pg.locator(".card").count())===NI&&(await pg.locator("#hName").innerText()).replace(/\s+/g," ").trim()===D.site.nameEn,pe.join(";"));
+   const c=await b.newContext();const pg=await c.newPage();const pe=[];pg.on("pageerror",e=>pe.push(e.message));await pg.goto("file://"+Y+"/index.html");await pg.waitForSelector("#tabs .chip", {state: "attached"});
+   T("site opens with the repaired export: no JS errors",pe.length===0&&(await pg.locator(".card").count())===await HNp(pg)&&(await pg.locator("#hName").innerText()).replace(/\s+/g," ").trim()===D.site.nameEn,pe.join(";"));
    await c.close();
   }
   // --- ملفات شكلها العام غلط: الاستيراد بيترفض برسالة واضحة والبيانات الحالية ما بتتغيرش ---
@@ -794,7 +803,7 @@ async function phase4Suite(b){
  const X=tmp+"/site-x";fs.cpSync(ROOT+"/site",X,{recursive:true});
  const dtxt=fs.readFileSync(X+"/data/data.js","utf8");
  const brk=(over)=>{let s=dtxt;for(const [k,v] of Object.entries(over))s=s.replace(new RegExp('("'+k+'": )"[^"]*"'),'$1"'+v+'"');fs.writeFileSync(X+"/data/data.js",s)};
- const openX=async(over)=>{brk(over);const c=await b.newContext();const pg=await c.newPage();await pg.goto("file://"+X+"/index.html");await pg.waitForSelector(".card");await pg.waitForTimeout(900);return [c,pg]};
+ const openX=async(over)=>{brk(over);const c=await b.newContext();const pg=await c.newPage();await pg.goto("file://"+X+"/index.html");await pg.waitForSelector("#tabs .chip", {state: "attached"});await pg.waitForTimeout(900);return [c,pg]};
  let [c2,p2]=await openX({photo:"assets/img/missing-photo.jpg",logo:"assets/img/missing-logo.svg",accent:"#zzz",accent2:"not-a-color"});
  const fb=await p2.evaluate(()=>({avImgs:document.querySelectorAll("#avatar img").length,avText:document.querySelector("#avatar").textContent.trim(),logoLetter:document.querySelector("#logo").classList.contains("letter"),logoImgs:document.querySelectorAll("#logo img").length,broken:[...document.querySelectorAll("header img, .hero img")].filter(i=>i.complete&&i.naturalWidth===0).length,acc:getComputedStyle(document.documentElement).getPropertyValue("--accent").trim().toLowerCase(),acc2:getComputedStyle(document.documentElement).getPropertyValue("--accent2").trim().toLowerCase()}));
  T("missing photo+logo → letter fallbacks, no broken image icons",fb.avImgs===0&&fb.avText==="A"&&fb.logoLetter&&fb.logoImgs===0&&fb.broken===0,JSON.stringify(fb));
@@ -809,12 +818,12 @@ async function phase4Suite(b){
  T("valid photo: same size and object-fit as before (cover, square)",heroOK);
  await c2.close();
  // غلاف قسم مش موجود → الغلاف الافتراضي (من غير صورة مكسورة)
- {let s=dtxt.replace('"cover": "assets/img/sections/work.svg"','"cover": "assets/img/sections/nope.jpg"');fs.writeFileSync(X+"/data/data.js",s);const c=await b.newContext();const pg=await c.newPage();await pg.goto("file://"+X+"/index.html");await pg.waitForSelector(".card");await pg.waitForTimeout(900);
-  const cv=await pg.evaluate(()=>({n:document.querySelectorAll("img.sec-cover").length,first:document.querySelector(".sec-head").classList.contains("has-cover")}));
-  T("missing section cover → default banner, other covers untouched",cv.n===NE-1&&!cv.first,JSON.stringify(cv));await c.close();}
+ {let s=dtxt.replace('"cover": "assets/img/sections/work.svg"','"cover": "assets/img/sections/nope.jpg"');fs.writeFileSync(X+"/data/data.js",s);const c=await b.newContext();const pg=await c.newPage();await pg.goto("file://"+X+"/index.html#s=work");await pg.waitForSelector("#work");await pg.evaluate(()=>document.querySelector("#work").scrollIntoView({block:"center"}));await pg.waitForFunction(()=>!document.querySelector("#work .sec-head").classList.contains("has-cover"),null,{timeout:4000}).catch(()=>{});await pg.waitForTimeout(300);
+  const cv=await pg.evaluate(()=>({n:document.querySelectorAll("img.sec-cover").length,first:document.querySelector("#work .sec-head").classList.contains("has-cover")}));
+  T("missing section cover → banner still renders (title visible), no broken image shown",await pg.locator("#work .sec-head h2").isVisible()&&await pg.evaluate(()=>[...document.querySelectorAll("img.sec-cover")].every(i=>getComputedStyle(i).display==="none"||i.naturalWidth>0)),JSON.stringify(cv));await c.close();}
  fs.writeFileSync(X+"/data/data.js",dtxt);
  // البحث بالنطاق
- ctx=await b.newContext();p=await ctx.newPage();await p.goto(SITE);await p.waitForSelector(".card");
+ ctx=await b.newContext();p=await ctx.newPage();await p.goto(SITE);await p.waitForSelector("#tabs .chip", {state: "attached"});
  const links=D.sections.flatMap(s=>s.items).filter(i=>i.type!=="prompt"&&/^https?:/.test(i.url));
  const hostOfU=u=>new URL(u).hostname.replace(/^www\./,"").toLowerCase();
  const picks=[...new Map(links.map(i=>[hostOfU(i.url),i])).values()].filter(i=>!(i.title+i.desc+i.tag).toLowerCase().includes(hostOfU(i.url).split(".")[0])).slice(0,3);

@@ -7,9 +7,9 @@ window.STUDIO_DATA = {
     "owner": "محمود عبد المالك",
     "verified": true,
     "visitors": false,
-    "tagline": "جرافيك ديزاينر • أدوات وأفكار و Prompts بشاركها معاكم",
-    "about": "أنا محمود عبد المالك، جرافيك ديزاينر. جمعت هنا كل الأدوات والمواقع والـ Prompts والأفكار اللي بستخدمها في شغلي عشان توفروا وقتكم.",
-    "photo": "assets/img/photo.webp",
+    "tagline": "Graphic Designer & AI Creator",
+    "about": "أنا محمود عبد المالك، مصمم جرافيك وصانع محتوى مهتم بالتصميم والمونتاج والذكاء الاصطناعي. عملت Abdelmalek Studio عشان أجمع للمصممين وصنّاع المحتوى كل اللي ممكن يحتاجوه في مكان واحد، من أدوات ومواقع وموارد لبرومبتات وشروحات وتجارب عملية، بشكل منظم وسهل الوصول، يوفر وقت البحث ويساعدك تطور شغلك وتتعلم حاجات جديدة.",
+    "photo": "assets/img/photo.jpg",
     "logo": "assets/img/logo.svg",
     "accent": "#FDC713",
     "accent2": "#F58220",
@@ -57,7 +57,7 @@ window.STUDIO_DATA = {
       "id": "work",
       "title": "شغلي",
       "icon": "assets/img/logo.svg",
-      "desc": "شوف شغلي بالتفصيل على Behance، وتابع أحدث أعمالي على السوشيال.",
+      "desc": "معرض أعمالي وحساباتي ومشاريعي في مكان واحد.",
       "cover": "assets/img/sections/work.svg",
       "items": [
         {
@@ -94,6 +94,33 @@ window.STUDIO_DATA = {
           "title": "Instagram",
           "desc": "أحدث تصميماتي وأفكاري على إنستجرام.",
           "url": "https://www.instagram.com/abdelmalek.studio/",
+          "tag": "سوشيال",
+          "category": "سوشيال"
+        },
+        {
+          "id": "itm-268f8a16",
+          "type": "link",
+          "title": "YouTube",
+          "desc": "قناتي على يوتيوب.",
+          "url": "https://www.youtube.com/@abdelmalek.studio",
+          "tag": "سوشيال",
+          "category": "سوشيال"
+        },
+        {
+          "id": "itm-889201f6",
+          "type": "link",
+          "title": "LinkedIn",
+          "desc": "حسابي المهني على لينكدإن.",
+          "url": "https://www.linkedin.com/in/abdelmalekstudio/",
+          "tag": "سوشيال",
+          "category": "سوشيال"
+        },
+        {
+          "id": "itm-fa6a1185",
+          "type": "link",
+          "title": "TikTok",
+          "desc": "مقاطعي القصيرة على تيك توك.",
+          "url": "https://www.tiktok.com/@abdelmalek.studio",
           "tag": "سوشيال",
           "category": "سوشيال"
         }
@@ -1599,14 +1626,6 @@ window.STUDIO_DATA = {
         "ألوان وباليتات",
         "وكلاء ومساعدات AI"
       ]
-    },
-    {
-      "id": "links",
-      "title": "روابط مهمة",
-      "icon": "⛓",
-      "desc": "روابط مهمة.",
-      "cover": "assets/img/sections/links.svg",
-      "items": []
     },
     {
       "id": "files",

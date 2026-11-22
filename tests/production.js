@@ -58,18 +58,18 @@ const tree = d => walk(d).sort().map(f => path.relative(d, f) + ":" + crypto.cre
 
   /* ===== تشغيل فعلي لـ dist على الجذر (زي https://abdelmalek-studio.github.io/) ===== */
   const env = await H.start({}); const p = await env.mk(); const reqs = []; p.on("request", q => reqs.push(q.url()));
-  await p.goto(env.BASE); await p.waitForSelector(".card"); await p.waitForTimeout(500);
+  await p.goto(env.BASE); await p.waitForSelector("#tabs .chip", {state: "attached"}); await p.waitForTimeout(500);
   T("dist: home loads, 144 items, no JS/console errors", (await p.locator("#tabs .chip").count()) > 5 && p.errs.length === 0, p.errs);
   T("dist: zero 404s on the root-served site", env.misses.length === 0, env.misses);
   T("dist: visitors counter disabled → ZERO requests to counterapi and the counter box stays empty", reqs.filter(u => /counterapi/i.test(u)).length === 0 && (await p.locator("#visitors").innerText()).trim() === "", {reqs: reqs.filter(u => /counterapi/i.test(u)), box: await p.locator("#visitors").innerText()});
   T("dist: admin is not reachable under the site path", await (async () => { const q = await fetch(env.BASE + "admin/index.html"); return q.status === 404; })());
   T("dist: robots.txt and sitemap.xml are served", (await (await fetch(env.BASE + "robots.txt")).text()).includes("Sitemap:") && (await (await fetch(env.BASE + "sitemap.xml")).text()).includes("<urlset"));
   const D = L.loadData(path.join(DIST, "data/data.js")), it = D.sections.flatMap(s => s.items).find(i => i.type === "prompt");
-  const p2 = await env.mk(); await p2.goto(env.BASE + "#i=" + it.id); await p2.waitForSelector(".card"); await p2.waitForTimeout(500); T("dist: direct link opens the prompt modal with the right title (fresh tab)", await p2.waitForSelector(".modal.show #mTitle", {timeout: 3000}).then(async () => (await p2.locator("#mTitle").innerText()) === it.title).catch(() => false));
+  const p2 = await env.mk(); await p2.goto(env.BASE + "#i=" + it.id); await p2.waitForSelector("#tabs .chip", {state: "attached"}); await p2.waitForTimeout(500); T("dist: direct link opens the prompt modal with the right title (fresh tab)", await p2.waitForSelector(".modal.show #mTitle", {timeout: 3000}).then(async () => (await p2.locator("#mTitle").innerText()) === it.title).catch(() => false));
   await p2.reload(); await p2.waitForSelector(".modal.show #mTitle", {timeout: 3000}); T("dist: refresh on direct link reopens it and keeps the URL", (await p2.locator("#mTitle").innerText()) === it.title && p2.url().endsWith("#i=" + it.id));
   await p2.evaluate(() => navigator.clipboard.writeText("")); await p2.locator("#mShare").click(); await p2.waitForTimeout(300); const link = await p2.evaluate(() => navigator.clipboard.readText());
   T("dist: share link is the ROOT permalink " + env.BASE + "#i=<id> (no repo path segment)", link === env.BASE + "#i=" + it.id, link);
-  const p3 = await env.mk({viewport: {width: 375, height: 700}, colorScheme: "dark", isMobile: true}); await p3.goto(env.BASE); await p3.waitForSelector(".card");
+  const p3 = await env.mk({viewport: {width: 375, height: 700}, colorScheme: "dark", isMobile: true}); await p3.goto(env.BASE); await p3.waitForSelector("#tabs .chip", {state: "attached"});
   T("dist: mobile + dark: no horizontal scroll, dark theme applied, no errors", await p3.evaluate(() => document.documentElement.scrollWidth <= innerWidth) && p3.errs.length === 0 && (await p3.evaluate(() => getComputedStyle(document.body).backgroundColor)) !== "rgb(255, 255, 255)", p3.errs);
   await p.fill("#q", "canva"); await p.waitForTimeout(100); T("dist: search works", await p.locator("#content .cwrap").count() > 0);
   await H.end(env);
