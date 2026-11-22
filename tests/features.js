@@ -81,8 +81,13 @@ const srv = http.createServer((q, r) => {   // سيرفر ثابت: الموقع
   T("keyboard: ArrowDown + Enter picks a suggestion", (await p.inputValue("#q")).length > 0 && await cards(p) > 0);
   await p.fill("#q", "canva"); await p.keyboard.press("Escape"); await p.keyboard.press("Escape");
   T("keyboard: Esc closes suggestions then clears search", await p.inputValue("#q") === "" && await cards(p) === homeN(D));
-  await p.fill("#q", "canva"); await p.waitForSelector("#suggest:not([hidden])", {timeout: 4000 * CIWAIT}); await p.keyboard.press("Escape"); await p.keyboard.press("Enter");
-  T("keyboard: Enter (no suggestion) moves focus to first result", await p.evaluate(() => !!document.activeElement.closest("#content")));
+  await p.fill("#q", "canva"); await p.waitForSelector("#suggest:not([hidden])", {timeout: 4000 * CIWAIT});
+  await p.waitForSelector("#content .cwrap .card", {timeout: 4000 * CIWAIT});   // النتائج ظهرت فعلًا قبل Enter (انتظار حتمي بدل افتراض التوقيت)
+  await p.keyboard.press("Escape");
+  await p.waitForSelector("#suggest", {state: "hidden", timeout: 4000 * CIWAIT});   // الاقتراحات اتقفلت فعلًا قبل ما نبعت Enter
+  await p.keyboard.press("Enter");
+  const focusMoved = await p.waitForFunction(() => { const a = document.activeElement; return !!a && !!a.closest("#content"); }, {timeout: 4000 * CIWAIT, polling: 250}).then(() => true, () => false);   // بنستنى الشرط نفسه بدل لقطة فورية — لو التركيز ما انتقلش أصلًا الاختبار يفشل برضه
+  T("keyboard: Enter (no suggestion) moves focus to first result", focusMoved);
   await p.fill("#q", "canva"); await p.waitForTimeout(100);
   T("search state is in the URL (shareable)", /q=canva/.test(await p.evaluate(() => location.hash)));
   await p.evaluate(() => { Object.defineProperty(navigator, "share", {value: undefined, configurable: true}); });
