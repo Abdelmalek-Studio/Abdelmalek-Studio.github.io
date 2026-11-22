@@ -3,6 +3,7 @@
 const {chromium} = require("playwright"); const http = require("http"), fs = require("fs"), path = require("path"), os = require("os");
 const ROOT = path.resolve(__dirname, ".."), PREFIX = "/Abdelmalek-Studio/";
 const res = []; const T = (n, ok, d = "") => { res.push(ok); console.log((ok ? "PASS" : "FAIL") + " | " + n + (d ? " | " + String(d).slice(0, 240) : "")); };
+const CIWAIT = process.env.CI ? 4 : 1;   // زمن الانتظار بس على CI: الـ runners أبطأ، فبنوسّع الـ timeout من غير ما نغيّر أي توقّع
 const load = f => { const g = {}; new Function("window", fs.readFileSync(f, "utf8"))(g); return g.STUDIO_DATA; };
 async function go(page,id){await page.evaluate(i=>{location.hash="#s="+i},id);await page.waitForTimeout(450)}
 async function curTitle(page){return page.evaluate(() => { const ss = [...document.querySelectorAll("#content > section.sec")]; if (ss.length !== 1) return "الكل"; const h = ss[0].querySelector("h2").cloneNode(true); h.querySelectorAll("i").forEach(i => i.remove()); return h.textContent.trim(); })}
@@ -25,7 +26,7 @@ const srv = http.createServer((q, r) => {   // سيرفر ثابت: الموقع
 
   /* ---------- 1) GitHub Pages: مسار فرعي ---------- */
   let p = await mk(); const bad = []; p.on("response", r => { if (r.status() >= 400 && r.url().startsWith(BASE.slice(0, 22))) bad.push(r.status() + " " + r.url()); });
-  await p.goto(BASE); await p.waitForSelector("#tabs .chip", {timeout: 8000}).catch(async e => { console.log("DBG", await p.evaluate(() => document.body.innerText.slice(0, 200)), p.errs); throw e; });
+  await p.goto(BASE); await p.waitForSelector("#tabs .chip", {timeout: 8000 * CIWAIT}).catch(async e => { console.log("DBG", await p.evaluate(() => document.body.innerText.slice(0, 200)), p.errs); throw e; });
   T("[GH Pages path] site loads from /Abdelmalek-Studio/ with the home cards", await cards(p) === homeN(D));
   await p.evaluate(async () => { document.querySelectorAll("img").forEach(i => i.loading = "eager"); for (let y = 0; y < document.body.scrollHeight; y += 700) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 40)); } });
   await p.waitForTimeout(600);
@@ -80,7 +81,7 @@ const srv = http.createServer((q, r) => {   // سيرفر ثابت: الموقع
   T("keyboard: ArrowDown + Enter picks a suggestion", (await p.inputValue("#q")).length > 0 && await cards(p) > 0);
   await p.fill("#q", "canva"); await p.keyboard.press("Escape"); await p.keyboard.press("Escape");
   T("keyboard: Esc closes suggestions then clears search", await p.inputValue("#q") === "" && await cards(p) === homeN(D));
-  await p.fill("#q", "canva"); await p.waitForSelector("#suggest:not([hidden])", {timeout: 4000}); await p.keyboard.press("Escape"); await p.keyboard.press("Enter");
+  await p.fill("#q", "canva"); await p.waitForSelector("#suggest:not([hidden])", {timeout: 4000 * CIWAIT}); await p.keyboard.press("Escape"); await p.keyboard.press("Enter");
   T("keyboard: Enter (no suggestion) moves focus to first result", await p.evaluate(() => !!document.activeElement.closest("#content")));
   await p.fill("#q", "canva"); await p.waitForTimeout(100);
   T("search state is in the URL (shareable)", /q=canva/.test(await p.evaluate(() => location.hash)));
