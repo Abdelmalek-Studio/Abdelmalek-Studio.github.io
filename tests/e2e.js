@@ -62,10 +62,11 @@ async function responsiveSuite(b){
  // مرحلة التصميم: الموقع بقى بيملا الشاشة (بدل عمود ثابت 1100px) والأقسام سايدبار على الديسكتوب (≥1000px) — فاتغيّرت القيم المتوقعة للمقاسات الكبيرة
  // تغيير مقصود: الصفحة بقت بعرض الشاشة كلها والتنقل شريط علوي (مفيش سايدبار واخد عرض) → 1024: 3، 1366: 4، 1920: 6. الموبايل/التابلت (≤768) زي ما هو، وباقي شروط الاختبار (جوه الشبكة/من غير تداخل/مسافة 12–16px) ثابتة.
  // تغيير مقصود (الموبايل بس): الموبايل: كروت أكبر، عمودين في الصف؛ الديسكتوب والتابلت زي ما كانوا
-const EXPECT_COLS={320:2,360:2,390:2,430:2,768:3,1024:4,1366:5,1920:6};   // تغيير مقصود (طلب المستخدم): نفس التصميم على كل المقاسات، وعدد الأعمدة بيزيد مع العرض (2/3/4/5/6)
+// تغيير مقصود (طلب المستخدم): كروت الموبايل عمود واحد بعرض الشاشة والوصف كامل؛ الديسكتوب والتابلت زي ما كانوا
+const EXPECT_COLS={320:1,360:1,390:1,430:1,768:3,1024:4,1366:5,1920:6};   // تغيير مقصود (طلب المستخدم): نفس التصميم على كل المقاسات، وعدد الأعمدة بيزيد مع العرض (2/3/4/5/6)
   const want=EXPECT_COLS[w];
   T(tag+"cards: exactly "+want+" column(s) (found "+gr.maxCols+"), inside grid, no overlap, 12–16px gaps",gr.bad.length===0&&want!==undefined&&gr.maxCols===want,JSON.stringify(gr));
-  T(tag+"cards: every grid has a valid column count (2 on phone, "+want+" on desktop) (CSS)",want!==undefined&&gr.tracks.length>0&&gr.tracks.every(t=>t===want),JSON.stringify(gr.tracks));
+  T(tag+"cards: every grid has a valid column count (1 on phone, "+want+" on desktop) (CSS)",want!==undefined&&gr.tracks.length>0&&gr.tracks.every(t=>t===want),JSON.stringify(gr.tracks));
   // 7) نافذة الـ Prompt
   await p.evaluate(()=>window.scrollTo(0,0));
   await go(p,"prompts");await p.waitForTimeout(500);
@@ -354,7 +355,7 @@ async function phase4Suite(b){
  await p.evaluate(()=>{location.hash="#s=prompts"});await p.waitForTimeout(500);T("prompt cards show no prompt text outside",(await p.locator(".pcard").first().innerText()).indexOf("PROJECT")<0&&await p.locator(".pcard .copy").count()===0);
  T("section title is English 'Prompts' (no Arabic word)",!/[\u0600-\u06FF]/.test(await p.locator("#prompts h2").innerText()));
  await p.evaluate(()=>{location.hash="#s=video"});await p.waitForTimeout(500);
- T("video cards show thumbnails outside (3)",await p.locator(".vcard .thumb img").count()===3);
+ T("video cards show thumbnails outside (4)",await p.locator(".vcard .thumb img").count()===4);   // تغيير مقصود (طلب المستخدم): اتضاف فيديو رابع لقسم الفيديوهات
  T("video cards link to the YouTube videos",(await p.locator(".vcard").evaluateAll(a=>a.map(x=>x.href))).every(h=>/youtu\.be\//.test(h)));
  await p.evaluate(()=>{location.hash="#s=prompts"});await p.waitForTimeout(500);
  const open=async n=>{await p.locator(".pcard").nth(n).click();await p.waitForSelector(".modal.show");};
@@ -831,7 +832,7 @@ async function phase4Suite(b){
  for(const it of picks){await p.fill("#q",hostOfU(it.url));const hr=await p.locator(".card").evaluateAll(a=>a.map(x=>x.getAttribute("href")));T("search by domain «"+hostOfU(it.url)+"» finds it",hr.includes(it.url));}
  const full=picks[0]||links[0];await p.fill("#q",full.url);T("search by pasted full URL finds exactly that link",(await p.locator(".card").evaluateAll(a=>a.map(x=>x.getAttribute("href")))).includes(full.url));
  await p.fill("#q","WWW."+hostOfU(full.url).toUpperCase());T("domain search is case-insensitive and tolerates www.",(await p.locator(".card").evaluateAll(a=>a.map(x=>x.getAttribute("href")))).includes(full.url));
- await p.fill("#q","youtu.be");T("search 'youtu.be' matches the 3 video items (by domain)",(await p.locator(".vcard").count())===3);
+ await p.fill("#q","youtu.be");T("search 'youtu.be' matches the 4 video items (by domain)",(await p.locator(".vcard").count())===4);   // تغيير مقصود: 4 فيديوهات دلوقتي
  {const yt=links.filter(i=>/youtube/i.test(hostOfU(i.url))||/youtube/i.test(i.title+i.desc+i.tag)).length;await p.fill("#q","youtube");const n=await p.locator(".card").count();T("search 'youtube' returns at least all items with that domain/text ("+yt+")",n>=yt&&(yt>0||await p.locator(".empty").count()===1));}
  await p.fill("#q","");
  await p.fill("#q","برومبت");T("Arabic normalization still works (ة/ه, أ/ا, ى/ي)",(await p.locator(".card").count())>=11);

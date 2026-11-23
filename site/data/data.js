@@ -166,6 +166,16 @@ window.STUDIO_DATA = {
           "tag": "يوتيوب",
           "autoTitle": true,
           "category": "يوتيوب"
+        },
+        {
+          "id": "itm-4f7a92c1",
+          "type": "video",
+          "title": "فيديو من القناة",
+          "desc": "",
+          "url": "https://youtu.be/0U8OjrSIizQ",
+          "tag": "يوتيوب",
+          "autoTitle": true,
+          "category": "يوتيوب"
         }
       ]
     },

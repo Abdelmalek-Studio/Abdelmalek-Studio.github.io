@@ -44,10 +44,10 @@ const clean = (r, w) => r.x === undefined && r.polluted === undefined && r.nodes
   const c1 = await mkA(); await c1.setInputFiles("#file", wf("code.js", code)); await c1.waitForTimeout(500); const rc = await injected(c1);
   T("admin: data.js with extra trailing code → code is NEVER executed", rc.x === undefined, rc.x);
   const wrapped = "window.STUDIO_DATA = (function(){window.__x='IIFE';return " + JSON.stringify(CUR) + ";})();"; await c1.setInputFiles("#file", wf("iife.js", wrapped)); await c1.waitForTimeout(500);
-  T("admin: data.js built from a function call is refused/not executed", (await injected(c1)).x === undefined && (await c1.locator(".item").count()) === 147);
+  T("admin: data.js built from a function call is refused/not executed", (await injected(c1)).x === undefined && (await c1.locator(".item").count()) === 148);
   const pp = JSON.stringify(CUR).replace('{"version"', '{"__proto__":{"polluted":"yes"},"constructor":{"prototype":{"polluted":"yes"}},"version"'); await c1.setInputFiles("#restore", wf("pp.json", pp)); await c1.waitForTimeout(500);
   const rp = await injected(c1); T("admin: __proto__/constructor.prototype keys can't pollute Object.prototype", rp.polluted === undefined, rp);
-  const pe = L.parseData(await L.download(c1, "#download", tmp)); T("admin: export after prototype-pollution attempt keeps all 147 items and Object.prototype stays clean", cnt(pe) === 147 && (await injected(c1)).polluted === undefined, cnt(pe));
+  const pe = L.parseData(await L.download(c1, "#download", tmp)); T("admin: export after prototype-pollution attempt keeps all 148 items and Object.prototype stays clean", cnt(pe) === 148 && (await injected(c1)).polluted === undefined, cnt(pe));
   function cnt(d) { return (d.sections || []).reduce((n, s) => n + s.items.length, 0); }
   // اسم الملف نفسه معادي
   const fn = path.join(tmp, `"><img src=x onerror=window.__x=1>.json`); fs.writeFileSync(fn, JSON.stringify(CUR)); await c1.setInputFiles("#restore", fn); await c1.waitForTimeout(500);

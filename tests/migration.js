@@ -43,6 +43,8 @@ const items = d => d.sections.flatMap(s => s.items);
   rest.site.tagline = legacy.site.tagline; rest.site.about = legacy.site.about; rest.site.photo = legacy.site.photo;   // الصورة الجديدة (photo.jpg الأصلية بدل webp)
   // تغيير مقصود: قسم «شغلي» اتضاف له YouTube وLinkedIn وTikTok (من روابط السوشيال الموجودة) ووصفه اتحدّث
   { const w = rest.sections.find(x => x.id === "work"), lw = legacy.sections.find(x => x.id === "work"); w.items = w.items.filter(i => lw.items.some(j => j.id === i.id)); w.desc = lw.desc; }
+  // تغيير مقصود موثّق (طلب المستخدم): قسم «فيديوهات تعليمية» اتضاف له فيديو رابع — بنشيله قبل المقارنة زي قسم «شغلي»
+  { const v = rest.sections.find(x => x.id === "video"), lv = legacy.sections.find(x => x.id === "video"); v.items = v.items.filter(i => lv.items.some(j => j.id === i.id)); }
   // تعديل مقصود موثّق (مراجعة): قسم «روابط مهمة» كان فاضي (0 عنصر) واتشال من البيانات الحالية — بنشيله من القديمة قبل المقارنة
   legacy.sections = legacy.sections.filter(s => !(s.id === "links" && s.items.length === 0));
   T("project's current data.js == legacy + price/category + those 2 documented changes ONLY (nothing else touched)", JSON.stringify(rest) === JSON.stringify(legacy));

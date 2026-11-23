@@ -250,7 +250,7 @@ function showSec(id, term){
   return false;   // الرئيسية: الهيرو + الأقسام الرئيسية بس (من غير كروت بره)
 }
 function landingHTML(g){
-  return `<section class="landing"><header class="sec-head"><span class="sec-mark" aria-hidden="true">${GICON[g.id] || ""}</span><div class="sec-text"><h2>${esc(g.title)}</h2></div></header>
+  return `<section class="landing"><header class="sec-head"><div class="sec-text"><h2>${esc(g.title)}</h2></div></header>
     <div class="tiles">` + g.secs.map(x => `<button type="button" class="tile" data-id="${esc(x.id)}"${hueStyle(x.id)}><span class="ti"><i${isImgIcon(x.icon) ? ' class="img"' : ""}>${iconHTML(x.icon)}</i><em>${(x.items || []).length}</em></span><b>${esc(slabel(x))}</b>${x.desc ? `<small>${esc(x.desc)}</small>` : ""}</button>`).join("") + `</div></section>`;
 }
 function renderSubTabs(){
@@ -300,8 +300,7 @@ function render(animate){
     const cover = safeImg(sec.cover);
     html += `<section class="sec" id="${esc(sec.id)}"${hueStyle(sec.id)}>
       <header class="sec-head${cover ? " has-cover" : ""}">${cover ? `<img class="sec-cover" src="${esc(cover)}" alt="" loading="lazy">` : ""}
-        <span class="sec-mark" aria-hidden="true">${isImgIcon(sec.icon) ? "" : esc(sec.icon)}</span>
-        <div class="sec-text"><h2><i${isImgIcon(sec.icon) ? ' class="img"' : ""}>${iconHTML(sec.icon)}</i>${esc(sec.title)}</h2>${sec.desc ? `<p>${esc(sec.desc)}</p>` : ""}</div>
+        <div class="sec-text"><h2>${esc(sec.title)}</h2>${sec.desc ? `<p>${esc(sec.desc)}</p>` : ""}</div>
       </header><div class="grid g-${gKind(items)}">` + items.map(it => cwrap(it)).join("") + `</div>` + (lim && total > lim ? `<button type="button" class="morebtn" data-more data-id="${esc(sec.id)}">عرض كل ${esc(sec.title)} (${total}) ‹</button>` : "") + `</section>`;
   });
   const filtersOn = fprice !== "all" || fcat !== "all";

@@ -196,7 +196,7 @@ const srv = http.createServer((q, r) => {   // سيرفر ثابت: الموقع
   await a.goto(A); await a.waitForSelector(".item");
   const saveDl = async sel => { const [d] = await Promise.all([a.waitForEvent("download"), a.click(sel)]); const f = path.join(tmp, "o" + Math.random() + ".txt"); await d.saveAs(f); return fs.readFileSync(f, "utf8"); };
   const parse = t => JSON.parse(t.replace(/^\/\*[\s\S]*?\*\/\s*/, "").replace(/^window\.STUDIO_DATA\s*=\s*/, "").replace(/;\s*$/, ""));
-  T("admin: section counts shown (" + D.sections.length + " sections)", await a.locator(".seccount").count() === D.sections.length && /147/.test(await a.innerText("#totals")));
+  T("admin: section counts shown (" + D.sections.length + " sections)", await a.locator(".seccount").count() === D.sections.length && /148/.test(await a.innerText("#totals")));   // تغيير مقصود: الفيديو الرابع خلى الإجمالي 148
   await a.fill("#asearch", "remove.bg"); const vis = await a.locator(".item:not(.upd):visible").count(); T("admin search filters items (+ info)", vis >= 1 && vis < 10 && /مطابق/.test(await a.innerText("#asearchinfo")), vis);
   await a.fill("#asearch", "zzzz"); T("admin search: no match message", /مفيش/.test(await a.innerText("#asearchinfo"))); await a.fill("#asearch", "");
   const n0 = await a.locator(".item:not(.upd)").count(); await a.locator('[data-act="dupitem"]').nth(2).click();

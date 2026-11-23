@@ -294,11 +294,12 @@ section.sec + section.sec{margin-top:34px}
     .sec-mark{display:flex!important;align-items:center;justify-content:center;flex:none;width:44px;height:28px;border-radius:6px;border:2px solid var(--ink);color:var(--ink);font-size:15px;line-height:1;opacity:1;position:static;transform:none}
   }
 
-  /* الكروت: عمودين في الصف، أكبر وأوضح */
-  .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important;margin:0!important}
+  /* الكروت: عمود واحد بعرض الشاشة زي أزرار الأقسام — اللوجو والاسم فوق والوصف كامل تحته */
+  .grid{grid-template-columns:1fr!important;gap:12px!important;margin:0!important}
   .grid .card{padding:10px;gap:6px;border-radius:16px}
-  .grid .card h3{font-size:14px!important;line-height:20px!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:40px}
-  .grid .card p{font-size:12px!important;line-height:18px!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .grid .card h3{font-size:14px!important;line-height:20px!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .grid .card p{font-size:12px!important;line-height:18px!important}
+  .grid .lcard p{display:block!important;overflow:visible!important}   /* موبايل: الوصف كامل زي الديسكتوب */
   .grid .vcard h3{min-height:0}
   .grid .vcard p,.grid .vcard .meta,.grid .vcard .go{display:none}
   .grid .cwrap .pcard{padding-bottom:56px}

@@ -35,7 +35,7 @@ const OV = Object.fromEntries([
   const d = L.clone(CUR); d.sections[0].items[0].image = "assets/img/t/gone.png"; d.sections[0].items[1].image = "assets/img/t/slow9.png"; d.sections[0].items[2].image = "assets/img/t/ok.png";
   const f = path.join(tmp, "img.json"); fs.writeFileSync(f, JSON.stringify(d)); await a.setInputFiles("#restore", f); await a.waitForTimeout(500);
   const tD = Date.now(); const txt = await L.download(a, "#download", tmp); await a.waitForFunction(() => !document.querySelector("#errbox").hidden, null, {timeout: 12000}); const box = await a.innerText("#errbox");
-  T("download is NOT blocked by image warnings (file produced with all data)", L.parseData(txt).sections[0].items[0].image === "assets/img/t/gone.png" && L.parseData(txt).sections.reduce((n, s) => n + s.items.length, 0) === 147);
+  T("download is NOT blocked by image warnings (file produced with all data)", L.parseData(txt).sections[0].items[0].image === "assets/img/t/gone.png" && L.parseData(txt).sections.reduce((n, s) => n + s.items.length, 0) === 148);
   T("warning box lists «1 صورة مش موجودة» and «1 … لم يتم التحقق»", /1 صورة مش موجودة/.test(box) && /1 صورة لم يتم التحقق/.test(box), box.slice(0, 220));
   T("warning box says it doesn't block download", /مش بيمنع/.test(box));
   T("page stayed responsive while probing (status/UI already updated before warnings)", /اتنزّل/.test(await a.innerText("#status")));

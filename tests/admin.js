@@ -14,7 +14,7 @@ let SERVED = null;
 
   /* ===== 1) تحميل البيانات الحالية + تصدير بلا فقدان ===== */
   let a = await mkA();
-  T("admin loads current data: all items + counters", (await nItems(a)) === cnt(CUR) && /147/.test(await a.innerText("#totals")));
+  T("admin loads current data: all items + counters", (await nItems(a)) === cnt(CUR) && /148/.test(await a.innerText("#totals")));
   const e0 = await exp(a);
   T("export with no edits: items/ids/titles/urls/tag all identical to source", JSON.stringify(items(e0).map(i => [i.id, i.title, i.url, i.tag, i.type])) === JSON.stringify(items(CUR).map(i => [i.id, i.title, i.url, i.tag, i.type])));
   T("export with no edits: price & category preserved exactly", JSON.stringify(items(e0).map(i => [i.price, i.category])) === JSON.stringify(items(CUR).map(i => [i.price, i.category])));
@@ -58,7 +58,7 @@ let SERVED = null;
   T("no file downloaded while errors exist (status says stopped)", /اتوقف/.test(await bad.innerText("#status")));
   await bad.click('#errbox [data-goto]').catch(() => {}); T("«go to place» link works without error", bad.errs.length === 0, bad.errs);
   // الغاء confirm = بدون تغيير
-  const cc = await mkA(); cc.removeAllListeners("dialog"); cc.on("dialog", d => d.dismiss()); await cc.setInputFiles("#restore", FX("old-backup.json")); await cc.waitForTimeout(400); T("cancel on confirm leaves data untouched", (await cc.innerText("#status")).includes("اتلغى") && (await nItems(cc)) === 147);
+  const cc = await mkA(); cc.removeAllListeners("dialog"); cc.on("dialog", d => d.dismiss()); await cc.setInputFiles("#restore", FX("old-backup.json")); await cc.waitForTimeout(400); T("cancel on confirm leaves data untouched", (await cc.innerText("#status")).includes("اتلغى") && (await nItems(cc)) === 148);
   // حقول مجهولة + صيغ إضافية
   const unk = L.clone(CUR); unk.futureTop = {x: [1, 2]}; unk.sections[0].futureSec = 7; unk.sections[0].items[0].futureItem = "keep"; await imp(bad, "#restore", wf("unk.json", unk)); const eu = await exp(bad);
   T("unknown top-level field survives", eu.futureTop && eu.futureTop.x[1] === 2); T("unknown section/item fields survive", eu.sections[0].futureSec === 7 && eu.sections[0].items[0].futureItem === "keep");
@@ -69,10 +69,10 @@ let SERVED = null;
   const s0 = 1; // قسم فيه عناصر
   await ed2.locator(`[data-act="additem"][data-s="${s0}"]`).click(); const nw = ed2.locator(`.item:not(.upd)`).filter({has: ed2.locator('[data-f="title"]')}).nth((CUR.sections.slice(0, s0 + 1).reduce((n, s) => n + s.items.length, 0)));
   await nw.locator('[data-f="title"]').fill("أداة اختبار جديدة"); await nw.locator('[data-f="url"]').fill("https://example.com/new-tool"); await nw.locator('[data-f="desc"]').fill("وصف تجريبي"); await nw.locator('[data-f="price"]').selectOption("مدفوع"); await nw.locator('[data-f="category"]').fill("فئة-تجريبية"); await nw.locator('[data-f="keywords"]').fill("اختبارxyz, تجربة");
-  T("admin: counters update after add (+1 item, section count)", /148/.test(await ed2.innerText("#totals")) && (await nItems(ed2)) === 148);
+  T("admin: counters update after add (+1 item, section count)", /149/.test(await ed2.innerText("#totals")) && (await nItems(ed2)) === 149);
   await ed2.click("#addUpd"); await ed2.locator('#updates [data-f="title"]').first().fill("إضافة أداة"); await ed2.locator('#updates [data-f="text"]').first().fill("أضفنا أداة"); await ed2.locator("#updates select[data-addref]").first().selectOption({label: /أداة اختبار جديدة/}).catch(async () => { await ed2.locator("#updates select[data-addref]").first().selectOption({index: 1}); });
   const out = await exp(ed2); const ni = items(out).find(i => i.title === "أداة اختبار جديدة");
-  T("export has the new item with price/category/added=today/unique id", ni && ni.price === "مدفوع" && ni.category === "فئة-تجريبية" && ni.added === today && items(out).filter(i => i.id === ni.id).length === 1 && cnt(out) === 148);
+  T("export has the new item with price/category/added=today/unique id", ni && ni.price === "مدفوع" && ni.category === "فئة-تجريبية" && ni.added === today && items(out).filter(i => i.id === ni.id).length === 1 && cnt(out) === 149);
   T("export has the update entry linked to an item", out.updates && out.updates.length === 1 && out.updates[0].items.length === 1);
   SERVED = L.dataJs(out); let s = await env.mk(); await s.goto(env.BASE + "?x=1"); await s.waitForSelector("#tabs .chip", {state: "attached"});
   await s.locator("#tabs .newchip").click(); await s.waitForSelector("#whatsnew"); T("site: shows the new item in «آخر الإضافات» (what's new view)", (await s.locator("#whatsnew").innerText()).includes("أداة اختبار جديدة"));
@@ -86,13 +86,13 @@ let SERVED = null;
   T("restore of the edited export shows item at the same place", (await r.locator('[data-f="title"]').inputValue()) === "أداة اختبار جديدة");
   await r.locator('[data-f="title"]').fill("أداة معدّلة"); await r.locator('[data-f="price"]').selectOption("مجاني"); await r.locator('[data-f="category"]').fill("");
   const oe = await exp(ed3); const mi = items(oe).find(i => i.id === ni.id);
-  T("edit: title changed, price changed, category cleared (key kept empty so legacy tag can't resurrect)", mi.title === "أداة معدّلة" && mi.price === "مجاني" && !mi.category && cnt(oe) === 148);
+  T("edit: title changed, price changed, category cleared (key kept empty so legacy tag can't resurrect)", mi.title === "أداة معدّلة" && mi.price === "مجاني" && !mi.category && cnt(oe) === 149);
   SERVED = L.dataJs(oe); await s.goto(env.BASE + "#i=" + encodeURIComponent(ni.id)); await s.waitForSelector("#tabs .chip", {state: "attached"}); await s.waitForTimeout(400);
   T("site: permalink to the edited item opens it with the new title", (await s.locator("#mTitle, .modal h2, [role=dialog] h2").first().innerText().catch(() => "")).includes("أداة معدّلة") || (await s.locator(`.card[data-id="${ni.id}"] h3`).innerText().catch(() => "")).includes("أداة معدّلة"));
   // حذف + تنضيف المراجع
   await ed3.locator(".item:not(.upd)").nth(idx).locator('[data-act="delitem"]').click();
-  const od = await exp(ed3); T("delete: item gone, count back to 147, update no longer references it", cnt(od) === 147 && !items(od).some(i => i.id === ni.id) && (od.updates || []).every(u => !(u.items || []).includes(ni.id)));
-  T("admin counters after delete: 147", /147/.test(await ed3.innerText("#totals")));
+  const od = await exp(ed3); T("delete: item gone, count back to 148, update no longer references it", cnt(od) === 148 && !items(od).some(i => i.id === ni.id) && (od.updates || []).every(u => !(u.items || []).includes(ni.id)));
+  T("admin counters after delete: 148", /148/.test(await ed3.innerText("#totals")));
   SERVED = L.dataJs(od); await s.goto(env.BASE + "#i=" + encodeURIComponent(ni.id)); await s.reload(); await s.waitForSelector("#tabs .chip", {state: "attached"}); await s.waitForTimeout(300);
   T("site: permalink to a deleted item doesn't crash and shows the site normally", s.errs.length === 0 && await s.locator("#tabs .chip").count() > 0 && (await s.innerText("body")).length > 500, s.errs);
   await s.evaluate(() => { location.hash = "#v=new"; }); await s.waitForTimeout(150); T("site: deleted item no longer in What's New", !(await s.innerText("#content")).includes("أداة معدّلة"));
