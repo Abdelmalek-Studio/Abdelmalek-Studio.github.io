@@ -85,8 +85,18 @@ const srv = http.createServer((q, r) => {   // سيرفر ثابت: الموقع
   await p.waitForSelector("#content .cwrap .card", {timeout: 4000 * CIWAIT});   // النتائج ظهرت فعلًا قبل Enter (انتظار حتمي بدل افتراض التوقيت)
   await p.keyboard.press("Escape");
   await p.waitForSelector("#suggest", {state: "hidden", timeout: 4000 * CIWAIT});   // الاقتراحات اتقفلت فعلًا قبل ما نبعت Enter
+  // ضمان حتمي ضد سباق تايمر الـ blur على CI البطيء: blur بيسلّح setTimeout(hideSuggest, 120) ممكن يتأخر بالتحميل ويقفل الاقتراحات لوحدها قبل Esc،
+  // ووقتها Esc بيمسح البحث (فرع «Esc تاني بيمسح») فـ Enter ميلاقيش نتائج. هنا بنرجّع الحالة المطلوبة بكود الصفحة نفسه: نفس الاستعلام + الاقتراحات مقفولة + التركيز على المربع.
+  await p.evaluate(() => {
+    const q = document.querySelector("#q"), s = document.querySelector("#suggest");
+    if (q.value !== "canva") { q.value = "canva"; q.dispatchEvent(new InputEvent("input", {bubbles: true})); }   // Esc مسح البحث بسبب السباق: رجّعه (نفس مسار الكتابة: render + showSuggest)
+    q.focus();
+    if (!s.hidden) q.dispatchEvent(new KeyboardEvent("keydown", {key: "Escape", bubbles: true}));   // الـ focus أعاد فتح الاقتراحات: اقفلها (التحقق أولًا — Esc وهي مقفولة بيمسح البحث)
+  });
+  await p.waitForSelector("#content .cwrap .card", {timeout: 4000 * CIWAIT});   // النتائج لسه ظاهرة لحظة Enter
+  await p.waitForSelector("#suggest", {state: "hidden", timeout: 4000 * CIWAIT});   // وحالة «مفيش اقتراح» مؤكدة (مفيش أي مسار async بيعيد فتحها)
   await p.keyboard.press("Enter");
-  const focusMoved = await p.waitForFunction(() => { const a = document.activeElement; return !!a && !!a.closest("#content"); }, {timeout: 4000 * CIWAIT, polling: 250}).then(() => true, () => false);   // بنستنى الشرط نفسه بدل لقطة فورية — لو التركيز ما انتقلش أصلًا الاختبار يفشل برضه
+  const focusMoved = await p.waitForFunction(() => { const a = document.activeElement; return !!a && !!a.closest("#content"); }, undefined, {timeout: 4000 * CIWAIT, polling: 250}).then(() => true, () => false);   // بنستنى الشرط نفسه — مع تصحيح مكان الخيارات (كانت بتتبعت كـ arg فالـ timeout/polling المقصودين ماكانش ليهم أثر)
   T("keyboard: Enter (no suggestion) moves focus to first result", focusMoved);
   await p.fill("#q", "canva"); await p.waitForTimeout(100);
   T("search state is in the URL (shareable)", /q=canva/.test(await p.evaluate(() => location.hash)));
